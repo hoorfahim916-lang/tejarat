@@ -1,0 +1,23 @@
+{
+  ConstraintSets: {
+    start: {
+      cart_badge: {
+        start: ['parent', 'start',92],
+        bottom: ['parent','bottom', 40]
+      }
+    },
+    end: {
+      cart_badge: {
+        end: ['parent', 'end',8],
+        top: ['parent','top', 12],
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      pathMotionArc: 'startVertical',
+      from: 'start',
+      to: 'end',
+    }
+  }
+}

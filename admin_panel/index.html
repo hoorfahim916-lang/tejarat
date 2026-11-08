@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tejarat Master Admin Portal — Products, Orders, Users & OTA Control</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+  <!-- MASTER PIN LOCK SCREEN -->
+  <div id="adminPinModal" class="fixed inset-0 bg-[#064e3b] z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6 border border-emerald-200">
+      <div class="w-16 h-16 bg-[#059669] text-white text-2xl font-black rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+        T
+      </div>
+      <div>
+        <h2 class="text-xl font-extrabold text-gray-900">تجارت ماسٹر ایڈمن پینل</h2>
+        <p class="text-xs text-gray-500 mt-1">برائے ایڈمنسٹریٹر لاگ ان - سیکیورٹی تصدیق</p>
+      </div>
+      <form onsubmit="verifyAdminPin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-600 mb-2">4-Digit Master Security PIN</label>
+          <input type="password" id="adminPinInput" maxlength="6" autofocus placeholder="• • • •" class="w-full text-center tracking-[0.5em] text-2xl font-black py-3 px-4 border-2 border-emerald-200 focus:border-[#059669] rounded-2xl outline-none transition bg-emerald-50/40" />
+          <p id="pinErrorMsg" class="text-red-500 text-xs font-bold mt-2 hidden">غلط پن درج کیا گیا ہے۔ دوبارہ کوشش کریں۔</p>
+          <p class="text-[11px] text-gray-400 mt-1">Default PIN: <span class="font-mono font-bold text-[#059669]">7860</span></p>
+        </div>
+        <button type="submit" class="w-full bg-[#059669] hover:bg-[#047857] text-white font-extrabold py-3.5 rounded-2xl shadow-lg transition text-sm">
+          انٹر کریں (Unlock Portal)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOP ADMIN HEADER -->
+  <header class="bg-[#059669] text-white shadow-lg sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-white text-[#059669] font-black text-xl flex items-center justify-center shadow">
+          T
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-lg font-extrabold tracking-tight">TEJARAT MASTER ADMIN</h1>
+            <span class="bg-amber-400 text-gray-950 text-[11px] font-black px-2 py-0.5 rounded-full">
+              ● Live Supabase & OTA Sync
+            </span>
+          </div>
+          <p class="text-xs text-emerald-100">Markaz-Style Reselling Platform Control Center</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button onclick="refreshAllAdminData(true)" class="bg-emerald-800 hover:bg-emerald-900 border border-emerald-400/30 text-xs font-bold px-3.5 py-2 rounded-xl flex items-center space-x-1.5 transition">
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          <span>Sync Live Data</span>
+        </button>
+        <a href="https://xdsxmgzcfihkohsbzszq.supabase.co/storage/v1/object/public/admin/tejarat-app.html" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-gray-900 text-xs font-extrabold px-3.5 py-2 rounded-xl flex items-center space-x-1.5 shadow">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          <span>Preview Mobile App ↗</span>
+        </a>
+        <button onclick="adminLogout()" title="Logout Admin" class="bg-red-500/20 hover:bg-red-600 text-red-200 hover:text-white border border-red-400/40 text-xs font-bold px-3 py-2 rounded-xl flex items-center space-x-1 transition">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+    <!-- KPI METRICS CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-500 font-semibold">Total Wholesale Products</p>
+        <p id="kpiProducts" class="text-2xl font-black text-[#5C1D8D] mt-1">0</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-500 font-semibold">Total Customer Orders</p>
+        <p id="kpiOrders" class="text-2xl font-black text-gray-900 mt-1">0</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-500 font-semibold">Total COD Volume</p>
+        <p id="kpiCODVolume" class="text-2xl font-black text-emerald-600 mt-1">Rs. 0</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-500 font-semibold">Reseller Profits Generated</p>
+        <p id="kpiResellerProfits" class="text-2xl font-black text-amber-600 mt-1">Rs. 0</p>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-500 font-semibold">WhatsApp Order Target</p>
+        <p id="kpiWhatsappPhone" class="text-base font-mono font-black text-emerald-700 mt-2">+92 322 2089610</p>
+      </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+      <button onclick="switchAdminTab('products')" id="adm-btn-products" class="adm-tab-btn bg-[#5C1D8D] text-white px-4 py-2 rounded-xl font-bold text-xs shadow">
+        📦 Products & Catalogs (پروڈکٹس)
+      </button>
+      <button onclick="switchAdminTab('orders')" id="adm-btn-orders" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
+        🚚 Orders & COD Management (آرڈرز)
+      </button>
+      <button onclick="switchAdminTab('users')" id="adm-btn-users" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
+        👥 Users, Commissions & Wallets (یوزرز اور کمیشن)
+      </button>
+      <button onclick="switchAdminTab('payouts')" id="adm-btn-payouts" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
+        💸 Payout Requests (ودڈرا ریکویسٹس)
+      </button>
+      <button onclick="switchAdminTab('settings')" id="adm-btn-settings" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
+        📲 Direct WhatsApp & Auto-Update (OTA سیٹنگز)
+      </button>
+    </div>
+
+    <!-- ==================== SECTION 1: PRODUCTS ==================== -->
+    <section id="adm-sec-products" class="adm-sec space-y-4">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-2xl border">
+        <div>
+          <h2 class="text-lg font-extrabold text-gray-900">Wholesale Catalog Management</h2>
+          <p class="text-xs text-gray-500">Add, edit, or delete wholesale products. Any change immediately updates inside all installed Android apps via OTA!</p>
+        </div>
+        <button onclick="openProductModal()" class="bg-[#5C1D8D] hover:bg-[#421266] text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow flex items-center space-x-2">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>+ Add New Wholesale Product</span>
+        </button>
+      </div>
+
+      <div id="adminProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
+    </section>
+
+    <!-- ==================== SECTION 2: ORDERS ==================== -->
+    <section id="adm-sec-orders" class="adm-sec hidden space-y-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 border-b bg-gray-50 flex flex-wrap justify-between items-center gap-2">
+          <div>
+            <h3 class="font-extrabold text-gray-900 text-base">Customer & Reseller COD Orders</h3>
+            <p class="text-xs text-gray-500">When you mark an order as "Delivered", the reseller's Pending Profit automatically moves to their Available Wallet Balance!</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
+              <tr>
+                <th class="px-4 py-3">Tracking ID & Type</th>
+                <th class="px-4 py-3">Customer & Address</th>
+                <th class="px-4 py-3">Sender Brand (Reseller)</th>
+                <th class="px-4 py-3">Items</th>
+                <th class="px-4 py-3">COD & Profit</th>
+                <th class="px-4 py-3">WhatsApp</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTable" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3: USERS & COMMISSIONS ==================== -->
+    <section id="adm-sec-users" class="adm-sec hidden space-y-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 border-b bg-gray-50 flex justify-between items-center">
+          <div>
+            <h3 class="font-extrabold text-gray-900 text-base">Reseller Users, Wallets & Commissions</h3>
+            <p class="text-xs text-gray-500">View and adjust reseller balances, pending profits, bonus rewards, and linked JazzCash/EasyPaisa accounts.</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
+              <tr>
+                <th class="px-4 py-3">Store / Brand Name</th>
+                <th class="px-4 py-3">Phone</th>
+                <th class="px-4 py-3">Available Balance</th>
+                <th class="px-4 py-3">Pending Profit</th>
+                <th class="px-4 py-3">Total Withdrawn</th>
+                <th class="px-4 py-3">Payout Account</th>
+                <th class="px-4 py-3 text-right">Manage Commission / Balance</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersTable" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: PAYOUTS ==================== -->
+    <section id="adm-sec-payouts" class="adm-sec hidden space-y-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-4 border-b bg-gray-50">
+          <h3 class="font-extrabold text-gray-900 text-base">Reseller Profit Withdrawal Requests (JazzCash / EasyPaisa / Bank)</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
+              <tr>
+                <th class="px-4 py-3">Request ID</th>
+                <th class="px-4 py-3">Reseller ID</th>
+                <th class="px-4 py-3">Method & Account</th>
+                <th class="px-4 py-3">Amount (PKR)</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminPayoutsTable" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 5: WHATSAPP & OTA AUTO-UPDATE SETTINGS ==================== -->
+    <section id="adm-sec-settings" class="adm-sec hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Direct WhatsApp Order Dispatch Configuration -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+          <div class="flex items-center space-x-2.5 border-b pb-3">
+            <i data-lucide="message-square" class="w-6 h-6 text-emerald-600"></i>
+            <div>
+              <h3 class="text-base font-extrabold text-gray-900">Direct WhatsApp Order Receiving Config</h3>
+              <p class="text-xs text-gray-500">Orders placed in the Android app are automatically dispatched in the background without opening the user's WhatsApp.</p>
+            </div>
+          </div>
+
+          <form onsubmit="saveGlobalSettings(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">Admin Order Receiving WhatsApp Number (International Format)</label>
+              <input type="text" id="setWhatsappOrder" required placeholder="923222089610" class="w-full border rounded-xl px-3 py-2 font-mono font-bold text-emerald-700" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">Reseller Support Helpline WhatsApp Number</label>
+              <input type="text" id="setWhatsappSupport" required placeholder="923190328256" class="w-full border rounded-xl px-3 py-2 font-mono font-bold text-[#5C1D8D]" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">Optional WhatsApp Cloud Webhook URL (Make / Zapier / Custom Bot)</label>
+              <input type="url" id="setWebhookUrl" placeholder="https://hook.eu1.make.com/..." class="w-full border rounded-xl px-3 py-2 font-mono" />
+            </div>
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">UltraMsg / GreenAPI Instance ID</label>
+                <input type="text" id="setApiInstance" placeholder="instance12345" class="w-full border rounded-xl px-3 py-2 font-mono" />
+              </div>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">API Token</label>
+                <input type="password" id="setApiToken" placeholder="Token..." class="w-full border rounded-xl px-3 py-2 font-mono" />
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2.5 rounded-xl shadow">
+              Save WhatsApp Dispatch Settings
+            </button>
+          </form>
+        </div>
+
+        <!-- OTA Auto-Update & App Rules Configuration -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
+          <div class="flex items-center space-x-2.5 border-b pb-3">
+            <i data-lucide="zap" class="w-6 h-6 text-[#5C1D8D]"></i>
+            <div>
+              <h3 class="text-base font-extrabold text-gray-900">Android App Auto-Update (OTA) & Delivery Rules</h3>
+              <p class="text-xs text-gray-500">Push instant live updates, announcements, and delivery rates to all installed Tejarat Android apps.</p>
+            </div>
+          </div>
+
+          <form onsubmit="saveGlobalSettings(event)" class="space-y-3 text-xs">
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Live OTA App Version</label>
+                <input type="text" id="setAppVersion" required placeholder="2.5.0" class="w-full border rounded-xl px-3 py-2 font-bold text-[#5C1D8D]" />
+              </div>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Flat Delivery Fee (PKR)</label>
+                <input type="number" id="setDeliveryFee" required value="125" class="w-full border rounded-xl px-3 py-2 font-bold" />
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">Home Hero Announcement Text (اردو / English)</label>
+              <textarea id="setBannerText" rows="2" class="w-full border rounded-xl px-3 py-2"></textarea>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">OTA Release Notes</label>
+              <textarea id="setUpdateNotes" rows="2" class="w-full border rounded-xl px-3 py-2"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-[#5C1D8D] hover:bg-[#421266] text-white font-extrabold py-2.5 rounded-xl shadow">
+              Push Live OTA Update to All Android Apps
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ADD / EDIT PRODUCT MODAL -->
+  <div id="admProductModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 id="admProdModalTitle" class="text-base font-extrabold text-[#5C1D8D]">Add / Edit Wholesale Product</h3>
+        <button onclick="closeProductModal()" class="text-gray-400"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <form id="admProductForm" onsubmit="saveProductFromAdmin(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="admProdId" />
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Product Title (English) *</label>
+          <input type="text" id="admProdTitle" required class="w-full border rounded-xl px-3 py-2" />
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Urdu Title (اردو نام)</label>
+          <input type="text" id="admProdUrdu" class="w-full border rounded-xl px-3 py-2" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Category *</label>
+            <select id="admProdCategory" required class="w-full border rounded-xl px-3 py-2">
+              <option value="Women Clothes">👗 Women Clothes</option>
+              <option value="Men Clothes">👔 Men Clothes</option>
+              <option value="Smart Gadgets">⌚ Smart Gadgets</option>
+              <option value="Dry Fruits & Nuts">🥜 Dry Fruits & Nuts</option>
+              <option value="Pure Sidr Honey">🍯 Pure Sidr Honey</option>
+              <option value="Desi Ghee & Makhan">🧈 Desi Ghee & Makhan</option>
+              <option value="Beauty & Cosmetics">💄 Beauty & Cosmetics</option>
+              <option value="Home & Bedding">🛏️ Home & Bedding</option>
+              <option value="Watches & Jewelry">💍 Watches & Jewelry</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Stock Quantity</label>
+            <input type="number" id="admProdStock" value="100" class="w-full border rounded-xl px-3 py-2" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Wholesale Rate (Rs.) *</label>
+            <input type="number" id="admProdWholesale" required class="w-full border rounded-xl px-3 py-2 font-bold text-[#5C1D8D]" />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Suggested Retail Rate (Rs.) *</label>
+            <input type="number" id="admProdRetail" required class="w-full border rounded-xl px-3 py-2 font-bold text-emerald-700" />
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Product Image URL *</label>
+          <input type="url" id="admProdImage" required placeholder="https://images.unsplash.com/..." class="w-full border rounded-xl px-3 py-2" />
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Full Description</label>
+          <textarea id="admProdDesc" rows="3" class="w-full border rounded-xl px-3 py-2"></textarea>
+        </div>
+        <div class="flex justify-end space-x-2 pt-2 border-t">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl font-bold">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-[#5C1D8D] text-white rounded-xl font-extrabold">Save & Sync to App</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://xdsxmgzcfihkohsbzszq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhkc3htZ3pjZmloa29oc2J6c3pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM3MDA2NzUsImV4cCI6MjEwOTI3NjY3NX0.kDUmA2E1BGl-oja9aosoBO4KQWCl7wxTRrOzxIiR-7g';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let products = [];
+    let orders = [];
+    let users = [];
+    let payouts = [];
+    let settings = {};
+
+    async function refreshAllAdminData() {
+      const [pRes, oRes, uRes, payRes, sRes] = await Promise.all([
+        supabaseClient.from('products').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('orders').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('reseller_wallets').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('payout_requests').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('app_settings').select('*').eq('id', 'global').single()
+      ]);
+
+      products = pRes.data || [];
+      orders = oRes.data || [];
+      users = uRes.data || [];
+      payouts = payRes.data || [];
+      settings = sRes.data || {};
+
+      renderKPIs();
+      renderAdminProducts();
+      renderAdminOrders();
+      renderAdminUsers();
+      renderAdminPayouts();
+      populateSettingsForm();
+      lucide.createIcons();
+    }
+
+    function renderKPIs() {
+      document.getElementById('kpiProducts').innerText = products.length;
+      document.getElementById('kpiOrders').innerText = orders.length;
+      const totalCOD = orders.reduce((s, o) => s + (o.total_cod_amount || 0), 0);
+      const totalProfit = orders.reduce((s, o) => s + (o.total_profit || 0), 0);
+      document.getElementById('kpiCODVolume').innerText = `Rs. ${totalCOD.toLocaleString()}`;
+      document.getElementById('kpiResellerProfits').innerText = `Rs. ${totalProfit.toLocaleString()}`;
+      if (settings.whatsapp_order_number) {
+        document.getElementById('kpiWhatsappPhone').innerText = '+' + settings.whatsapp_order_number;
+      }
+    }
+
+    function renderAdminProducts() {
+      const grid = document.getElementById('adminProductsGrid');
+      grid.innerHTML = products.map(p => `
+        <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="h-44 bg-gray-100 relative">
+              <img src="${p.image_url}" class="w-full h-full object-cover" />
+              <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                Margin: Rs. ${(p.suggested_retail_price || 0) - (p.wholesale_price || 0)}
+              </span>
+            </div>
+            <div class="p-3.5">
+              <span class="text-[10px] font-bold bg-purple-50 text-[#5C1D8D] px-2 py-0.5 rounded">${p.category}</span>
+              <h4 class="font-bold text-xs text-gray-900 mt-1.5 line-clamp-2">${p.title}</h4>
+              <p class="text-[11px] text-gray-500 mt-0.5">${p.urdu_title || ''}</p>
+            </div>
+          </div>
+          <div class="p-3.5 pt-2 border-t flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-gray-400 block">Wholesale</span>
+              <span class="text-sm font-black text-[#5C1D8D]">Rs. ${p.wholesale_price}</span>
+            </div>
+            <div class="flex space-x-1">
+              <button onclick="editProduct('${p.id}')" class="p-1.5 text-[#5C1D8D] hover:bg-purple-50 rounded-lg">
+                <i data-lucide="edit-2" class="w-4 h-4"></i>
+              </button>
+              <button onclick="deleteProduct('${p.id}')" class="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminOrders() {
+      const tbody = document.getElementById('adminOrdersTable');
+      tbody.innerHTML = orders.map(o => {
+        const items = Array.isArray(o.items_json) ? o.items_json : [];
+        const itemsSummary = items.map(i => `${i.quantity || 1}x ${i.title}`).join(', ') || 'Wholesale Parcel';
+        return `
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3">
+              <span class="font-mono font-bold text-[#5C1D8D] block">${o.tracking_id}</span>
+              <span class="text-[10px] bg-purple-50 text-[#5C1D8D] px-1.5 py-0.5 rounded font-bold">${o.order_type || 'Resell'}</span>
+            </td>
+            <td class="px-4 py-3">
+              <span class="font-bold text-gray-900 block">${o.customer_name}</span>
+              <span class="text-gray-500 block">${o.customer_phone} • ${o.customer_city}</span>
+              <span class="text-[10px] text-gray-400">${o.customer_address}</span>
+            </td>
+            <td class="px-4 py-3">
+              <span class="font-bold text-gray-900 block">${o.reseller_store_name}</span>
+              <span class="text-[10px] text-gray-500">${o.reseller_phone || ''}</span>
+            </td>
+            <td class="px-4 py-3 max-w-xs truncate" title="${itemsSummary}">${itemsSummary}</td>
+            <td class="px-4 py-3">
+              <span class="font-black text-gray-900 block">COD: Rs. ${o.total_cod_amount}</span>
+              <span class="font-bold text-emerald-600 text-[11px]">Profit: +Rs. ${o.total_profit}</span>
+            </td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">✓ Auto-Sent</span>
+            </td>
+            <td class="px-4 py-3">
+              <select onchange="changeOrderStatus('${o.id}', this.value, ${o.total_profit || 0}, '${o.reseller_id || 'default_reseller'}')" class="border rounded-lg px-2 py-1 font-bold text-xs">
+                ${['Pending', 'Packed', 'Dispatched', 'Out for Delivery', 'Delivered', 'Cancelled'].map(st => `<option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>`).join('')}
+              </select>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button onclick="deleteOrder('${o.id}')" class="text-rose-500 hover:underline font-bold">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function changeOrderStatus(orderId, newStatus, orderProfit, resellerId) {
+      await supabaseClient.from('orders').update({ status: newStatus }).eq('id', orderId);
+      if (newStatus === 'Delivered' && orderProfit > 0) {
+        const u = users.find(x => x.user_id === resellerId);
+        if (u) {
+          const newAvail = (u.available_balance || 0) + orderProfit;
+          const newPend = Math.max(0, (u.pending_profit || 0) - orderProfit);
+          await supabaseClient.from('reseller_wallets').update({
+            available_balance: newAvail,
+            pending_profit: newPend,
+            completed_orders: (u.completed_orders || 0) + 1
+          }).eq('user_id', resellerId);
+        }
+      }
+      refreshAllAdminData();
+    }
+
+    async function deleteOrder(orderId) {
+      if (!confirm('Delete this order record?')) return;
+      await supabaseClient.from('orders').delete().eq('id', orderId);
+      refreshAllAdminData();
+    }
+
+    function renderAdminUsers() {
+      const tbody = document.getElementById('adminUsersTable');
+      tbody.innerHTML = users.map(u => `
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-3 font-bold text-gray-900">${u.store_name} <span class="text-[10px] text-gray-400 block">${u.user_id}</span></td>
+          <td class="px-4 py-3 font-mono">${u.phone}</td>
+          <td class="px-4 py-3 font-black text-emerald-600">Rs. ${u.available_balance}</td>
+          <td class="px-4 py-3 font-bold text-amber-600">Rs. ${u.pending_profit}</td>
+          <td class="px-4 py-3 font-bold text-gray-700">Rs. ${u.total_withdrawn}</td>
+          <td class="px-4 py-3">${u.payment_method}: <span class="font-mono font-bold">${u.account_number}</span> (${u.account_title})</td>
+          <td class="px-4 py-3 text-right">
+            <button onclick="adjustUserBalance('${u.user_id}', ${u.available_balance})" class="bg-purple-50 text-[#5C1D8D] font-bold px-3 py-1 rounded-lg hover:bg-purple-100">
+              Edit Balance / Bonus
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function adjustUserBalance(userId, currentBalance) {
+      const val = prompt(`Enter new Available Profit Balance (PKR) for ${userId}:`, currentBalance);
+      if (val === null) return;
+      const num = parseInt(val);
+      if (isNaN(num)) return;
+      await supabaseClient.from('reseller_wallets').update({ available_balance: num }).eq('user_id', userId);
+      refreshAllAdminData();
+    }
+
+    function renderAdminPayouts() {
+      const tbody = document.getElementById('adminPayoutsTable');
+      tbody.innerHTML = payouts.map(p => `
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-3 font-mono font-bold">${p.id}</td>
+          <td class="px-4 py-3">${p.reseller_id}</td>
+          <td class="px-4 py-3 font-bold">${p.payment_method} • ${p.account_number} (${p.account_title})</td>
+          <td class="px-4 py-3 font-black text-emerald-700">Rs. ${p.amount}</td>
+          <td class="px-4 py-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${p.status}</span>
+          </td>
+          <td class="px-4 py-3 text-right space-x-2">
+            ${p.status === 'Pending' ? `<button onclick="approvePayout('${p.id}', '${p.reseller_id}', ${p.amount})" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg font-bold">Approve & Mark Paid</button>` : `<span class="text-gray-400">Processed</span>`}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function approvePayout(payoutId, resellerId, amount) {
+      await supabaseClient.from('payout_requests').update({ status: 'Approved', processed_at: new Date().toISOString() }).eq('id', payoutId);
+      const u = users.find(x => x.user_id === resellerId);
+      if (u) {
+        await supabaseClient.from('reseller_wallets').update({
+          available_balance: Math.max(0, (u.available_balance || 0) - amount),
+          total_withdrawn: (u.total_withdrawn || 0) + amount
+        }).eq('user_id', resellerId);
+      }
+      refreshAllAdminData();
+    }
+
+    function populateSettingsForm() {
+      if (!settings) return;
+      document.getElementById('setWhatsappOrder').value = settings.whatsapp_order_number || '923222089610';
+      document.getElementById('setWhatsappSupport').value = settings.whatsapp_support_number || '923190328256';
+      document.getElementById('setWebhookUrl').value = settings.whatsapp_webhook_url || '';
+      document.getElementById('setApiInstance').value = settings.whatsapp_api_instance_id || '';
+      document.getElementById('setApiToken').value = settings.whatsapp_api_token || '';
+      document.getElementById('setAppVersion').value = settings.app_version || '2.5.0';
+      document.getElementById('setDeliveryFee').value = settings.default_delivery_fee || 125;
+      document.getElementById('setBannerText').value = settings.banner_text || '';
+      document.getElementById('setUpdateNotes').value = settings.update_notes || '';
+    }
+
+    async function saveGlobalSettings(e) {
+      e.preventDefault();
+      const updated = {
+        id: 'global',
+        whatsapp_order_number: document.getElementById('setWhatsappOrder').value.trim(),
+        whatsapp_support_number: document.getElementById('setWhatsappSupport').value.trim(),
+        whatsapp_webhook_url: document.getElementById('setWebhookUrl').value.trim(),
+        whatsapp_api_instance_id: document.getElementById('setApiInstance').value.trim(),
+        whatsapp_api_token: document.getElementById('setApiToken').value.trim(),
+        app_version: document.getElementById('setAppVersion').value.trim(),
+        default_delivery_fee: parseInt(document.getElementById('setDeliveryFee').value) || 125,
+        banner_text: document.getElementById('setBannerText').value.trim(),
+        update_notes: document.getElementById('setUpdateNotes').value.trim(),
+        updated_at: new Date().toISOString()
+      };
+      await supabaseClient.from('app_settings').upsert(updated);
+      alert('✓ Settings & Live OTA Update pushed to all Android apps!');
+      refreshAllAdminData();
+    }
+
+    function openProductModal() {
+      document.getElementById('admProductForm').reset();
+      document.getElementById('admProdId').value = '';
+      document.getElementById('admProdModalTitle').innerText = 'Add New Wholesale Product';
+      document.getElementById('admProductModal').classList.remove('hidden');
+    }
+
+    function editProduct(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('admProdId').value = p.id;
+      document.getElementById('admProdTitle').value = p.title;
+      document.getElementById('admProdUrdu').value = p.urdu_title || '';
+      document.getElementById('admProdCategory').value = p.category;
+      document.getElementById('admProdStock').value = p.stock_quantity || 100;
+      document.getElementById('admProdWholesale').value = p.wholesale_price;
+      document.getElementById('admProdRetail').value = p.suggested_retail_price;
+      document.getElementById('admProdImage').value = p.image_url;
+      document.getElementById('admProdDesc').value = p.description || '';
+      document.getElementById('admProdModalTitle').innerText = 'Edit Wholesale Product';
+      document.getElementById('admProductModal').classList.remove('hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('admProductModal').classList.add('hidden');
+    }
+
+    async function saveProductFromAdmin(e) {
+      e.preventDefault();
+      const id = document.getElementById('admProdId').value || 'prod_' + Date.now();
+      const payload = {
+        id,
+        title: document.getElementById('admProdTitle').value.trim(),
+        urdu_title: document.getElementById('admProdUrdu').value.trim(),
+        category: document.getElementById('admProdCategory').value,
+        stock_quantity: parseInt(document.getElementById('admProdStock').value) || 100,
+        wholesale_price: parseInt(document.getElementById('admProdWholesale').value) || 0,
+        suggested_retail_price: parseInt(document.getElementById('admProdRetail').value) || 0,
+        image_url: document.getElementById('admProdImage').value.trim(),
+        description: document.getElementById('admProdDesc').value.trim()
+      };
+      await supabaseClient.from('products').upsert(payload);
+      closeProductModal();
+      refreshAllAdminData();
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product from Tejarat catalog?')) return;
+      await supabaseClient.from('products').delete().eq('id', id);
+      refreshAllAdminData();
+    }
+
+    function switchAdminTab(tab) {
+      document.querySelectorAll('.adm-sec').forEach(s => s.classList.add('hidden'));
+      document.getElementById('adm-sec-' + tab).classList.remove('hidden');
+      document.querySelectorAll('.adm-tab-btn').forEach(b => {
+        b.className = 'adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs';
+      });
+      document.getElementById('adm-btn-' + tab).className = 'adm-tab-btn bg-[#5C1D8D] text-white px-4 py-2 rounded-xl font-bold text-xs shadow';
+    }
+
+    function checkAdminAuth() {
+      if (sessionStorage.getItem('tejarat_admin_auth') === 'true') {
+        const modal = document.getElementById('adminPinModal');
+        if (modal) modal.classList.add('hidden');
+      } else {
+        const modal = document.getElementById('adminPinModal');
+        if (modal) modal.classList.remove('hidden');
+      }
+    }
+
+    function verifyAdminPin(e) {
+      e.preventDefault();
+      const pin = document.getElementById('adminPinInput').value.trim();
+      const err = document.getElementById('pinErrorMsg');
+      if (pin === '7860') {
+        sessionStorage.setItem('tejarat_admin_auth', 'true');
+        document.getElementById('adminPinModal').classList.add('hidden');
+        if (err) err.classList.add('hidden');
+      } else {
+        if (err) err.classList.remove('hidden');
+        document.getElementById('adminPinInput').value = '';
+        document.getElementById('adminPinInput').focus();
+      }
+    }
+
+    function adminLogout() {
+      sessionStorage.removeItem('tejarat_admin_auth');
+      location.reload();
+    }
+
+    checkAdminAuth();
+    refreshAllAdminData();
+  </script>
+</body>
+</html>

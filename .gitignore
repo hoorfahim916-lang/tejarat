@@ -1,0 +1,6 @@
+# Android build artifacts
+android_source/build/
+*.idsig
+*.tmp
+.DS_Store
+Thumbs.db
