@@ -28,11 +28,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Remove title bar and set branded status bar color (#059669 Emerald Green)
+        // Set branded status bar color (#047857) and clean navigation bar (#FFFFFF)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#059669"));
+        window.setStatusBarColor(Color.parseColor("#047857"));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            window.setNavigationBarColor(Color.parseColor("#FFFFFF"));
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
 
         // Enable hardware acceleration
         window.setFlags(

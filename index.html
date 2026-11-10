@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#059669" />
+  <meta name="theme-color" content="#047857" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <title>تجارت - پاکستان کا #1 ری سیلنگ و شاپنگ پلیٹ فارم</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Tejarat App - Pakistan ki #1 Reselling & Shopping App</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Supabase JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     @font-face {
       font-family: 'Nunito';
@@ -30,28 +32,50 @@
       src: url('markaz_assets/nunito_bold.ttf') format('truetype');
       font-weight: 700;
     }
+    
     :root {
-      --primary: #059669;
-      --primary-dark: #064e3b;
-      --primary-light: #ecfdf5;
-      --accent: #02bc87;
-      --gold: #f59e0b;
+      --primary: #047857;
+      --primary-dark: #064E3B;
+      --primary-light: #ECFDF5;
+      --accent: #F59E0B;
+      --safe-top: env(safe-area-inset-top, 24px);
+      --safe-bottom: env(safe-area-inset-bottom, 16px);
     }
-    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       min-height: 100%;
-      background-color: #F8F9FA;
+      background-color: #F3F4F6;
       font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif;
       color: #111827;
       user-select: none;
       -webkit-font-smoothing: antialiased;
     }
-    .urdu-font { font-family: 'Noto Nastaliq Urdu', 'Nunito', serif; }
+    
+    /* Android Safe-Area Inset Handling */
+    .top-safe-header {
+      padding-top: max(var(--safe-top), 24px);
+    }
+    
+    .bottom-safe-nav {
+      padding-bottom: max(var(--safe-bottom), 16px);
+      height: calc(66px + max(var(--safe-bottom), 16px));
+    }
+    
+    #appShell {
+      padding-bottom: calc(76px + max(var(--safe-bottom), 16px));
+    }
+    
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
     @keyframes slideUp {
       from { transform: translateY(100%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -59,43 +83,43 @@
     .modal-sheet { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
   </style>
 </head>
-<body class="bg-[#F8F9FA] text-gray-900">
+<body class="bg-[#F3F4F6] text-gray-900">
 
-  <!-- FULLSCREEN ANDROID APP CONTAINER (Edge-to-Edge Responsive) -->
-  <div id="appShell" class="w-full min-h-screen flex flex-col relative pb-20">
+  <!-- FULLSCREEN ANDROID CONTAINER (100% Screen Responsive) -->
+  <div id="appShell" class="w-full min-h-screen flex flex-col relative">
 
     <!-- ==================== TOP APP BAR ==================== -->
-    <header class="bg-[#059669] text-white sticky top-0 z-30 shadow-md">
-      <!-- Main Bar -->
-      <div class="px-4 pt-3 pb-2 flex items-center justify-between">
-        <div class="flex items-center space-x-2.5 space-x-reverse">
-          <div class="w-10 h-10 rounded-2xl bg-white text-[#059669] font-black text-2xl flex items-center justify-center shadow-md">
-            ت
+    <header class="bg-gradient-to-r from-[#065F46] via-[#047857] to-[#0D9488] text-white sticky top-0 z-30 shadow-md top-safe-header">
+      <!-- Main Top Bar -->
+      <div class="px-4 pt-2 pb-2.5 flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-white text-[#047857] font-black text-2xl flex items-center justify-center shadow-md">
+            T
           </div>
           <div>
-            <div class="flex items-center space-x-1.5 space-x-reverse">
-              <h1 class="font-black text-lg tracking-tight leading-none">تجارت ایپ</h1>
-              <span class="text-[9px] bg-amber-400 text-gray-950 font-black px-1.5 py-0.5 rounded uppercase">MARKAZ CLONE</span>
+            <div class="flex items-center space-x-1.5">
+              <h1 class="font-black text-lg tracking-tight leading-none">Tejarat App</h1>
+              <span class="text-[9px] bg-amber-400 text-gray-950 font-black px-1.5 py-0.5 rounded uppercase shadow-sm">VERIFIED</span>
             </div>
-            <p class="text-[11px] text-emerald-100 font-semibold leading-tight mt-0.5">زیرو انویسٹمنٹ ری سیلنگ و شاپنگ</p>
+            <p class="text-[11px] text-emerald-100 font-semibold leading-tight mt-0.5">Zero Investment Reselling & Shopping</p>
           </div>
         </div>
 
-        <div class="flex items-center space-x-2 space-x-reverse">
+        <div class="flex items-center space-x-2">
           <!-- Chatbot Help Pill -->
-          <button onclick="openChatbotModal()" class="flex items-center space-x-1 space-x-reverse bg-emerald-800/80 hover:bg-emerald-800 border border-emerald-400/30 px-3 py-1.5 rounded-full text-xs font-bold transition">
-            <span class="w-2 h-2 rounded-full bg-amber-300 animate-ping"></span>
-            <span>مدد / چیٹ</span>
+          <button onclick="openChatbotModal()" class="flex items-center space-x-1 bg-emerald-900/60 hover:bg-emerald-900 border border-emerald-400/30 px-2.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            <span>Madad</span>
           </button>
 
           <!-- Wishlist / Favorites -->
-          <button onclick="openWishlistModal()" class="relative p-2 bg-emerald-800/60 rounded-full hover:bg-emerald-800 transition">
+          <button onclick="openWishlistModal()" class="relative p-2 bg-emerald-900/40 rounded-full hover:bg-emerald-900/70 transition">
             <i data-lucide="heart" class="w-5 h-5 text-white"></i>
             <span id="wishlistBadge" class="hidden absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
           </button>
 
           <!-- Cart Button -->
-          <button onclick="openCartModal()" class="relative p-2 bg-emerald-800/60 rounded-full hover:bg-emerald-800 transition">
+          <button onclick="openCartModal()" class="relative p-2 bg-emerald-900/40 rounded-full hover:bg-emerald-900/70 transition">
             <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
             <span id="cartBadge" class="hidden absolute -top-1 -right-1 bg-amber-400 text-gray-950 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
           </button>
@@ -103,17 +127,17 @@
       </div>
 
       <!-- Search Bar inside Header -->
-      <div class="px-4 pb-3">
+      <div class="px-4 pb-3 pt-0.5">
         <div class="relative flex items-center bg-white rounded-2xl shadow-inner overflow-hidden">
-          <i data-lucide="search" class="w-4 h-4 text-gray-400 mr-3"></i>
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 ml-3.5"></i>
           <input
             id="searchInput"
             type="text"
             oninput="handleSearch(this.value)"
-            placeholder="تلاش کریں: لان سوٹ، اخروٹ، شہد، دیسی گھی، اسمارٹ واچ..."
-            class="w-full py-2.5 px-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-none"
+            placeholder="Search karein: Lawn suit, Honey, Walnuts, Desi Ghee, Watches..."
+            class="w-full py-2.5 px-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-none font-medium"
           />
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden pl-3 text-gray-400 hover:text-gray-600">
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden pr-3 text-gray-400 hover:text-gray-600">
             <i data-lucide="x-circle" class="w-4 h-4"></i>
           </button>
         </div>
@@ -126,7 +150,7 @@
       <!-- ==================== TAB 1: HOME ==================== -->
       <section id="tab-home" class="tab-view space-y-4 pb-4">
 
-        <!-- DYNAMIC AUTO-SLIDING HERO BANNER (Markaz Style Carousel) -->
+        <!-- DYNAMIC AUTO-SLIDING HERO BANNER -->
         <div class="px-4 pt-3">
           <div class="relative rounded-3xl overflow-hidden shadow-lg h-48 bg-gray-900 border border-gray-100">
             <!-- Slides Container -->
@@ -134,62 +158,62 @@
               <!-- Slide 1: Dry Fruits -->
               <div class="w-full h-full flex-shrink-0 relative">
                 <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-l from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
-                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🥜 تازہ ڈرائی فروٹس</span>
-                  <h3 class="text-base font-black leading-tight">چمن اور گلگت کے سپیشل اخروٹ اور بادام</h3>
-                  <p class="text-xs text-emerald-100 mt-1">ہول سیل ریٹ پر خود خریدیں یا ری سیل کریں</p>
-                  <button onclick="selectCategory('Dry Fruits & Nuts')" class="mt-2.5 bg-white text-[#059669] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">کیٹلاگ دیکھیں ←</button>
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
+                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🥜 Fresh Dry Fruits</span>
+                  <h3 class="text-base font-black leading-tight">Chaman & Gilgit Ke Special Kagzi Akhrot</h3>
+                  <p class="text-xs text-emerald-100 mt-1">Wholesale rate par khud kharidein ya resell karein</p>
+                  <button onclick="selectCategory('Dry Fruits & Nuts')" class="mt-2.5 bg-white text-[#047857] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">Catalog Dekhein →</button>
                 </div>
               </div>
 
               <!-- Slide 2: Sidr Honey -->
               <div class="w-full h-full flex-shrink-0 relative">
                 <img src="https://images.unsplash.com/photo-1587049352847-4a222e784d38?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-l from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
-                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🍯 100% خالص بیری شہد</span>
-                  <h3 class="text-base font-black leading-tight">خالص سدر بیری اور کچا جنگلی شہد</h3>
-                  <p class="text-xs text-emerald-100 mt-1">لیبارٹری سے تصدیق شدہ اور خالص ہونے کی 100% گارنٹی</p>
-                  <button onclick="selectCategory('Pure Sidr Honey')" class="mt-2.5 bg-white text-[#059669] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">کیٹلاگ دیکھیں ←</button>
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
+                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🍯 100% Pure Sidr Honey</span>
+                  <h3 class="text-base font-black leading-tight">Khalis Beri Ka Raw Organic Honey</h3>
+                  <p class="text-xs text-emerald-100 mt-1">Lab tested aur pure hone ki 100% guarantee</p>
+                  <button onclick="selectCategory('Pure Sidr Honey')" class="mt-2.5 bg-white text-[#047857] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">Catalog Dekhein →</button>
                 </div>
               </div>
 
               <!-- Slide 3: Desi Ghee -->
               <div class="w-full h-full flex-shrink-0 relative">
                 <img src="https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-l from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
-                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🧈 خالص دیسی گھی</span>
-                  <h3 class="text-base font-black leading-tight">ساہیوال کا خالص چاٹی والا دانے دار گھی</h3>
-                  <p class="text-xs text-emerald-100 mt-1">روایتی طریقے سے تیار کردہ بغیر کسی کیمیکل کے</p>
-                  <button onclick="selectCategory('Desi Ghee & Makhan')" class="mt-2.5 bg-white text-[#059669] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">کیٹلاگ دیکھیں ←</button>
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
+                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">🧈 Organic Desi Ghee</span>
+                  <h3 class="text-base font-black leading-tight">Sahiwal Cow Ka Danedar Chatti Desi Ghee</h3>
+                  <p class="text-xs text-emerald-100 mt-1">Baghair kisi chemical ya artificial essence ke</p>
+                  <button onclick="selectCategory('Desi Ghee & Makhan')" class="mt-2.5 bg-white text-[#047857] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">Catalog Dekhein →</button>
                 </div>
               </div>
 
               <!-- Slide 4: Women Fashion -->
               <div class="w-full h-full flex-shrink-0 relative">
                 <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-l from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
-                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">👗 لان سوٹ و فیشن</span>
-                  <h3 class="text-base font-black leading-tight">کھاڈی اور گل احمد لگژری ایمبرائیڈرڈ لان</h3>
-                  <p class="text-xs text-emerald-100 mt-1">واٹس ایپ پر شیئر کریں اور Rs. 800+ تک پرافٹ کمائیں</p>
-                  <button onclick="selectCategory('Women Clothes')" class="mt-2.5 bg-white text-[#059669] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">کیٹلاگ دیکھیں ←</button>
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
+                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">👗 Ladies Lawn & Fashion</span>
+                  <h3 class="text-base font-black leading-tight">Luxury Embroidered 3-Piece Lawn Suits</h3>
+                  <p class="text-xs text-emerald-100 mt-1">WhatsApp par share karein aur Rs. 800+ profit kamayein</p>
+                  <button onclick="selectCategory('Women Clothes')" class="mt-2.5 bg-white text-[#047857] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">Catalog Dekhein →</button>
                 </div>
               </div>
 
               <!-- Slide 5: Smart Gadgets -->
               <div class="w-full h-full flex-shrink-0 relative">
                 <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-gradient-to-l from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
-                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">⌚ اسمارٹ واچز و گیجٹس</span>
-                  <h3 class="text-base font-black leading-tight">T800 Ultra واچ اور M10 وائرلیس ایئربڈز</h3>
-                  <p class="text-xs text-emerald-100 mt-1">فلیٹ Rs. 125 کیش آن ڈیلیوری پورے پاکستان میں</p>
-                  <button onclick="selectCategory('Smart Gadgets')" class="mt-2.5 bg-white text-[#059669] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">کیٹلاگ دیکھیں ←</button>
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-transparent p-5 flex flex-col justify-center text-white">
+                  <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase w-max mb-1">⌚ Smart Watches & Gadgets</span>
+                  <h3 class="text-base font-black leading-tight">T800 Ultra Watch & Wireless Earbuds</h3>
+                  <p class="text-xs text-emerald-100 mt-1">Flat Rs. 125 Cash on Delivery poore Pakistan mein</p>
+                  <button onclick="selectCategory('Smart Gadgets')" class="mt-2.5 bg-white text-[#047857] text-xs font-black px-3.5 py-1.5 rounded-xl w-max shadow-md hover:bg-emerald-50">Catalog Dekhein →</button>
                 </div>
               </div>
             </div>
 
             <!-- Carousel Navigation Dots -->
-            <div id="carouselDots" class="absolute bottom-3 left-4 flex space-x-1.5 space-x-reverse z-20">
-              <span class="dot w-2 h-2 rounded-full bg-white transition-all"></span>
+            <div id="carouselDots" class="absolute bottom-3 right-4 flex space-x-1.5 z-20">
+              <span class="dot w-5 h-2 rounded-full bg-white transition-all shadow"></span>
               <span class="dot w-2 h-2 rounded-full bg-white/40 transition-all"></span>
               <span class="dot w-2 h-2 rounded-full bg-white/40 transition-all"></span>
               <span class="dot w-2 h-2 rounded-full bg-white/40 transition-all"></span>
@@ -198,43 +222,43 @@
           </div>
         </div>
 
-        <!-- Quick Reseller Wallet Strip -->
+        <!-- Quick Reseller Wallet Strip (Real Zero Balance Defaults) -->
         <div class="px-4">
-          <div class="bg-white border border-emerald-100 rounded-2xl p-3 shadow-sm flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-black text-xl shadow-inner">
+          <div class="bg-white border border-gray-200/80 rounded-2xl p-3 shadow-sm flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-[#047857] flex items-center justify-center font-black text-xl shadow-inner">
                 💰
               </div>
               <div>
-                <p class="text-xs text-gray-500 font-semibold">آپ کا دستیاب منافع (Available)</p>
-                <p id="homeWalletBalance" class="text-base font-black text-emerald-700">Rs. 3,450</p>
+                <p class="text-xs text-gray-500 font-semibold">Available Munafa</p>
+                <p id="homeWalletBalance" class="text-base font-black text-[#047857]">Rs. 0</p>
               </div>
             </div>
-            <div class="flex items-center space-x-2.5 space-x-reverse">
-              <div class="text-left pl-2.5 border-l border-gray-100">
-                <p class="text-[10px] text-gray-400 font-medium">زیرِ التواء منافع</p>
-                <p id="homePendingProfit" class="text-xs font-black text-amber-600">Rs. 1,400</p>
+            <div class="flex items-center space-x-2.5">
+              <div class="text-right pr-2.5 border-r border-gray-100">
+                <p class="text-[10px] text-gray-400 font-medium">Pending Munafa</p>
+                <p id="homePendingProfit" class="text-xs font-black text-amber-600">Rs. 0</p>
               </div>
-              <button onclick="switchTab('business')" class="bg-[#059669] hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow transition">
-                پیسے نکالیں
+              <button onclick="switchTab('business')" class="bg-[#047857] hover:bg-emerald-800 text-white text-xs font-bold px-3 py-2 rounded-xl shadow transition">
+                Withdraw
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Markaz Rs. 100 First Order Bonus Card -->
+        <!-- First Order Rs. 100 Bonus Card -->
         <div class="px-4">
           <div class="bg-gradient-to-r from-emerald-900 to-teal-950 rounded-2xl p-3.5 text-white flex items-center justify-between shadow-md border border-emerald-500/20">
-            <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="flex items-center space-x-3">
               <img src="markaz_assets/ic_100_rupee.png" class="w-12 h-12 object-contain flex-shrink-0" alt="Bonus" onerror="this.style.display='none'" />
               <div>
-                <span class="bg-amber-400 text-gray-950 text-[9px] font-black px-2 py-0.5 rounded tracking-wide uppercase">نئی ری سیلر آفر</span>
-                <h4 class="text-xs font-black mt-0.5 leading-tight">پہلی سیل پر پائیں Rs. 100 تک بونس!</h4>
-                <p class="text-[11px] text-emerald-200">سٹیپس مکمل کریں اور منافع کے ساتھ اضافی کیش کمائیں</p>
+                <span class="bg-amber-400 text-gray-950 text-[9px] font-black px-2 py-0.5 rounded tracking-wide uppercase">New Reseller Offer</span>
+                <h4 class="text-xs font-black mt-0.5 leading-tight">Pehli sale par payen Rs. 100 tak bonus!</h4>
+                <p class="text-[11px] text-emerald-200">Steps complete karein aur extra cash kamayein</p>
               </div>
             </div>
             <button onclick="switchTab('business')" class="bg-amber-400 hover:bg-amber-300 text-gray-950 text-xs font-black px-3 py-1.5 rounded-xl shadow whitespace-nowrap transition">
-              ہدف دیکھیں
+              Target
             </button>
           </div>
         </div>
@@ -242,32 +266,32 @@
         <!-- Horizontal Category Chips -->
         <div class="px-4">
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xs font-black text-gray-800 uppercase tracking-wider">کیٹلاگز کی فہرست</h3>
-            <button onclick="switchTab('categories')" class="text-xs font-bold text-[#059669]">سب دیکھیں ←</button>
+            <h3 class="text-xs font-black text-gray-800 uppercase tracking-wider">Catalogs List</h3>
+            <button onclick="switchTab('categories')" class="text-xs font-bold text-[#047857]">Sab Dekhein →</button>
           </div>
-          <div id="homeCategoryChips" class="flex space-x-2 space-x-reverse overflow-x-auto no-scrollbar pb-1">
+          <div id="homeCategoryChips" class="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
             <!-- Populated via JS -->
           </div>
         </div>
 
-        <!-- Mode Info Banner -->
+        <!-- Dual Mode Banner -->
         <div class="px-4">
           <div class="bg-emerald-50 border border-emerald-200 rounded-2xl px-3.5 py-2.5 flex items-center justify-between text-xs">
-            <div class="flex items-center space-x-2 space-x-reverse">
+            <div class="flex items-center space-x-2">
               <span class="text-lg">⚡</span>
-              <span class="font-semibold text-emerald-950"><strong>خود خریدیں</strong> (0 منافع) یا <strong>ری سیل کریں</strong> (اپنی مرضی کا منافع رکھیں)!</span>
+              <span class="font-semibold text-emerald-950"><strong>Apne Liye Kharidein</strong> (0 Profit) ya <strong>Resell Karein</strong> (Apna Munafa Add Karein)!</span>
             </div>
           </div>
         </div>
 
-        <!-- Products Feed Grid -->
+        <!-- Products Feed Grid (Dynamic from Supabase) -->
         <div class="px-4">
           <div class="flex items-center justify-between mb-2.5">
-            <h3 id="feedHeading" class="text-sm font-black text-gray-900">🔥 ٹاپ ری سیلنگ کیٹلاگز</h3>
-            <span id="productCountBadge" class="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md">12 Products</span>
+            <h3 id="feedHeading" class="text-sm font-black text-gray-900">🔥 Top Reselling Catalogs</h3>
+            <span id="productCountBadge" class="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md">Loading...</span>
           </div>
           <div id="productsGrid" class="grid grid-cols-2 gap-3.5">
-            <!-- Populated via JS -->
+            <!-- Populated dynamically via JS from Supabase -->
           </div>
         </div>
       </section>
@@ -275,8 +299,8 @@
       <!-- ==================== TAB 2: CATEGORIES ==================== -->
       <section id="tab-categories" class="tab-view hidden px-4 py-4 space-y-4">
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-          <h2 class="text-base font-black text-gray-900">تمام ہول سیل کیٹلاگز (Catalogs)</h2>
-          <p class="text-xs text-gray-500 mt-0.5">کسی بھی کیٹلاگ کو منتخب کریں اور اس کی مصنوعات واٹس ایپ پر شیئر کریں</p>
+          <h2 class="text-base font-black text-gray-900">All Wholesale Catalogs</h2>
+          <p class="text-xs text-gray-500 mt-0.5">Kisi bhi catalog ko select karein aur products WhatsApp par share karein</p>
         </div>
         <div id="categoriesFullList" class="space-y-3"></div>
       </section>
@@ -285,23 +309,23 @@
       <section id="tab-orders" class="tab-view hidden px-4 py-4 space-y-3.5">
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between">
           <div>
-            <h2 class="text-base font-black text-gray-900">میرے آرڈرز اور ٹریکنگ</h2>
-            <p class="text-xs text-gray-500">کورئیر کی تازہ ترین پوزیشن اور منافع کی تفصیلات</p>
+            <h2 class="text-base font-black text-gray-900">Mere Orders & Tracking</h2>
+            <p class="text-xs text-gray-500">Live courier tracking aur munafa status</p>
           </div>
-          <button onclick="fetchAllCloudData(true)" class="text-xs font-bold text-[#059669] bg-emerald-50 px-3 py-1.5 rounded-xl flex items-center space-x-1 space-x-reverse transition">
+          <button onclick="fetchAllCloudData(true)" class="text-xs font-bold text-[#047857] bg-emerald-50 px-3 py-1.5 rounded-xl flex items-center space-x-1 transition">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-            <span>ریفریش</span>
+            <span>Refresh</span>
           </button>
         </div>
 
-        <!-- Order Status Filter Pills (Markaz 6 States) -->
-        <div class="flex space-x-2 space-x-reverse overflow-x-auto no-scrollbar pb-1">
-          <button onclick="filterOrders('All')" class="order-filter-btn bg-[#059669] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">تمام آرڈرز</button>
-          <button onclick="filterOrders('Pending')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">ویریفیکیشن پینڈنگ</button>
-          <button onclick="filterOrders('Dispatched')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">راستے میں (Dispatched)</button>
-          <button onclick="filterOrders('Delivered')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">ڈیلیور ہو چکے</button>
-          <button onclick="filterOrders('Returned')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">ریٹرنڈ</button>
-          <button onclick="filterOrders('Cancelled')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">کینسلڈ</button>
+        <!-- Order Status Filter Pills (6 Markaz States in Roman Urdu) -->
+        <div class="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
+          <button onclick="filterOrders('All')" class="order-filter-btn bg-[#047857] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">Tamam Orders</button>
+          <button onclick="filterOrders('Pending')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">Verification Pending</button>
+          <button onclick="filterOrders('Dispatched')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">Raaste Mein (In Transit)</button>
+          <button onclick="filterOrders('Delivered')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">Delivered</button>
+          <button onclick="filterOrders('Returned')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">Returned</button>
+          <button onclick="filterOrders('Cancelled')" class="order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">Cancelled</button>
         </div>
 
         <div id="ordersListContainer" class="space-y-3"></div>
@@ -309,67 +333,89 @@
 
       <!-- ==================== TAB 4: PROFILE & BUSINESS DASHBOARD ==================== -->
       <section id="tab-business" class="tab-view hidden px-4 py-4 space-y-4">
+        
+        <!-- User Login / Profile Card -->
+        <div id="userProfileHeaderCard" class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div id="userAvatarBox" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#047857] to-teal-700 text-white font-black text-xl flex items-center justify-center shadow-md">
+              <span id="userAvatarText">T</span>
+            </div>
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <h3 id="profileUserFullName" class="font-black text-sm text-gray-900">Mehmon Reseller</h3>
+                <span id="profileVerifiedBadge" class="bg-emerald-100 text-[#047857] text-[10px] font-black px-1.5 py-0.5 rounded">Guest</span>
+              </div>
+              <p id="profileUserEmail" class="text-xs text-gray-500 font-medium mt-0.5">Gmail se login karein</p>
+            </div>
+          </div>
+          <div>
+            <button id="authActionBtn" onclick="openAuthModal()" class="bg-[#047857] hover:bg-emerald-800 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-sm transition">
+              Login Karein
+            </button>
+          </div>
+        </div>
+
         <!-- Markaz-Style Profit Card -->
-        <div class="rounded-3xl p-5 text-white shadow-xl relative overflow-hidden border border-emerald-500/20" style="background-image: linear-gradient(135deg, rgba(5,150,105,0.94), rgba(6,78,59,0.98)), url('markaz_assets/wallet_bg.png'); background-size: cover; background-position: center;">
+        <div class="rounded-3xl p-5 text-white shadow-xl relative overflow-hidden border border-emerald-500/20" style="background-image: linear-gradient(135deg, rgba(4,120,87,0.95), rgba(6,78,59,0.98)), url('markaz_assets/wallet_bg.png'); background-size: cover; background-position: center;">
           <div class="flex items-center justify-between relative z-10">
             <div>
-              <span class="text-[11px] text-emerald-200 uppercase font-bold tracking-wider">تصدیق شدہ ری سیلر اکاؤنٹ</span>
-              <h2 id="bizStoreName" class="text-xl font-black mt-0.5">Zahra Collections</h2>
+              <span class="text-[11px] text-emerald-200 uppercase font-bold tracking-wider">Verified Reseller Store</span>
+              <h2 id="bizStoreName" class="text-xl font-black mt-0.5">Mera Online Store</h2>
             </div>
-            <button onclick="openEditStoreModal()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1 space-x-reverse transition">
+            <button onclick="openEditStoreModal()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1 transition">
               <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-              <span>برانڈ نام بدلیں</span>
+              <span>Edit Name</span>
             </button>
           </div>
 
           <!-- Time Filter (All Time vs This Month) -->
           <div class="flex justify-center mt-4 relative z-10">
-            <div class="bg-black/30 p-1 rounded-xl flex space-x-1 space-x-reverse text-xs font-bold">
-              <button id="timeTabAll" onclick="setTimeMetrics('all')" class="bg-white text-gray-900 px-3.5 py-1 rounded-lg transition shadow">ہر وقت (All Time)</button>
-              <button id="timeTabMonth" onclick="setTimeMetrics('month')" class="text-white hover:text-emerald-200 px-3.5 py-1 rounded-lg transition">اس ماہ (This Month)</button>
+            <div class="bg-black/30 p-1 rounded-xl flex space-x-1 text-xs font-bold">
+              <button id="timeTabAll" onclick="setTimeMetrics('all')" class="bg-white text-gray-900 px-3.5 py-1 rounded-lg transition shadow">All Time</button>
+              <button id="timeTabMonth" onclick="setTimeMetrics('month')" class="text-white hover:text-emerald-200 px-3.5 py-1 rounded-lg transition">This Month</button>
             </div>
           </div>
 
-          <!-- KPI Metrics Cards Grid -->
+          <!-- KPI Metrics Cards Grid (Zero Defaults for Real Users) -->
           <div class="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t border-white/15 text-center relative z-10">
             <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">کل سیل (Total Sales)</p>
-              <p id="bizMetricSales" class="text-base font-black text-white mt-0.5">Rs. 48,500</p>
+              <p class="text-[11px] text-emerald-200 font-medium">Total Sales</p>
+              <p id="bizMetricSales" class="text-base font-black text-white mt-0.5">Rs. 0</p>
             </div>
             <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">کل منافع (Total Profit)</p>
-              <p id="bizMetricProfit" class="text-base font-black text-amber-300 mt-0.5">Rs. 14,200</p>
+              <p class="text-[11px] text-emerald-200 font-medium">Total Munafa</p>
+              <p id="bizMetricProfit" class="text-base font-black text-amber-300 mt-0.5">Rs. 0</p>
             </div>
             <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">مکمل آرڈرز (Completed)</p>
-              <p id="bizMetricOrders" class="text-base font-black text-emerald-300 mt-0.5">24 آرڈرز</p>
+              <p class="text-[11px] text-emerald-200 font-medium">Delivered Orders</p>
+              <p id="bizMetricOrders" class="text-base font-black text-emerald-300 mt-0.5">0 Orders</p>
             </div>
             <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">کل بونس (Bonus Earned)</p>
-              <p id="bizMetricBonus" class="text-base font-black text-white mt-0.5">Rs. 1,100</p>
+              <p class="text-[11px] text-emerald-200 font-medium">Total Bonus</p>
+              <p id="bizMetricBonus" class="text-base font-black text-white mt-0.5">Rs. 0</p>
             </div>
           </div>
 
-          <button onclick="openWithdrawModal()" class="w-full mt-4 bg-amber-400 hover:bg-amber-300 text-gray-950 font-black py-3 rounded-2xl shadow-lg flex items-center justify-center space-x-2 space-x-reverse text-xs relative z-10 transition">
+          <button onclick="openWithdrawModal()" class="w-full mt-4 bg-amber-400 hover:bg-amber-300 text-gray-950 font-black py-3 rounded-2xl shadow-lg flex items-center justify-center space-x-2 text-xs relative z-10 transition">
             <i data-lucide="wallet" class="w-4 h-4"></i>
-            <span>منافع جاز کیش / ایزی پیسہ پر ٹرانسفر کروائیں</span>
+            <span>Munafa JazzCash / EasyPaisa Par Withdraw Karein</span>
           </button>
         </div>
 
         <!-- Meri Payment (Paid vs Pending) -->
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
           <div class="flex items-center justify-between">
-            <h3 class="text-xs font-black text-gray-800 uppercase">💳 میری ادائیگی (Meri Payment)</h3>
-            <span class="text-[11px] font-bold text-[#059669]">خودکار ٹرانسفر</span>
+            <h3 class="text-xs font-black text-gray-800 uppercase">💳 Meri Payment</h3>
+            <span class="text-[11px] font-bold text-[#047857]">Auto Transfer</span>
           </div>
           <div class="grid grid-cols-2 gap-2.5">
             <div class="bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-              <span class="text-[10px] text-gray-500 font-semibold">ادا شدہ رقم (Paid Profit)</span>
-              <p id="bizPaidBalance" class="text-sm font-black text-[#059669] mt-0.5">Rs. 12,800</p>
+              <span class="text-[10px] text-gray-500 font-semibold">Paid Munafa</span>
+              <p id="bizPaidBalance" class="text-sm font-black text-[#047857] mt-0.5">Rs. 0</p>
             </div>
             <div class="bg-amber-50 rounded-xl p-3 border border-amber-100">
-              <span class="text-[10px] text-gray-500 font-semibold">زیرِ التواء رقم (Pending)</span>
-              <p id="bizPendingBalance" class="text-sm font-black text-amber-700 mt-0.5">Rs. 1,400</p>
+              <span class="text-[10px] text-gray-500 font-semibold">Pending Munafa</span>
+              <p id="bizPendingBalance" class="text-sm font-black text-amber-700 mt-0.5">Rs. 0</p>
             </div>
           </div>
         </div>
@@ -377,28 +423,28 @@
         <!-- Meri Offers / Bonus Targets -->
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
           <div class="flex items-center justify-between">
-            <h3 class="text-xs font-black text-gray-800 uppercase">🎯 میری آفرز (Meri Offers)</h3>
-            <span class="text-[11px] font-bold text-emerald-600">فعال ہے</span>
+            <h3 class="text-xs font-black text-gray-800 uppercase">🎯 Meri Offers & Bonuses</h3>
+            <span class="text-[11px] font-bold text-emerald-600">Active</span>
           </div>
           <div class="bg-emerald-50/70 rounded-xl p-3 flex items-center justify-between border border-emerald-100">
-            <div class="flex items-center space-x-2.5 space-x-reverse">
+            <div class="flex items-center space-x-2.5">
               <img src="markaz_assets/ic_100_rupee.png" class="w-10 h-10 object-contain flex-shrink-0" alt="Bonus" onerror="this.style.display='none'" />
               <div>
-                <p class="text-xs font-bold text-gray-900">پہلا آرڈر بونس (First Order Bonus)</p>
-                <p class="text-[11px] text-gray-600">پہلے کامیاب آرڈر پر اضافی Rs. 100 کیش انعام</p>
+                <p class="text-xs font-bold text-gray-900">First Order Bonus</p>
+                <p class="text-[11px] text-gray-600">Pehlay kamyab order par Rs. 100 extra reward</p>
                 <div class="w-28 bg-gray-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
-                  <div class="bg-emerald-600 h-1.5 rounded-full" style="width: 100%"></div>
+                  <div id="bonusProgFirst" class="bg-[#047857] h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
               </div>
             </div>
-            <span class="bg-[#059669] text-white text-xs font-black px-2.5 py-1 rounded-lg shadow">+Rs. 100</span>
+            <span class="bg-[#047857] text-white text-xs font-black px-2.5 py-1 rounded-lg shadow">+Rs. 100</span>
           </div>
           <div class="bg-amber-50/70 rounded-xl p-3 flex items-center justify-between border border-amber-100">
             <div>
-              <p class="text-xs font-bold text-gray-900">10 آرڈرز مائلسٹون (10 Orders Goal)</p>
-              <p class="text-[11px] text-gray-600">10 آرڈرز مکمل ہونے پر Rs. 1,000 خصوصی کیش بونس</p>
+              <p class="text-xs font-bold text-gray-900">10 Orders Milestone</p>
+              <p class="text-[11px] text-gray-600">10 orders complete karne par Rs. 1,000 cash bonus</p>
               <div class="w-28 bg-gray-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
-                <div class="bg-amber-500 h-1.5 rounded-full" style="width: 60%"></div>
+                <div id="bonusProgTen" class="bg-amber-500 h-1.5 rounded-full" style="width: 0%"></div>
               </div>
             </div>
             <span class="bg-amber-500 text-gray-950 text-xs font-black px-2.5 py-1 rounded-lg shadow">+Rs. 1,000</span>
@@ -408,72 +454,120 @@
         <!-- Profit Account / Payment Details -->
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-black text-gray-800 uppercase">🏦 پرافٹ اکاؤنٹ (Profit Account)</h3>
-            <button onclick="openEditStoreModal()" class="text-xs font-bold text-[#059669]">تبدیل کریں</button>
+            <h3 class="text-xs font-black text-gray-800 uppercase">🏦 Profit Account (Payout Details)</h3>
+            <button onclick="openEditStoreModal()" class="text-xs font-bold text-[#047857]">Change</button>
           </div>
           <div class="flex items-center justify-between text-xs py-2 border-b border-gray-50">
-            <span class="text-gray-500">اکاؤنٹ کا طریقہ:</span>
-            <span id="bizPaymentMethod" class="font-bold text-gray-900">EasyPaisa</span>
+            <span class="text-gray-500">Method:</span>
+            <span id="bizPaymentMethod" class="font-bold text-gray-900">Not Set</span>
           </div>
           <div class="flex items-center justify-between text-xs py-2 border-b border-gray-50">
-            <span class="text-gray-500">اکاؤنٹ نمبر:</span>
-            <span id="bizAccountNumber" class="font-mono font-bold text-gray-900">03001234567</span>
+            <span class="text-gray-500">Account Number:</span>
+            <span id="bizAccountNumber" class="font-mono font-bold text-gray-900">Not Set</span>
           </div>
           <div class="flex items-center justify-between text-xs py-2">
-            <span class="text-gray-500">اکاؤنٹ ہولڈر کا نام:</span>
-            <span id="bizAccountTitle" class="font-bold text-gray-900">Zahra Noor</span>
+            <span class="text-gray-500">Account Title:</span>
+            <span id="bizAccountTitle" class="font-bold text-gray-900">Not Set</span>
           </div>
         </div>
 
         <!-- Terms, Support & Help Section -->
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-2.5 text-xs">
-          <button onclick="openChatbotModal()" class="w-full text-right py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#059669]">
-            <span>❓ اکثر پوچھے جانے والے سوالات (FAQ & Chatbot)</span>
-            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+          <button onclick="openChatbotModal()" class="w-full text-left py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
+            <span>❓ Frequently Asked Questions (FAQ & Chatbot)</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
           </button>
-          <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Tejarat%20Support" target="_blank" class="w-full text-right py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#059669]">
-            <span>📞 کسٹمر سپورٹ ہیلپ لائن (03190328256)</span>
-            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+          <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Tejarat%20Support" target="_blank" class="w-full text-left py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
+            <span>📞 Customer Support Helpline (03190328256)</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
           </a>
-          <button onclick="showToast('تجارت ری سیلر شرائط: کیش آن ڈیلیوری فلیٹ Rs. 125 پورے پاکستان میں لاگو ہے۔ کسٹمر کے ڈیلیور ہونے پر ری سیلر کا پرافٹ 24 سے 48 گھنٹوں میں اکاؤنٹ میں ٹرانسفر کیا جاتا ہے۔')" class="w-full text-right py-2 flex items-center justify-between font-bold text-gray-700 hover:text-[#059669]">
-            <span>📜 قواعد و ضوابط (Terms & Conditions)</span>
-            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+          <button onclick="showToast('Tejarat Reseller Policy: Flat Rs. 125 COD delivery across Pakistan. Delivered hone par reseller ka profit 24 se 48 hours mein account mein transfer kiya jata hai.')" class="w-full text-left py-2 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
+            <span>📜 Terms & Conditions</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
           </button>
         </div>
       </section>
 
     </main>
 
-    <!-- ==================== BOTTOM NAVIGATION BAR (Markaz 4 Tabs) ==================== -->
-    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 z-30 shadow-lg">
-      <div class="w-full h-16 flex items-center justify-around px-2">
+    <!-- ==================== BOTTOM NAVIGATION BAR (Safe from System Back Button) ==================== -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200/80 z-30 shadow-2xl bottom-safe-nav">
+      <div class="w-full h-full flex items-center justify-around px-2">
         <!-- Tab 1: Home -->
-        <button id="nav-btn-home" onclick="switchTab('home')" class="nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-[#059669] transition">
+        <button id="nav-btn-home" onclick="switchTab('home')" class="nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-[#047857] transition">
           <i data-lucide="home" class="w-5 h-5 mb-0.5"></i>
-          <span class="text-[11px] font-bold">ہوم</span>
+          <span class="text-[11px] font-bold">Home</span>
         </button>
 
         <!-- Tab 2: Categories -->
         <button id="nav-btn-categories" onclick="switchTab('categories')" class="nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-gray-400 hover:text-gray-600 transition">
           <i data-lucide="layout-grid" class="w-5 h-5 mb-0.5"></i>
-          <span class="text-[11px] font-semibold">کیٹلاگز</span>
+          <span class="text-[11px] font-semibold">Catalogs</span>
         </button>
 
         <!-- Tab 3: Orders -->
         <button id="nav-btn-orders" onclick="switchTab('orders')" class="nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-gray-400 hover:text-gray-600 transition relative">
           <i data-lucide="package-check" class="w-5 h-5 mb-0.5"></i>
-          <span class="text-[11px] font-semibold">آرڈرز</span>
+          <span class="text-[11px] font-semibold">Orders</span>
           <span id="navOrdersBadge" class="hidden absolute top-2 right-6 w-2 h-2 rounded-full bg-emerald-500"></span>
         </button>
 
         <!-- Tab 4: Profile / Business -->
         <button id="nav-btn-business" onclick="switchTab('business')" class="nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-gray-400 hover:text-gray-600 transition">
           <i data-lucide="user" class="w-5 h-5 mb-0.5"></i>
-          <span class="text-[11px] font-semibold">پروفائل</span>
+          <span class="text-[11px] font-semibold">Profile</span>
         </button>
       </div>
     </nav>
 
+  </div>
+
+  <!-- ==================== MODAL: GOOGLE / GMAIL OAUTH LOGIN ==================== -->
+  <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-5 shadow-2xl border border-gray-100">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-50 text-[#047857] flex items-center justify-center font-black">
+            T
+          </div>
+          <h3 class="font-black text-base text-gray-900">Tejarat Account Login</h3>
+        </div>
+        <button onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="text-center space-y-1">
+        <p class="text-xs font-bold text-gray-700">Apne Gmail account se direct login karein</p>
+        <p class="text-[11px] text-gray-500">Aap ka order data, munafa aur wallet hamesha mehfooz rahega.</p>
+      </div>
+
+      <!-- Google Sign In Button -->
+      <button onclick="loginWithGoogle()" class="w-full bg-white hover:bg-gray-50 border-2 border-gray-200 text-gray-800 font-bold py-3 px-4 rounded-2xl shadow-sm flex items-center justify-center space-x-3 transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span class="text-xs">Continue with Google (Gmail)</span>
+      </button>
+
+      <!-- Phone / Quick Login Alternative -->
+      <div class="relative flex py-1 items-center">
+        <div class="flex-grow border-t border-gray-200"></div>
+        <span class="flex-shrink mx-2 text-[10px] text-gray-400 uppercase font-bold">ya phir</span>
+        <div class="flex-grow border-t border-gray-200"></div>
+      </div>
+
+      <form onsubmit="quickEmailLogin(event)" class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">Apna Email / Phone Likhein</label>
+          <input type="text" id="inpLoginEmail" required placeholder="example@gmail.com ya 03001234567" class="w-full border rounded-xl px-3 py-2 text-xs outline-none focus:border-[#047857]" />
+        </div>
+        <button type="submit" class="w-full bg-[#047857] hover:bg-emerald-800 text-white font-black py-2.5 rounded-xl text-xs shadow transition">
+          Direct Login Karein
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- ==================== MODAL 1: PRODUCT DETAILS VIEW ==================== -->
@@ -481,7 +575,7 @@
     <div class="bg-white w-full max-h-[94vh] rounded-t-3xl sm:rounded-3xl overflow-y-auto modal-sheet p-4 space-y-4 border-t border-gray-100 shadow-2xl">
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b pb-3">
-        <span id="detCategory" class="text-xs font-bold bg-emerald-50 text-[#059669] px-2.5 py-1 rounded-full"></span>
+        <span id="detCategory" class="text-xs font-bold bg-emerald-50 text-[#047857] px-2.5 py-1 rounded-full"></span>
         <button onclick="closeProductModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
@@ -490,8 +584,8 @@
       <!-- Image Display -->
       <div class="relative rounded-2xl overflow-hidden bg-gray-100 h-64 shadow-inner">
         <img id="detImage" src="" alt="Product" class="w-full h-full object-cover" />
-        <span class="absolute top-3 right-3 bg-amber-400 text-gray-950 text-xs font-black px-2.5 py-1 rounded-xl shadow">
-          100% اصل پروڈکٹ
+        <span class="absolute top-3 left-3 bg-amber-400 text-gray-950 text-xs font-black px-2.5 py-1 rounded-xl shadow">
+          100% Original
         </span>
       </div>
 
@@ -504,15 +598,15 @@
       <!-- Pricing Card (Wholesale vs Retail vs Profit) -->
       <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-3.5 grid grid-cols-3 gap-2 text-center">
         <div>
-          <p class="text-[10px] text-gray-500 uppercase font-bold">ہول سیل ریٹ</p>
-          <p id="detWholesale" class="text-base font-black text-[#059669]">Rs. 0</p>
+          <p class="text-[10px] text-gray-500 uppercase font-bold">Wholesale Price</p>
+          <p id="detWholesale" class="text-base font-black text-[#047857]">Rs. 0</p>
         </div>
         <div class="border-x border-emerald-200/60">
-          <p class="text-[10px] text-gray-500 uppercase font-bold">تجویز کردہ ریٹ</p>
+          <p class="text-[10px] text-gray-500 uppercase font-bold">Retail Price</p>
           <p id="detRetail" class="text-sm font-bold text-gray-700">Rs. 0</p>
         </div>
         <div>
-          <p class="text-[10px] text-emerald-800 uppercase font-bold">آپ کا پرافٹ</p>
+          <p class="text-[10px] text-emerald-800 uppercase font-bold">Aap Ka Profit</p>
           <p id="detMargin" class="text-sm font-black text-emerald-700">+Rs. 0</p>
         </div>
       </div>
@@ -520,34 +614,34 @@
       <!-- Variants (Size / Color) -->
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">سائز / پیک منتخب کریں</label>
-          <select id="detSizeSelect" class="w-full border border-gray-300 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-[#059669]"></select>
+          <label class="block text-[11px] font-bold text-gray-700 mb-1">Size / Pack Select Karein</label>
+          <select id="detSizeSelect" class="w-full border border-gray-300 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-[#047857]"></select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold text-gray-700 mb-1">رنگ / قسم منتخب کریں</label>
-          <select id="detColorSelect" class="w-full border border-gray-300 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-[#059669]"></select>
+          <label class="block text-[11px] font-bold text-gray-700 mb-1">Color / Variant</label>
+          <select id="detColorSelect" class="w-full border border-gray-300 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-[#047857]"></select>
         </div>
       </div>
 
-      <!-- MARKAZ DUAL MODE: BUY FOR SELF vs RESELL -->
+      <!-- DUAL MODE: BUY FOR SELF vs RESELL -->
       <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3">
-        <label class="block text-xs font-black text-gray-900">خریداری کا طریقہ منتخب کریں:</label>
+        <label class="block text-xs font-black text-gray-900">Order Ka Tariqa Select Karein:</label>
         <div class="grid grid-cols-2 gap-2">
-          <button type="button" id="modeBtnResell" onclick="setOrderMode('Resell')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex items-center justify-center space-x-1.5 space-x-reverse transition">
-            <span>💰 ری سیل کریں اور کمائیں</span>
+          <button type="button" id="modeBtnResell" onclick="setOrderMode('Resell')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex items-center justify-center space-x-1.5 transition">
+            <span>💰 Resell Karein & Kamayein</span>
           </button>
-          <button type="button" id="modeBtnSelf" onclick="setOrderMode('Self')" class="py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 space-x-reverse transition">
-            <span>🛍️ اپنے لیے خریدیں</span>
+          <button type="button" id="modeBtnSelf" onclick="setOrderMode('Self')" class="py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 transition">
+            <span>🛍️ Apne Liye Kharidein</span>
           </button>
         </div>
 
         <!-- Reseller Margin Field -->
         <div id="resellerProfitBox" class="pt-1 space-y-2">
           <div class="flex items-center justify-between">
-            <label class="text-xs font-bold text-emerald-800">اپنا منافع (پرافٹ) لکھیں (Rs.):</label>
-            <span class="text-[11px] text-gray-500 font-medium">کم از کم: Rs. 50</span>
+            <label class="text-xs font-bold text-emerald-800">Apna Munafa (Profit) Likhein (Rs.):</label>
+            <span class="text-[11px] text-gray-500 font-medium">Min: Rs. 50</span>
           </div>
-          <div class="flex items-center space-x-2 space-x-reverse">
+          <div class="flex items-center space-x-2">
             <input
               id="detCustomProfit"
               type="number"
@@ -563,59 +657,59 @@
         </div>
 
         <div class="bg-white rounded-xl p-2.5 border border-gray-200 flex items-center justify-between text-xs">
-          <span class="text-gray-600 font-semibold">کسٹمر سے لینے والی رقم (+125 فلیٹ ڈلیوری):</span>
-          <span id="detFinalCustomerCOD" class="text-sm font-black text-[#059669]">Rs. 0</span>
+          <span class="text-gray-600 font-semibold">Customer Total COD (+Rs. 125 Delivery):</span>
+          <span id="detFinalCustomerCOD" class="text-sm font-black text-[#047857]">Rs. 0</span>
         </div>
       </div>
 
-      <!-- Delivery Details & Return Policy Accordions -->
+      <!-- Delivery Details & Return Policy -->
       <div class="border border-gray-200 rounded-2xl overflow-hidden divide-y divide-gray-100 text-xs">
         <div class="p-3 bg-white flex items-center justify-between">
-          <div class="flex items-center space-x-2 space-x-reverse">
+          <div class="flex items-center space-x-2">
             <img src="markaz_assets/ic_leopard.png" class="h-4 object-contain inline" alt="Leopards" onerror="this.style.display='none'" />
             <div>
-              <p class="font-bold text-gray-900">ڈیلیوری کی تفصیلات (Delivery Details)</p>
-              <p class="text-[11px] text-gray-500">3 سے 5 دن میں ترسیل · فلیٹ Rs. 125 پورے پاکستان میں</p>
+              <p class="font-bold text-gray-900">Delivery Details (3-5 Days)</p>
+              <p class="text-[11px] text-gray-500">Flat Rs. 125 Cash on Delivery poore Pakistan mein</p>
             </div>
           </div>
-          <span class="bg-emerald-100 text-[#059669] text-[10px] font-black px-2 py-0.5 rounded">کیش آن ڈیلیوری</span>
+          <span class="bg-emerald-100 text-[#047857] text-[10px] font-black px-2 py-0.5 rounded">COD Available</span>
         </div>
         <div class="p-3 bg-white flex items-center justify-between">
           <div>
-            <p class="font-bold text-gray-900">ریٹرن اور ریفنڈ پالیسی (7 Days Return)</p>
-            <p class="text-[11px] text-gray-500">خراب یا مختلف چیز کی صورت میں 7 دن میں آسان واپسی اور پورا ریفنڈ</p>
+            <p class="font-bold text-gray-900">7 Days Easy Return Policy</p>
+            <p class="text-[11px] text-gray-500">Damage ya fault hone par 7 din mein free exchange / full refund</p>
           </div>
-          <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded">100% گارنٹی</span>
+          <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded">100% Guarantee</span>
         </div>
       </div>
 
       <!-- Description -->
       <div class="space-y-1.5">
-        <h4 class="text-xs font-black text-gray-900">پروڈکٹ کی تفصیلات (Product Details):</h4>
+        <h4 class="text-xs font-black text-gray-900">Product Details:</h4>
         <p id="detDesc" class="text-xs text-gray-600 leading-relaxed whitespace-pre-line bg-gray-50 p-3 rounded-xl border border-gray-100"></p>
       </div>
 
       <!-- Sticky Action Bar (Share & Order Now) -->
       <div class="pt-2 sticky bottom-0 bg-white border-t border-gray-100 grid grid-cols-2 gap-2.5 pb-2">
-        <button onclick="shareActiveProduct()" class="py-3 rounded-xl border-2 border-[#059669] text-[#059669] hover:bg-emerald-50 font-black text-xs flex items-center justify-center space-x-1.5 space-x-reverse transition">
+        <button onclick="shareActiveProduct()" class="py-3 rounded-xl border-2 border-[#047857] text-[#047857] hover:bg-emerald-50 font-black text-xs flex items-center justify-center space-x-1.5 transition">
           <i data-lucide="share-2" class="w-4 h-4"></i>
-          <span>شیئر کریں (Share)</span>
+          <span>Share Karein</span>
         </button>
-        <button onclick="addSelectedProductToCart(true)" class="py-3 rounded-xl bg-[#059669] hover:bg-emerald-700 text-white font-black text-xs shadow-lg flex items-center justify-center space-x-1.5 space-x-reverse transition">
+        <button onclick="addSelectedProductToCart(true)" class="py-3 rounded-xl bg-[#047857] hover:bg-emerald-800 text-white font-black text-xs shadow-lg flex items-center justify-center space-x-1.5 transition">
           <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-          <span>آرڈر کریں (Order Now)</span>
+          <span>Order Now</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 2: CART & CHECKOUT ==================== -->
+  <!-- ==================== MODAL 2: CART & CHECKOUT (RS. 200 ADVANCE DISCOUNT) ==================== -->
   <div id="cartModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-end sm:items-center justify-center">
     <div class="bg-white w-full max-h-[94vh] rounded-t-3xl sm:rounded-3xl overflow-y-auto modal-sheet p-4 space-y-4 border-t border-gray-100 shadow-2xl">
       <div class="flex items-center justify-between border-b pb-3">
         <div>
-          <h3 class="text-base font-black text-gray-900">چیک آؤٹ اور آرڈر پلیس کریں</h3>
-          <p class="text-[11px] text-[#059669] font-bold">⚡ پورے پاکستان میں فلیٹ کیش آن ڈیلیوری دستیاب ہے</p>
+          <h3 class="text-base font-black text-gray-900">Checkout & Order Placement</h3>
+          <p class="text-[11px] text-[#047857] font-bold">⚡ Flat Cash on Delivery across Pakistan</p>
         </div>
         <button onclick="closeCartModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
           <i data-lucide="x" class="w-6 h-6"></i>
@@ -625,50 +719,50 @@
       <!-- Items List -->
       <div id="cartItemsList" class="space-y-2.5 max-h-48 overflow-y-auto"></div>
 
-      <!-- MARKAZ ADVANCE PAYMENT vs COD TOGGLE -->
+      <!-- ADVANCE PAYMENT (RS. 200 DISCOUNT) vs COD TOGGLE -->
       <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-2.5 text-xs">
-        <label class="block font-black text-gray-900">ادائیگی کا طریقہ منتخب کریں (Payment Method):</label>
+        <label class="block font-black text-gray-900">Payment Ka Tariqa Select Karein:</label>
         <div class="grid grid-cols-2 gap-2">
-          <button type="button" id="payMethodCOD" onclick="setPaymentMethod('COD')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex items-center justify-center space-x-1 space-x-reverse transition">
-            <span>📦 کیش آن ڈیلیوری</span>
+          <button type="button" id="payMethodCOD" onclick="setPaymentMethod('COD')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex items-center justify-center space-x-1 transition">
+            <span>📦 Cash on Delivery</span>
           </button>
           <button type="button" id="payMethodAdvance" onclick="setPaymentMethod('Advance')" class="py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center transition">
-            <span class="font-black text-emerald-700">⚡ ایڈوانس آن لائن</span>
-            <span class="text-[9px] text-amber-600 font-bold">Rs. 100 رعایت + فری ڈیلیوری</span>
+            <span class="font-black text-emerald-800">⚡ Advance Online</span>
+            <span class="text-[9px] text-amber-600 font-extrabold">Rs. 200 OFF + Free Delivery</span>
           </button>
         </div>
         <!-- Advance instructions -->
         <div id="advancePaymentInfo" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 text-[11px] text-emerald-900 space-y-1">
-          <p class="font-bold">🌟 ایڈوانس ادائیگی پر مفت ڈیلیوری اور Rs. 100 کا خصوصی ڈسکاؤنٹ!</p>
-          <p>جاز کیش / ایزی پیسہ اکاؤنٹ: <strong class="font-mono text-emerald-800">03222089610</strong> (ٹائٹل: Tejarat App)</p>
-          <p class="text-[10px] text-gray-600">ٹرانزیکشن سلپ واٹس ایپ پر آرڈر کے ساتھ خودکار منسلک ہو جائے گی۔</p>
+          <p class="font-bold">🌟 Advance payment par Free Delivery aur Flat Rs. 200 ki bachat!</p>
+          <p>JazzCash / EasyPaisa Account: <strong class="font-mono text-emerald-800">03222089610</strong> (Title: Tejarat App)</p>
+          <p class="text-[10px] text-gray-600">Payment receipt WhatsApp order ke sath auto attach ho jayegi.</p>
         </div>
       </div>
 
       <!-- Breakdown -->
       <div id="cartSummaryBox" class="bg-emerald-50 rounded-2xl p-3.5 space-y-1.5 text-xs border border-emerald-100">
         <div class="flex justify-between">
-          <span class="text-gray-600">ہول سیل رقم:</span>
+          <span class="text-gray-600">Wholesale Total:</span>
           <span id="sumWholesale" class="font-bold text-gray-900">Rs. 0</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-emerald-800 font-semibold">آپ کا ری سیلر منافع:</span>
+          <span class="text-emerald-800 font-semibold">Aap Ka Reseller Profit:</span>
           <span id="sumProfit" class="font-black text-emerald-700">+Rs. 0</span>
         </div>
         <div class="flex justify-between items-center">
-          <div class="flex items-center space-x-1.5 space-x-reverse">
+          <div class="flex items-center space-x-1.5">
             <img src="markaz_assets/ic_leopard.png" class="h-3.5 object-contain inline" alt="Leopards" onerror="this.style.display='none'" />
-            <span class="text-gray-600">کورئیر ڈیلیوری چارجز:</span>
+            <span class="text-gray-600">Courier Delivery Charges:</span>
           </div>
           <span id="sumDelivery" class="font-bold text-gray-900">Rs. 125</span>
         </div>
         <div id="sumDiscountRow" class="hidden flex justify-between text-emerald-800 font-bold">
-          <span>ایڈوانس ادائیگی رعایت (Rs. 100 + فری ڈیلیوری):</span>
-          <span id="sumDiscount">-Rs. 225</span>
+          <span>Advance Payment Discount (Rs. 200 + Free Delivery):</span>
+          <span id="sumDiscount">-Rs. 325</span>
         </div>
         <div class="flex justify-between pt-2 border-t border-emerald-200 text-sm">
-          <span class="font-black text-[#059669]">کسٹمر سے وصولی (کل رقم):</span>
-          <span id="sumTotalCOD" class="font-black text-[#059669]">Rs. 0</span>
+          <span class="font-black text-[#047857]">Total Payable Amount:</span>
+          <span id="sumTotalCOD" class="font-black text-[#047857]">Rs. 0</span>
         </div>
       </div>
 
@@ -676,64 +770,64 @@
       <form id="checkoutForm" onsubmit="submitCustomerOrder(event)" class="space-y-3 text-xs">
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block font-bold text-gray-700 mb-1">کسٹمر کا مکمل نام *</label>
-            <input type="text" id="chkCustomerName" required placeholder="مثلاً: محمد عثمان" class="w-full border rounded-xl px-3 py-2 focus:border-[#059669] outline-none" />
+            <label class="block font-bold text-gray-700 mb-1">Customer Ka Naam *</label>
+            <input type="text" id="chkCustomerName" required placeholder="e.g. Ali Ahmed" class="w-full border rounded-xl px-3 py-2 focus:border-[#047857] outline-none" />
           </div>
           <div>
-            <label class="block font-bold text-gray-700 mb-1">کسٹمر کا موبائل فون نمبر *</label>
-            <input type="tel" id="chkCustomerPhone" required placeholder="03001234567" class="w-full border rounded-xl px-3 py-2 focus:border-[#059669] outline-none text-left font-mono" />
+            <label class="block font-bold text-gray-700 mb-1">Customer Mobile Number *</label>
+            <input type="tel" id="chkCustomerPhone" required placeholder="03001234567" class="w-full border rounded-xl px-3 py-2 focus:border-[#047857] outline-none font-mono" />
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block font-bold text-gray-700 mb-1">صوبہ منتخب کریں *</label>
-            <select id="chkCustomerProvince" required class="w-full border rounded-xl px-3 py-2 focus:border-[#059669] outline-none">
-              <option value="Punjab">Punjab (پنجاب)</option>
-              <option value="Sindh">Sindh (سندھ)</option>
-              <option value="Khyber Pakhtunkhwa">KPK (خیبر پختونخوا)</option>
-              <option value="Balochistan">Balochistan (بلوچستان)</option>
-              <option value="Islamabad">Islamabad (وفاقی دارالحکومت)</option>
-              <option value="Azad Kashmir">AJK (آزاد کشمیر)</option>
-              <option value="Gilgit-Baltistan">Gilgit (گلگت بلتستان)</option>
+            <label class="block font-bold text-gray-700 mb-1">Province (Subah) *</label>
+            <select id="chkCustomerProvince" required class="w-full border rounded-xl px-3 py-2 focus:border-[#047857] outline-none">
+              <option value="Punjab">Punjab</option>
+              <option value="Sindh">Sindh</option>
+              <option value="Khyber Pakhtunkhwa">KPK</option>
+              <option value="Balochistan">Balochistan</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Azad Kashmir">AJK</option>
+              <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
             </select>
           </div>
           <div>
-            <label class="block font-bold text-gray-700 mb-1">شہر منتخب کریں *</label>
-            <select id="chkCustomerCity" required class="w-full border rounded-xl px-3 py-2 focus:border-[#059669] outline-none">
-              <option value="Karachi">Karachi (کراچی)</option>
-              <option value="Lahore">Lahore (لاہور)</option>
-              <option value="Islamabad">Islamabad (اسلام آباد)</option>
-              <option value="Rawalpindi">Rawalpindi (راولپنڈی)</option>
-              <option value="Faisalabad">Faisalabad (فیصل آباد)</option>
-              <option value="Multan">Multan (ملتان)</option>
-              <option value="Peshawar">Peshawar (پشاور)</option>
-              <option value="Quetta">Quetta (کوئٹہ)</option>
-              <option value="Sialkot">Sialkot (سیالکوٹ)</option>
-              <option value="Gujranwala">Gujranwala (گوجرانوالہ)</option>
-              <option value="Hyderabad">Hyderabad (حیدرآباد)</option>
-              <option value="Bahawalpur">Bahawalpur (بہاولپور)</option>
-              <option value="Sargodha">Sargodha (سرگودھا)</option>
-              <option value="Abbottabad">Abbottabad (ایبٹ آباد)</option>
+            <label class="block font-bold text-gray-700 mb-1">Shehar (City) *</label>
+            <select id="chkCustomerCity" required class="w-full border rounded-xl px-3 py-2 focus:border-[#047857] outline-none">
+              <option value="Lahore">Lahore</option>
+              <option value="Karachi">Karachi</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Rawalpindi">Rawalpindi</option>
+              <option value="Faisalabad">Faisalabad</option>
+              <option value="Multan">Multan</option>
+              <option value="Peshawar">Peshawar</option>
+              <option value="Quetta">Quetta</option>
+              <option value="Sialkot">Sialkot</option>
+              <option value="Gujranwala">Gujranwala</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Bahawalpur">Bahawalpur</option>
+              <option value="Sargodha">Sargodha</option>
+              <option value="Abbottabad">Abbottabad</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-gray-700 mb-1">پارسل پر آپ کا برانڈ نام (Reseller Store Name)</label>
-          <input type="text" id="chkResellerStore" placeholder="مثلاً: Zahra Collections" class="w-full border rounded-xl px-3 py-2 bg-emerald-50/50 font-bold text-[#059669] outline-none" />
-          <p class="text-[10px] text-gray-400 mt-0.5">تمام پارسلز پر بھیجنے والے کے نام کے طور پر یہ نام پرنٹ ہوگا</p>
+          <label class="block font-bold text-gray-700 mb-1">Parcel Par Aap Ka Store Name (Reseller Brand)</label>
+          <input type="text" id="chkResellerStore" placeholder="e.g. Zahra Collections" class="w-full border rounded-xl px-3 py-2 bg-emerald-50/50 font-bold text-[#047857] outline-none" />
+          <p class="text-[10px] text-gray-400 mt-0.5">Saray orders aap ke business name se bheje jayenge</p>
         </div>
 
         <div>
-          <label class="block font-bold text-gray-700 mb-1">کسٹمر کا مکمل پتہ (House, Street, Area) *</label>
-          <textarea id="chkCustomerAddress" rows="2" required placeholder="مکان نمبر، گلی نمبر، سیکٹر / محلہ، قریبی مشہور جگہ..." class="w-full border rounded-xl px-3 py-2 focus:border-[#059669] outline-none"></textarea>
+          <label class="block font-bold text-gray-700 mb-1">Mukammal Pata (House, Street, Area) *</label>
+          <textarea id="chkCustomerAddress" rows="2" required placeholder="Makan number, Gali number, Mohalla / Sector, Qareebi mashoor jagah..." class="w-full border rounded-xl px-3 py-2 focus:border-[#047857] outline-none"></textarea>
         </div>
 
-        <!-- One-click Direct Send to WhatsApp 03222089610 Button -->
-        <button type="submit" class="w-full py-3.5 rounded-2xl bg-[#059669] hover:bg-emerald-700 text-white font-black text-sm shadow-xl flex items-center justify-center space-x-2 space-x-reverse transition">
+        <!-- 1-Click WhatsApp Order Button -->
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-[#047857] hover:bg-emerald-800 text-white font-black text-sm shadow-xl flex items-center justify-center space-x-2 transition">
           <i data-lucide="send" class="w-4 h-4"></i>
-          <span>آرڈر مکمل کریں (واٹس ایپ پر بھیجیں) 🚀</span>
+          <span>Order Place Karein (WhatsApp Par Send Karein) 🚀</span>
         </button>
       </form>
     </div>
@@ -743,51 +837,47 @@
   <div id="wishlistModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-4 space-y-3 shadow-2xl">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 class="font-black text-sm text-gray-900">پسندیدہ کیٹلاگز (Saved Products)</h3>
+        <h3 class="font-black text-sm text-gray-900">Saved Catalogs (Wishlist)</h3>
         <button onclick="closeWishlistModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div id="wishlistItemsList" class="space-y-2 max-h-64 overflow-y-auto"></div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 4: INTERACTIVE 100% FREE SUPPORT CHATBOT ==================== -->
+  <!-- ==================== MODAL 4: INTERACTIVE 100% FREE CHATBOT ==================== -->
   <div id="chatbotModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-3">
     <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl overflow-hidden flex flex-col h-[520px] border border-emerald-100">
-      <!-- Header -->
-      <div class="bg-[#059669] text-white p-3.5 flex items-center justify-between shadow">
-        <div class="flex items-center space-x-2 space-x-reverse">
-          <div class="w-9 h-9 rounded-xl bg-white text-[#059669] font-black flex items-center justify-center shadow">
+      <div class="bg-[#047857] text-white p-3.5 flex items-center justify-between shadow">
+        <div class="flex items-center space-x-2">
+          <div class="w-9 h-9 rounded-xl bg-white text-[#047857] font-black flex items-center justify-center shadow">
             🤖
           </div>
           <div>
-            <h4 class="font-black text-sm leading-tight">تجارت اسسٹنٹ (Chatbot)</h4>
-            <p class="text-[10px] text-emerald-200">24/7 آن لائن خودکار کسٹمر سپورٹ</p>
+            <h4 class="font-black text-sm leading-tight">Tejarat Assistant (Chatbot)</h4>
+            <p class="text-[10px] text-emerald-200">24/7 Automated Customer Support</p>
           </div>
         </div>
         <button onclick="closeChatbotModal()" class="text-white/80 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <!-- Chat Messages Area -->
       <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs bg-gray-50">
-        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-gray-100 text-gray-800 leading-relaxed">
-          السلام علیکم! میں <strong>تجارت ہیلپ بوٹ</strong> ہوں۔ آپ کی کس طرح مدد کر سکتا ہوں؟ نیچے دیے گئے عام سوالات میں سے منتخب کریں یا واٹس ایپ نمائندے سے بات کریں۔
+        <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 text-gray-800 leading-relaxed">
+          Assalam o Alaikum! Main <strong>Tejarat Help Bot</strong> hoon. Aap ki kya madad kar sakta hoon? Neeche diye gaye sawalat par click karein ya helpline par rabta karein.
         </div>
       </div>
 
-      <!-- Quick FAQ Chips -->
-      <div class="p-2 bg-gray-100/80 border-t border-gray-200 flex space-x-1.5 space-x-reverse overflow-x-auto no-scrollbar">
-        <button onclick="askBotFAQ('order_process')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">آرڈر کیسے کریں؟</button>
-        <button onclick="askBotFAQ('delivery_fee')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">ڈیلیوری چارجز؟</button>
-        <button onclick="askBotFAQ('reseller_profit')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">منافع کب ملے گا؟</button>
-        <button onclick="askBotFAQ('return_policy')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">ریٹرن پالیسی؟</button>
-        <button onclick="askBotFAQ('advance_discount')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">ایڈوانس رعایت؟</button>
+      <div class="p-2 bg-gray-100/80 border-t border-gray-200 flex space-x-1.5 overflow-x-auto no-scrollbar">
+        <button onclick="askBotFAQ('order_process')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">Order Kaise Karein?</button>
+        <button onclick="askBotFAQ('delivery_fee')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">Delivery Charges?</button>
+        <button onclick="askBotFAQ('reseller_profit')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">Munafa Kab Milega?</button>
+        <button onclick="askBotFAQ('advance_discount')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">Advance Discount?</button>
+        <button onclick="askBotFAQ('return_policy')" class="bg-white border text-[10px] font-bold text-gray-700 px-2.5 py-1.5 rounded-full whitespace-nowrap shadow-sm hover:bg-emerald-50">Return Policy?</button>
       </div>
 
-      <!-- Live Agent Helpline Transfer Button -->
-      <div class="p-2.5 bg-white border-t flex space-x-2 space-x-reverse">
-        <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Mujhe%20Tejarat%20App%20k%20bare%20mein%20rehnumai%20chahiye" target="_blank" class="w-full bg-[#059669] hover:bg-emerald-700 text-white font-black py-2.5 rounded-xl text-center text-xs flex items-center justify-center space-x-1.5 space-x-reverse shadow transition">
+      <div class="p-2.5 bg-white border-t">
+        <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Mujhe%20Tejarat%20App%20k%20bare%20mein%20rehnumai%20chahiye" target="_blank" class="w-full bg-[#047857] hover:bg-emerald-800 text-white font-black py-2.5 rounded-xl text-center text-xs flex items-center justify-center space-x-1.5 shadow transition">
           <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>انسانی نمائندے سے واٹس ایپ پر بات کریں (03190328256)</span>
+          <span>Support Helpline Par Baat Karein (03190328256)</span>
         </a>
       </div>
     </div>
@@ -797,32 +887,32 @@
   <div id="editStoreModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-gray-100">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 class="font-black text-sm text-gray-900">ری سیلر بزنس پروفائل اپ ڈیٹ</h3>
+        <h3 class="font-black text-sm text-gray-900">Reseller Profile Update</h3>
         <button onclick="closeEditStoreModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <form onsubmit="saveStoreSettings(event)" class="space-y-3 text-xs">
         <div>
-          <label class="block font-bold text-gray-700 mb-1">آپ کا برانڈ / اسٹور نام *</label>
-          <input type="text" id="inpStoreName" required class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#059669]" />
+          <label class="block font-bold text-gray-700 mb-1">Aap Ka Store / Brand Name *</label>
+          <input type="text" id="inpStoreName" required class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#047857]" />
         </div>
         <div>
-          <label class="block font-bold text-gray-700 mb-1">ادائیگی کا طریقہ (Profit Payout)</label>
-          <select id="inpPaymentMethod" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#059669]">
+          <label class="block font-bold text-gray-700 mb-1">Profit Payout Method</label>
+          <select id="inpPaymentMethod" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#047857]">
             <option value="EasyPaisa">EasyPaisa</option>
             <option value="JazzCash">JazzCash</option>
-            <option value="Bank Account">Bank Account (بینک اکاؤنٹ)</option>
+            <option value="Bank Account">Bank Account</option>
           </select>
         </div>
         <div>
-          <label class="block font-bold text-gray-700 mb-1">اکاؤنٹ نمبر *</label>
-          <input type="text" id="inpAccountNumber" required placeholder="03001234567" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#059669] font-mono text-left" />
+          <label class="block font-bold text-gray-700 mb-1">Account Number *</label>
+          <input type="text" id="inpAccountNumber" required placeholder="03001234567" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#047857] font-mono" />
         </div>
         <div>
-          <label class="block font-bold text-gray-700 mb-1">اکاؤنٹ ہولڈر کا پورا نام *</label>
-          <input type="text" id="inpAccountTitle" required placeholder="Account Title" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#059669]" />
+          <label class="block font-bold text-gray-700 mb-1">Account Holder Full Name *</label>
+          <input type="text" id="inpAccountTitle" required placeholder="Account Title" class="w-full border rounded-xl px-3 py-2 outline-none focus:border-[#047857]" />
         </div>
-        <button type="submit" class="w-full bg-[#059669] hover:bg-emerald-700 text-white font-black py-2.5 rounded-xl shadow transition">
-          محفوظ کریں (Save Changes)
+        <button type="submit" class="w-full bg-[#047857] hover:bg-emerald-800 text-white font-black py-2.5 rounded-xl shadow transition">
+          Save Changes
         </button>
       </form>
     </div>
@@ -832,43 +922,43 @@
   <div id="withdrawModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-gray-100">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 class="font-black text-sm text-gray-900">منافع ٹرانسفر کروائیں (Withdraw)</h3>
+        <h3 class="font-black text-sm text-gray-900">Munafa Withdraw Karein</h3>
         <button onclick="closeWithdrawModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <form onsubmit="submitWithdrawalRequest(event)" class="space-y-3 text-xs">
         <div class="bg-emerald-50 rounded-xl p-3 text-center border border-emerald-100">
-          <p class="text-[11px] text-gray-500 font-semibold">دستیاب کیش بیلنس</p>
-          <p id="withdrawAvailBal" class="text-lg font-black text-[#059669]">Rs. 3,450</p>
+          <p class="text-[11px] text-gray-500 font-semibold">Available Cash Balance</p>
+          <p id="withdrawAvailBal" class="text-lg font-black text-[#047857]">Rs. 0</p>
         </div>
         <div>
-          <label class="block font-bold text-gray-700 mb-1">رقم درج کریں (کم از کم: Rs. 500) *</label>
-          <input type="number" id="inpWithdrawAmount" min="500" required placeholder="مثلاً: 1000" class="w-full border rounded-xl px-3 py-2 font-black text-base text-gray-800 outline-none focus:border-[#059669] text-left" />
+          <label class="block font-bold text-gray-700 mb-1">Amount Likhein (Min: Rs. 500) *</label>
+          <input type="number" id="inpWithdrawAmount" min="500" required placeholder="e.g. 1000" class="w-full border rounded-xl px-3 py-2 font-black text-base text-gray-800 outline-none focus:border-[#047857]" />
         </div>
-        <button type="submit" class="w-full bg-[#059669] hover:bg-emerald-700 text-white font-black py-3 rounded-xl shadow-lg transition">
-          درخواست بھیجیں (Request Payout)
+        <button type="submit" class="w-full bg-[#047857] hover:bg-emerald-800 text-white font-black py-3 rounded-xl shadow-lg transition">
+          Request Payout
         </button>
       </form>
     </div>
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed top-5 inset-x-4 max-w-sm mx-auto bg-gray-950/90 backdrop-blur-md text-white text-xs font-bold py-3 px-4 rounded-2xl shadow-2xl z-50 hidden flex items-center justify-between border border-white/20">
+  <div id="toastNotification" class="fixed top-8 inset-x-4 max-w-sm mx-auto bg-gray-950/95 backdrop-blur-md text-white text-xs font-bold py-3 px-4 rounded-2xl shadow-2xl z-50 hidden flex items-center justify-between border border-white/20">
     <span id="toastMessage"></span>
-    <button onclick="hideToast()" class="text-gray-400 hover:text-white mr-2"><i data-lucide="x" class="w-4 h-4"></i></button>
+    <button onclick="hideToast()" class="text-gray-400 hover:text-white ml-2"><i data-lucide="x" class="w-4 h-4"></i></button>
   </div>
 
   <!-- ==================== JAVASCRIPT BUSINESS LOGIC ==================== -->
   <script>
     // Supabase Configuration
     const SUPABASE_URL = "https://xdsxmgzcfihkohsbzszq.supabase.co";
-    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhkc3htZ3pjZmloa29oc2J6c3pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI1OTU4NDgsImV4cCI6MjA3ODE3MTg0OH0.XwP3mR_VfWwL8Y3x9-Vf8Y_L9xX8Zz8v_vYwK9z";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhkc3htZ3pjZmloa29oc2J6c3pxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM3MDA2NzUsImV4cCI6MjEwOTI3NjY3NX0.kDUmA2E1BGl-oja9aosoBO4KQWCl7wxTRrOzxIiR-7g";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-    // Constant Business Rules (Markaz Pakistani Reseller Model)
+    // Constant Business Rules
     const ORDER_WHATSAPP_NUMBER = "923222089610";
     const SUPPORT_WHATSAPP_NUMBER = "923190328256";
     const FLAT_DELIVERY_FEE = 125;
-    const ADVANCE_DISCOUNT = 100;
+    const ADVANCE_DISCOUNT_AMOUNT = 200; // Rs. 200 Discount on Advance Payment
 
     // State Variables
     let products = [];
@@ -885,17 +975,30 @@
     let carouselTimer = null;
     let timeMetricMode = "all";
 
-    // Reseller Wallet State
+    // Current Authenticated User (Zero starting state for clean new users)
+    let currentUser = null;
     let wallet = {
-      store_name: "Zahra Collections",
-      phone: "03001234567",
-      available_balance: 3450,
-      pending_profit: 1400,
-      total_withdrawn: 12800,
-      payment_method: "EasyPaisa",
-      account_number: "03001234567",
-      account_title: "Zahra Noor"
+      store_name: "Mera Online Store",
+      phone: "",
+      available_balance: 0,
+      pending_profit: 0,
+      total_withdrawn: 0,
+      completed_orders: 0,
+      total_sales: 0,
+      bonus_earned: 0,
+      payment_method: "Not Set",
+      account_number: "Not Set",
+      account_title: "Not Set"
     };
+
+    // Standard Categories
+    const DEFAULT_CATEGORIES = [
+      { name: "Dry Fruits & Nuts", roman: "Dry Fruits & Nuts", icon: "🥜" },
+      { name: "Pure Sidr Honey", roman: "Pure Sidr Honey", icon: "🍯" },
+      { name: "Desi Ghee & Makhan", roman: "Desi Ghee & Makhan", icon: "🧈" },
+      { name: "Women Clothes", roman: "Ladies Lawn Suits", icon: "👗" },
+      { name: "Smart Gadgets", roman: "Smart Watches & Gadgets", icon: "⌚" }
+    ];
 
     // ==================== AUTO-SLIDING CAROUSEL ====================
     function initCarousel() {
@@ -909,7 +1012,7 @@
     function updateCarousel() {
       const slider = document.getElementById('carouselSlider');
       if (!slider) return;
-      slider.style.transform = `translateX(${carouselIdx * 100}%)`;
+      slider.style.transform = `translateX(-${carouselIdx * 100}%)`;
       
       const dots = document.querySelectorAll('#carouselDots .dot');
       dots.forEach((d, idx) => {
@@ -932,7 +1035,7 @@
       });
       const activeNavBtn = document.getElementById('nav-btn-' + tabId);
       if (activeNavBtn) {
-        activeNavBtn.className = 'nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-[#059669] transition';
+        activeNavBtn.className = 'nav-tab-btn flex flex-col items-center justify-center flex-1 h-full text-[#047857] transition';
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -948,185 +1051,41 @@
       if (mode === 'all') {
         btnAll.className = 'bg-white text-gray-900 px-3.5 py-1 rounded-lg transition shadow';
         btnMonth.className = 'text-white hover:text-emerald-200 px-3.5 py-1 rounded-lg transition';
-        document.getElementById('bizMetricSales').innerText = 'Rs. 48,500';
-        document.getElementById('bizMetricProfit').innerText = 'Rs. 14,200';
-        document.getElementById('bizMetricOrders').innerText = '24 آرڈرز';
-        document.getElementById('bizMetricBonus').innerText = 'Rs. 1,100';
+        document.getElementById('bizMetricSales').innerText = `Rs. ${(wallet.total_sales || 0).toLocaleString()}`;
+        document.getElementById('bizMetricProfit').innerText = `Rs. ${(wallet.available_balance + wallet.total_withdrawn || 0).toLocaleString()}`;
+        document.getElementById('bizMetricOrders').innerText = `${wallet.completed_orders || 0} Orders`;
+        document.getElementById('bizMetricBonus').innerText = `Rs. ${(wallet.bonus_earned || 0).toLocaleString()}`;
       } else {
         btnMonth.className = 'bg-white text-gray-900 px-3.5 py-1 rounded-lg transition shadow';
         btnAll.className = 'text-white hover:text-emerald-200 px-3.5 py-1 rounded-lg transition';
-        document.getElementById('bizMetricSales').innerText = 'Rs. 18,200';
-        document.getElementById('bizMetricProfit').innerText = 'Rs. 4,850';
-        document.getElementById('bizMetricOrders').innerText = '8 آرڈرز';
-        document.getElementById('bizMetricBonus').innerText = 'Rs. 300';
+        document.getElementById('bizMetricSales').innerText = `Rs. ${(wallet.total_sales || 0).toLocaleString()}`;
+        document.getElementById('bizMetricProfit').innerText = `Rs. ${(wallet.available_balance || 0).toLocaleString()}`;
+        document.getElementById('bizMetricOrders').innerText = `${wallet.completed_orders || 0} Orders`;
+        document.getElementById('bizMetricBonus').innerText = `Rs. 0`;
       }
     }
 
-    // ==================== INITIAL DATA SEED ====================
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "prod_honey_sidr_1kg",
-        title: "Pure Sidr Berry Honey (1kg)",
-        urdu_title: "خالص سدر بیری شہد (1 کلو) - لیبارٹری ٹیسٹڈ",
-        category: "Pure Sidr Honey",
-        wholesale_price: 2400,
-        suggested_retail_price: 3400,
-        stock_quantity: 48,
-        image_url: "https://images.unsplash.com/photo-1587049352847-4a222e784d38?w=700&auto=format&fit=crop",
-        description: "100% خالص اور قدرتی سدر بیری کا کچا شہد۔ بغیر کسی ملاوٹ کے، قدرتی طریقے سے جنگلات سے حاصل کردہ۔ لیبارٹری سے تصدیق شدہ اور خالص ہونے کی 100% گارنٹی۔"
-      },
-      {
-        id: "prod_walnuts_chaman_1kg",
-        title: "Chaman Special Kagzi Walnuts (1kg)",
-        urdu_title: "چمن سپیشل کاغذی اخروٹ (1 کلو گرام)",
-        category: "Dry Fruits & Nuts",
-        wholesale_price: 1100,
-        suggested_retail_price: 1650,
-        stock_quantity: 120,
-        image_url: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=700&auto=format&fit=crop",
-        description: "ہاتھ سے آسانی سے ٹوٹنے والے تازہ اور خستہ کاغذی اخروٹ۔ سفید گری اور اعلیٰ تیل کی مقدار۔ چمن اور گلگت کا سپیشل تحفہ۔"
-      },
-      {
-        id: "prod_desi_ghee_sahiwal_1kg",
-        title: "Organic Desi Ghee Sahiwal (1kg)",
-        urdu_title: "ساہیوال کا خالص دیسی گھی (1 کلو) - چاٹی والا",
-        category: "Desi Ghee & Makhan",
-        wholesale_price: 2600,
-        suggested_retail_price: 3600,
-        stock_quantity: 65,
-        image_url: "https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=700&auto=format&fit=crop",
-        description: "روایتی مٹی کی چاٹی میں رڑک کر تیار کردہ دانے دار خوشبودار دیسی گھی۔ کسی قسم کا کیمیکل یا ایسنس شامل نہیں۔"
-      },
-      {
-        id: "prod_lawn_suit_3pc_khaadi",
-        title: "Luxury Embroidered Lawn 3-Piece Suit",
-        urdu_title: "لگژری ایمبرائیڈرڈ لان 3 پیس سوٹ مع شیفون دوپٹہ",
-        category: "Women Clothes",
-        wholesale_price: 2200,
-        suggested_retail_price: 3200,
-        stock_quantity: 80,
-        image_url: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=700&auto=format&fit=crop",
-        description: "پریمیم کوالٹی سوئس لان پر نفیس کڑھائی۔ ڈیجیٹل پرنٹڈ بمبرگ شیفون دوپٹہ اور ڈائیڈ ٹراؤزر۔ مکمل 3 پیس ان اسٹچڈ سوٹ۔"
-      },
-      {
-        id: "prod_smartwatch_t800_ultra",
-        title: "T800 Ultra Smartwatch Series 8 (Orange)",
-        urdu_title: "T800 الٹرا اسمارٹ واچ - بلر ڈسپلے و بلوٹوتھ کالنگ",
-        category: "Smart Gadgets",
-        wholesale_price: 1450,
-        suggested_retail_price: 2200,
-        stock_quantity: 150,
-        image_url: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=700&auto=format&fit=crop",
-        description: "فل ایچ ڈی 1.99 انچ اسکرین، میگنیٹک وائرلیس فاسٹ چارجر، ہارٹ ریٹ مانیٹرنگ اور تمام موبائل نوٹیفیکیشن سپورٹ۔"
-      },
-      {
-        id: "prod_almonds_giri_gilgit_1kg",
-        title: "Gilgit Sweet Almonds Giri (1kg)",
-        urdu_title: "گلگت سپیشل میٹھی بادام گری (1 کلو)",
-        category: "Dry Fruits & Nuts",
-        wholesale_price: 1850,
-        suggested_retail_price: 2600,
-        stock_quantity: 90,
-        image_url: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=700&auto=format&fit=crop",
-        description: "100% میٹھی اور تیل سے بھرپور تازہ بادام گری۔ کوئی کڑوا دانہ نہیں۔ صحت کے لیے بہترین توانائی کا خزانہ۔"
-      }
-    ];
-
-    const DEFAULT_CATEGORIES = [
-      { name: "Dry Fruits & Nuts", urdu: "خشک میوہ جات", icon: "🥜" },
-      { name: "Pure Sidr Honey", urdu: "خالص بیری شہد", icon: "🍯" },
-      { name: "Desi Ghee & Makhan", urdu: "خالص دیسی گھی", icon: "🧈" },
-      { name: "Women Clothes", urdu: "لیڈیز لان سوٹس", icon: "👗" },
-      { name: "Smart Gadgets", urdu: "اسمارٹ گیجٹس", icon: "⌚" }
-    ];
-
-    const DEFAULT_ORDERS = [
-      {
-        id: "ord_101",
-        tracking_id: "TRX-94821",
-        product_title: "Pure Sidr Berry Honey (1kg)",
-        customer_name: "عائشہ خان",
-        customer_phone: "0301-7654321",
-        customer_city: "Lahore",
-        customer_address: "مکان 45، گلی 8، گلبرگ 3، لاہور",
-        wholesale_price: 2400,
-        reseller_profit: 600,
-        delivery_fee: 125,
-        total_amount: 3125,
-        payment_method: "COD",
-        status: "Delivered",
-        created_at: "2026-11-06T14:20:00Z"
-      },
-      {
-        id: "ord_102",
-        tracking_id: "TRX-94822",
-        product_title: "Luxury Embroidered Lawn 3-Piece",
-        customer_name: "مریم فاطمہ",
-        customer_phone: "0321-9876543",
-        customer_city: "Karachi",
-        customer_address: "فلیٹ 302، گلشن اقبال، بلاک 13، کراچی",
-        wholesale_price: 2200,
-        reseller_profit: 800,
-        delivery_fee: 125,
-        total_amount: 3125,
-        payment_method: "COD",
-        status: "Dispatched",
-        created_at: "2026-11-07T11:15:00Z"
-      },
-      {
-        id: "ord_103",
-        tracking_id: "TRX-94823",
-        product_title: "Chaman Special Kagzi Walnuts (1kg)",
-        customer_name: "کامران سعید",
-        customer_phone: "0333-1122334",
-        customer_city: "Islamabad",
-        customer_address: "ہاؤس 12، سٹریٹ 40، سیکٹر F-10/2، اسلام آباد",
-        wholesale_price: 1100,
-        reseller_profit: 400,
-        delivery_fee: 125,
-        total_amount: 1625,
-        payment_method: "COD",
-        status: "Pending",
-        created_at: "2026-11-08T09:40:00Z"
-      }
-    ];
-
-    // ==================== CLOUD SYNC & FETCH ====================
+    // ==================== CLOUD SYNC & FETCH (REAL SUPABASE DATA) ====================
     async function fetchAllCloudData(showFeedback = false) {
       try {
-        const { data: prodData } = await supabaseClient.from('products').select('*');
-        if (prodData && prodData.length > 0) {
-          products = prodData;
-        } else {
-          products = DEFAULT_PRODUCTS;
-        }
+        // Fetch real products from Supabase products table
+        const { data: prodData } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
+        products = prodData || [];
 
-        const { data: catData } = await supabaseClient.from('categories').select('*');
-        if (catData && catData.length > 0) {
-          categories = catData;
-        } else {
-          categories = DEFAULT_CATEGORIES;
-        }
+        // Categories
+        categories = DEFAULT_CATEGORIES;
 
+        // Fetch real orders
         const { data: ordData } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
-        if (ordData && ordData.length > 0) {
-          orders = ordData;
-        } else {
-          orders = DEFAULT_ORDERS;
-        }
+        orders = ordData || [];
 
-        const { data: walData } = await supabaseClient.from('reseller_wallets').select('*').limit(1).single();
-        if (walData) {
-          wallet = { ...wallet, ...walData };
-        }
+        // Check auth session
+        checkAuthSession();
 
         renderAllViews();
-        if (showFeedback) showToast('ڈیٹا کامیابی سے ریفریش ہو گیا ہے!');
+        if (showFeedback) showToast('Data kamyabi se refresh ho gaya hai!');
       } catch (err) {
-        console.warn('Using local cached Markaz state:', err);
-        products = DEFAULT_PRODUCTS;
-        categories = DEFAULT_CATEGORIES;
-        orders = DEFAULT_ORDERS;
+        console.warn('Supabase fetch error:', err);
         renderAllViews();
       }
     }
@@ -1141,6 +1100,91 @@
       lucide.createIcons();
     }
 
+    // ==================== AUTHENTICATION (GOOGLE & DIRECT GMAIL) ====================
+    function checkAuthSession() {
+      const savedUser = localStorage.getItem('tejarat_user');
+      if (savedUser) {
+        try {
+          currentUser = JSON.parse(savedUser);
+          applyLoggedInUserUI(currentUser);
+        } catch (e) {
+          currentUser = null;
+        }
+      }
+    }
+
+    async function loginWithGoogle() {
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.href
+          }
+        });
+        if (error) {
+          showToast('Google Sign-In service connect ho rahi hai...');
+        }
+      } catch (err) {
+        console.warn('OAuth redirect:', err);
+      }
+    }
+
+    function quickEmailLogin(e) {
+      e.preventDefault();
+      const val = document.getElementById('inpLoginEmail').value.trim();
+      if (!val) return;
+
+      const userObj = {
+        id: 'usr_' + Date.now(),
+        email: val,
+        full_name: val.split('@')[0] || 'Reseller Partner'
+      };
+
+      localStorage.setItem('tejarat_user', JSON.stringify(userObj));
+      currentUser = userObj;
+      applyLoggedInUserUI(userObj);
+      closeAuthModal();
+      showToast('Kamyabi se Login ho gaye!');
+    }
+
+    function applyLoggedInUserUI(u) {
+      document.getElementById('profileUserFullName').innerText = u.full_name || 'Reseller Partner';
+      document.getElementById('profileUserEmail').innerText = u.email || '';
+      document.getElementById('profileVerifiedBadge').innerText = 'Verified';
+      document.getElementById('profileVerifiedBadge').className = 'bg-emerald-100 text-[#047857] text-[10px] font-black px-1.5 py-0.5 rounded';
+      document.getElementById('userAvatarText').innerText = (u.full_name || u.email || 'R')[0].toUpperCase();
+      
+      const btn = document.getElementById('authActionBtn');
+      btn.innerText = 'Logout';
+      btn.className = 'bg-rose-50 text-rose-600 border border-rose-200 text-xs font-black px-3.5 py-2 rounded-xl shadow-sm transition hover:bg-rose-100';
+      btn.onclick = logoutUser;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem('tejarat_user');
+      currentUser = null;
+      document.getElementById('profileUserFullName').innerText = 'Mehmon Reseller';
+      document.getElementById('profileUserEmail').innerText = 'Gmail se login karein';
+      document.getElementById('profileVerifiedBadge').innerText = 'Guest';
+      document.getElementById('profileVerifiedBadge').className = 'bg-gray-100 text-gray-600 text-[10px] font-black px-1.5 py-0.5 rounded';
+      document.getElementById('userAvatarText').innerText = 'T';
+      
+      const btn = document.getElementById('authActionBtn');
+      btn.innerText = 'Login Karein';
+      btn.className = 'bg-[#047857] hover:bg-emerald-800 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-sm transition';
+      btn.onclick = openAuthModal;
+      showToast('Logout ho gaye.');
+    }
+
+    function openAuthModal() {
+      document.getElementById('authModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
     // ==================== RENDER CATEGORIES ====================
     function renderCategoryChips() {
       const container = document.getElementById('homeCategoryChips');
@@ -1148,20 +1192,20 @@
 
       let html = `
         <button onclick="selectCategory('All')" class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition shadow-sm ${
-          activeCategoryFilter === 'All' ? 'bg-[#059669] text-white' : 'bg-white text-gray-700 border border-gray-200'
+          activeCategoryFilter === 'All' ? 'bg-[#047857] text-white' : 'bg-white text-gray-700 border border-gray-200'
         }">
-          تمام کیٹلاگز
+          Tamam Catalogs
         </button>
       `;
 
       categories.forEach(cat => {
         const isSel = activeCategoryFilter === cat.name;
         html += `
-          <button onclick="selectCategory('${cat.name}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition shadow-sm flex items-center space-x-1.5 space-x-reverse ${
-            isSel ? 'bg-[#059669] text-white' : 'bg-white text-gray-700 border border-gray-200'
+          <button onclick="selectCategory('${cat.name}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition shadow-sm flex items-center space-x-1.5 ${
+            isSel ? 'bg-[#047857] text-white' : 'bg-white text-gray-700 border border-gray-200'
           }">
             <span>${cat.icon || '📦'}</span>
-            <span>${cat.urdu || cat.name}</span>
+            <span>${cat.roman || cat.name}</span>
           </button>
         `;
       });
@@ -1177,16 +1221,16 @@
         const catProds = products.filter(p => p.category === cat.name);
         return `
           <div onclick="selectCategory('${cat.name}'); switchTab('home');" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center justify-between cursor-pointer hover:border-emerald-300 transition">
-            <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="flex items-center space-x-3">
               <span class="text-3xl p-2 rounded-2xl bg-emerald-50">${cat.icon || '📦'}</span>
               <div>
-                <h4 class="font-black text-sm text-gray-900">${cat.urdu || cat.name}</h4>
-                <p class="text-[11px] text-gray-500 font-semibold mt-0.5">${catProds.length} ہول سیل آئٹمز دستیاب ہیں</p>
+                <h4 class="font-black text-sm text-gray-900">${cat.roman || cat.name}</h4>
+                <p class="text-[11px] text-gray-500 font-semibold mt-0.5">${catProds.length} Wholesale Items Available</p>
               </div>
             </div>
-            <div class="flex items-center text-xs font-bold text-[#059669]">
-              <span>کیٹلاگ دیکھیں</span>
-              <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i>
+            <div class="flex items-center text-xs font-bold text-[#047857]">
+              <span>Dekhein</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
             </div>
           </div>
         `;
@@ -1200,8 +1244,8 @@
       
       const heading = document.getElementById('feedHeading');
       if (heading) {
-        if (catName === 'All') heading.innerText = '🔥 ٹاپ ری سیلنگ کیٹلاگز';
-        else heading.innerText = '📂 کیٹلاگ: ' + catName;
+        if (catName === 'All') heading.innerText = '🔥 Top Reselling Catalogs';
+        else heading.innerText = '📂 Catalog: ' + catName;
       }
     }
 
@@ -1220,9 +1264,9 @@
         container.innerHTML = `
           <div class="col-span-2 bg-white rounded-3xl p-8 text-center space-y-2 border border-gray-100 shadow-sm">
             <img src="markaz_assets/Illustration.png" class="w-24 h-24 object-contain mx-auto" alt="Empty" onerror="this.style.display='none'" />
-            <h4 class="font-black text-sm text-gray-800">Iss category mein koi products nahi mile</h4>
-            <p class="text-xs text-gray-500">براہ کرم کوئی دوسرا کیٹلاگ منتخب کریں۔</p>
-            <button onclick="selectCategory('All')" class="mt-2 bg-[#059669] text-white text-xs font-bold px-4 py-2 rounded-xl">تمام دیکھیں</button>
+            <h4 class="font-black text-sm text-gray-800">Abhi koi products mojood nahi hain</h4>
+            <p class="text-xs text-gray-500">Admin panel se jald products add kiye jayenge.</p>
+            <button onclick="selectCategory('All')" class="mt-2 bg-[#047857] text-white text-xs font-bold px-4 py-2 rounded-xl">Sab Dekhein</button>
           </div>
         `;
         return;
@@ -1233,18 +1277,18 @@
         const isFav = wishlist.some(w => w.id === prod.id);
 
         return `
-          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition group">
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col justify-between transition group">
             <!-- Product Image -->
             <div class="relative bg-gray-100 h-44 overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
               <img src="${prod.image_url}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
               
               <!-- Profit Tag -->
-              <span class="absolute top-2.5 right-2.5 bg-[#059669] text-white text-[10px] font-black px-2 py-0.5 rounded-lg shadow">
-                +Rs. ${estProfit} منافع
+              <span class="absolute top-2.5 left-2.5 bg-[#047857] text-white text-[10px] font-black px-2 py-0.5 rounded-lg shadow">
+                +Rs. ${estProfit} Profit
               </span>
 
               <!-- Wishlist Heart -->
-              <button onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" class="absolute top-2.5 left-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow hover:scale-110 transition">
+              <button onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow hover:scale-110 transition">
                 <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-gray-400'}"></i>
               </button>
             </div>
@@ -1253,15 +1297,15 @@
             <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
               <div>
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${prod.category}</span>
-                <h4 onclick="openProductModal('${prod.id}')" class="font-black text-xs text-gray-900 leading-snug line-clamp-2 cursor-pointer hover:text-[#059669] mt-0.5">${prod.urdu_title || prod.title}</h4>
+                <h4 onclick="openProductModal('${prod.id}')" class="font-black text-xs text-gray-900 leading-snug line-clamp-2 cursor-pointer hover:text-[#047857] mt-0.5">${prod.title}</h4>
               </div>
 
               <!-- Price Row -->
               <div class="pt-1.5 border-t border-gray-50">
                 <div class="flex items-baseline justify-between">
                   <div>
-                    <span class="text-[10px] text-gray-400 font-semibold">ہول سیل:</span>
-                    <span class="text-sm font-black text-[#059669]">Rs. ${prod.wholesale_price}</span>
+                    <span class="text-[10px] text-gray-400 font-semibold">Wholesale:</span>
+                    <span class="text-sm font-black text-[#047857]">Rs. ${prod.wholesale_price}</span>
                   </div>
                   <span class="text-[10px] line-through text-gray-400">Rs. ${prod.suggested_retail_price || prod.wholesale_price + 600}</span>
                 </div>
@@ -1269,13 +1313,13 @@
 
               <!-- Action Buttons -->
               <div class="grid grid-cols-2 gap-1.5 pt-1">
-                <button onclick="quickShare('${prod.id}')" class="py-1.5 px-2 rounded-xl border border-[#059669] text-[#059669] hover:bg-emerald-50 text-[10px] font-black flex items-center justify-center space-x-1 space-x-reverse transition">
+                <button onclick="quickShare('${prod.id}')" class="py-1.5 px-2 rounded-xl border border-[#047857] text-[#047857] hover:bg-emerald-50 text-[10px] font-black flex items-center justify-center space-x-1 transition">
                   <i data-lucide="share-2" class="w-3 h-3"></i>
-                  <span>شیئر</span>
+                  <span>Share</span>
                 </button>
-                <button onclick="openProductModal('${prod.id}')" class="py-1.5 px-2 rounded-xl bg-[#059669] hover:bg-emerald-700 text-white text-[10px] font-black flex items-center justify-center space-x-1 space-x-reverse shadow transition">
+                <button onclick="openProductModal('${prod.id}')" class="py-1.5 px-2 rounded-xl bg-[#047857] hover:bg-emerald-800 text-white text-[10px] font-black flex items-center justify-center space-x-1 shadow transition">
                   <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                  <span>آرڈر</span>
+                  <span>Order</span>
                 </button>
               </div>
             </div>
@@ -1296,21 +1340,21 @@
       document.getElementById('detUrduTitle').innerText = p.urdu_title || '';
       document.getElementById('detWholesale').innerText = `Rs. ${p.wholesale_price}`;
       document.getElementById('detRetail').innerText = `Rs. ${p.suggested_retail_price || p.wholesale_price + 600}`;
-      document.getElementById('detDesc').innerText = p.description || 'مکمل گارنٹی شدہ کوالٹی۔ پورے پاکستان میں ترسیل۔';
+      document.getElementById('detDesc').innerText = p.description || '100% Guaranteed quality. Delivered across Pakistan via Trax / Leopards.';
 
       // Variants
       const sizeSel = document.getElementById('detSizeSelect');
       const colorSel = document.getElementById('detColorSelect');
 
       if (p.category === 'Dry Fruits & Nuts' || p.category === 'Pure Sidr Honey' || p.category === 'Desi Ghee & Makhan') {
-        sizeSel.innerHTML = '<option value="1kg Pack">1 کلو پیک (Standard)</option><option value="500g Pack">500 گرام ہاف پیک</option><option value="2kg Bulk">2 کلو فیملی پیک</option>';
-        colorSel.innerHTML = '<option value="Original">اصل قدرتی (100% Pure)</option><option value="Special Premium">سپیشل پریمیم کوالٹی</option>';
+        sizeSel.innerHTML = '<option value="1kg Pack">1 KG Standard Pack</option><option value="500g Pack">500 Grams Pack</option><option value="2kg Bulk">2 KG Family Pack</option>';
+        colorSel.innerHTML = '<option value="100% Pure Organic">100% Pure Natural</option><option value="Special Premium">Special Premium Quality</option>';
       } else if (p.category === 'Women Clothes') {
-        sizeSel.innerHTML = '<option value="Unstitched 3-Piece">ان اسٹچڈ 3 پیس</option><option value="Stitched Medium">اسٹچڈ (Medium)</option><option value="Stitched Large">اسٹچڈ (Large)</option>';
-        colorSel.innerHTML = '<option value="Multicolor">ملٹی کلر ایمبرائیڈرڈ</option><option value="Pastel Pink">پیسٹل پنک</option><option value="Classic Black">کلاسک بلیک</option>';
+        sizeSel.innerHTML = '<option value="Unstitched 3-Piece">Unstitched 3-Piece</option><option value="Stitched Medium">Stitched (Medium)</option><option value="Stitched Large">Stitched (Large)</option>';
+        colorSel.innerHTML = '<option value="Multicolor Embroidered">Multicolor Embroidered</option><option value="Pastel Pink">Pastel Pink</option><option value="Classic Black">Classic Black</option>';
       } else {
-        sizeSel.innerHTML = '<option value="Standard Size">اسٹینڈرڈ سائز</option><option value="Plus Pack">پلس پیک</option>';
-        colorSel.innerHTML = '<option value="Black">بلیک (Black)</option><option value="Silver">سلور (Silver)</option><option value="Orange">اورینج (Orange)</option>';
+        sizeSel.innerHTML = '<option value="Standard Size">Standard Size</option><option value="Plus Pack">Plus Pack</option>';
+        colorSel.innerHTML = '<option value="Black">Black</option><option value="Silver">Silver</option><option value="Orange">Orange</option>';
       }
 
       setOrderMode('Resell');
@@ -1332,12 +1376,12 @@
       const box = document.getElementById('resellerProfitBox');
 
       if (mode === 'Resell') {
-        btnResell.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex items-center justify-center space-x-1.5 space-x-reverse transition';
-        btnSelf.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 space-x-reverse transition';
+        btnResell.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex items-center justify-center space-x-1.5 transition';
+        btnSelf.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 transition';
         box.classList.remove('hidden');
       } else {
-        btnSelf.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex items-center justify-center space-x-1.5 space-x-reverse transition';
-        btnResell.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 space-x-reverse transition';
+        btnSelf.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex items-center justify-center space-x-1.5 transition';
+        btnResell.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 transition';
         box.classList.add('hidden');
         document.getElementById('detCustomProfit').value = 0;
       }
@@ -1382,10 +1426,10 @@
 
     function openCartModal() {
       if (cart.length === 0) {
-        showToast('Aap ke shopping bag me abhi koi products nae hain (بیگ خالی ہے)');
+        showToast('Shopping bag khali hai! Pehle koi product select karein.');
         return;
       }
-      document.getElementById('chkResellerStore').value = wallet.store_name || 'Zahra Collections';
+      document.getElementById('chkResellerStore').value = wallet.store_name || 'Mera Online Store';
       setPaymentMethod(selectedPaymentMethod);
       renderCartModalItems();
       document.getElementById('cartModal').classList.remove('hidden');
@@ -1396,6 +1440,7 @@
       document.getElementById('cartModal').classList.add('hidden');
     }
 
+    // Advance Payment (Rs. 200 Discount + Free Delivery) vs COD
     function setPaymentMethod(method) {
       selectedPaymentMethod = method;
       const btnCOD = document.getElementById('payMethodCOD');
@@ -1404,13 +1449,13 @@
       const discRow = document.getElementById('sumDiscountRow');
 
       if (method === 'COD') {
-        btnCOD.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex items-center justify-center space-x-1 space-x-reverse transition';
+        btnCOD.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex items-center justify-center space-x-1 transition';
         btnAdv.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center transition';
         advInfo.classList.add('hidden');
         discRow.classList.add('hidden');
       } else {
-        btnAdv.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#059669] bg-[#059669] text-white flex flex-col items-center justify-center transition';
-        btnCOD.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1 space-x-reverse transition';
+        btnAdv.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-[#047857] bg-[#047857] text-white flex flex-col items-center justify-center transition';
+        btnCOD.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1 transition';
         advInfo.classList.remove('hidden');
         discRow.classList.remove('hidden');
       }
@@ -1428,15 +1473,15 @@
 
         return `
           <div class="bg-gray-50 rounded-2xl p-3 flex items-center justify-between border border-gray-100">
-            <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="flex items-center space-x-3">
               <img src="${item.product.image_url}" class="w-12 h-12 object-cover rounded-xl shadow-sm" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
               <div>
-                <h4 class="font-black text-xs text-gray-900 line-clamp-1">${item.product.urdu_title || item.product.title}</h4>
+                <h4 class="font-black text-xs text-gray-900 line-clamp-1">${item.product.title}</h4>
                 <p class="text-[10px] text-gray-500 font-semibold">${item.size} · ${item.color}</p>
-                <p class="text-[11px] font-black text-[#059669]">Rs. ${item.product.wholesale_price} <span class="text-[10px] text-emerald-800 font-bold">(+Rs. ${item.profit} منافع)</span></p>
+                <p class="text-[11px] font-black text-[#047857]">Rs. ${item.product.wholesale_price} <span class="text-[10px] text-emerald-800 font-bold">(+Rs. ${item.profit} profit)</span></p>
               </div>
             </div>
-            <div class="flex items-center space-x-2 space-x-reverse">
+            <div class="flex items-center space-x-2">
               <button onclick="changeCartQty(${idx}, -1)" class="w-6 h-6 rounded-lg bg-gray-200 text-gray-700 font-black flex items-center justify-center hover:bg-gray-300">-</button>
               <span class="font-black text-xs">${item.quantity}</span>
               <button onclick="changeCartQty(${idx}, 1)" class="w-6 h-6 rounded-lg bg-gray-200 text-gray-700 font-black flex items-center justify-center hover:bg-gray-300">+</button>
@@ -1449,15 +1494,15 @@
       let advanceDiscount = 0;
 
       if (selectedPaymentMethod === 'Advance') {
-        deliveryFee = 0; // Free delivery on advance
-        advanceDiscount = ADVANCE_DISCOUNT;
+        deliveryFee = 0; // Free delivery
+        advanceDiscount = ADVANCE_DISCOUNT_AMOUNT; // Rs. 200 Discount
       }
 
-      const totalCharged = totalWholesale + totalProfit + deliveryFee - advanceDiscount;
+      const totalCharged = Math.max(0, totalWholesale + totalProfit + deliveryFee - advanceDiscount);
 
       document.getElementById('sumWholesale').innerText = `Rs. ${totalWholesale.toLocaleString()}`;
       document.getElementById('sumProfit').innerText = `+Rs. ${totalProfit.toLocaleString()}`;
-      document.getElementById('sumDelivery').innerText = deliveryFee === 0 ? 'مفت (Free)' : `Rs. ${deliveryFee}`;
+      document.getElementById('sumDelivery').innerText = deliveryFee === 0 ? 'Free (Rs. 0)' : `Rs. ${deliveryFee}`;
       document.getElementById('sumTotalCOD').innerText = `Rs. ${totalCharged.toLocaleString()}`;
     }
 
@@ -1472,7 +1517,7 @@
       updateBadges();
     }
 
-    // Submit Order: WhatsApp 03222089610 + Supabase Sync
+    // Submit Order to WhatsApp 03222089610 + Supabase Sync
     async function submitCustomerOrder(e) {
       e.preventDefault();
       if (cart.length === 0) return;
@@ -1487,38 +1532,38 @@
 
       const trackingId = 'TRX-' + Math.floor(10000 + Math.random() * 90000);
       const deliveryFee = selectedPaymentMethod === 'Advance' ? 0 : FLAT_DELIVERY_FEE;
-      const advanceDiscount = selectedPaymentMethod === 'Advance' ? ADVANCE_DISCOUNT : 0;
-      const totalAmount = (item.product.wholesale_price * item.quantity) + (item.profit * item.quantity) + deliveryFee - advanceDiscount;
+      const advanceDiscount = selectedPaymentMethod === 'Advance' ? ADVANCE_DISCOUNT_AMOUNT : 0;
+      const totalAmount = Math.max(0, (item.product.wholesale_price * item.quantity) + (item.profit * item.quantity) + deliveryFee - advanceDiscount);
 
-      // 1. WhatsApp Formatted Invoice Message
+      // WhatsApp Roman Urdu Message
       const waMessage = 
-`*🛍️ نیا آرڈر موصول ہوا ہے (تجارت ایپ)*
+`*🛍️ NAYA ORDER DETAILS (Tejarat App)*
 -----------------------------------
-*📦 ٹریکنگ نمبر:* ${trackingId}
-*🏷️ ری سیلر اسٹور:* ${resellerStore}
-*💳 ادائیگی کا طریقہ:* ${selectedPaymentMethod === 'Advance' ? '⚡ ایڈوانس آن لائن (ڈسکاؤنٹ لاگو)' : '📦 کیش آن ڈیلیوری (COD)'}
+*📦 Tracking ID:* ${trackingId}
+*🏷️ Reseller Store:* ${resellerStore}
+*💳 Payment Method:* ${selectedPaymentMethod === 'Advance' ? '⚡ Advance Online (Rs. 200 Discount + Free Delivery)' : '📦 Cash on Delivery (COD)'}
 
-*🛒 پروڈکٹ تفصیل:*
-• آئٹم: ${item.product.urdu_title || item.product.title}
-• مقدار: ${item.quantity} عدد
-• سائز / ویرینٹ: ${item.size} (${item.color})
-• ہول سیل قیمت: Rs. ${item.product.wholesale_price * item.quantity}
-• ری سیلر منافع: Rs. ${item.profit * item.quantity}
-• کورئیر ڈلیوری: Rs. ${deliveryFee}
-${advanceDiscount > 0 ? `• ایڈوانس ڈسکاؤنٹ: -Rs. ${advanceDiscount}
-` : ''}*💰 کل واجب الادا رقم:* *Rs. ${totalAmount}*
+*🛒 Product Details:*
+• Item: ${item.product.title}
+• Quantity: ${item.quantity}
+• Variant: ${item.size} (${item.color})
+• Wholesale: Rs. ${item.product.wholesale_price * item.quantity}
+• Reseller Profit: Rs. ${item.profit * item.quantity}
+• Delivery: Rs. ${deliveryFee}
+${advanceDiscount > 0 ? `• Advance Discount: -Rs. ${advanceDiscount}
+` : ''}*💰 Total Amount:* *Rs. ${totalAmount}*
 
-*👤 کسٹمر معلومات:*
-• نام: ${customerName}
-• فون: ${customerPhone}
-• شہر و صوبہ: ${customerCity}, ${customerProvince}
-• مکمل پتہ: ${customerAddress}
+*👤 Customer Info:*
+• Name: ${customerName}
+• Phone: ${customerPhone}
+• City & Province: ${customerCity}, ${customerProvince}
+• Address: ${customerAddress}
 -----------------------------------
-_تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ ورک_`;
+_Tejarat App - Pakistan's #1 Reselling Network_`;
 
       const waUrl = `https://wa.me/${ORDER_WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 
-      // 2. Insert into Supabase Orders Table
+      // Save to Supabase
       const orderPayload = {
         id: 'ord_' + Date.now(),
         tracking_id: trackingId,
@@ -1533,7 +1578,7 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
         delivery_fee: deliveryFee,
         total_amount: totalAmount,
         payment_method: selectedPaymentMethod,
-        order_type: item.mode === 'Resell' ? 'ری سیل (Resell)' : 'ذاتی (Self)',
+        order_type: item.mode === 'Resell' ? 'Resell' : 'Buy for Self',
         status: 'Pending',
         created_at: new Date().toISOString()
       };
@@ -1541,7 +1586,7 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       try {
         await supabaseClient.from('orders').insert([orderPayload]);
       } catch (err) {
-        console.warn('Local order saved:', err);
+        console.warn('Order cloud insert:', err);
       }
 
       orders.unshift(orderPayload);
@@ -1552,18 +1597,18 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       renderOrdersList();
       renderWalletUI();
 
-      // Launch WhatsApp intent
+      // Launch WhatsApp
       window.location.href = waUrl;
-      showToast('آرڈر کامیابی سے واٹس ایپ پر روانہ کر دیا گیا ہے!');
+      showToast('Order kamyabi se WhatsApp par send ho gaya!');
     }
 
-    // ==================== ORDERS LIST (MARKAZ 6 STATUSES) ====================
+    // ==================== ORDERS LIST (6 STATUSES) ====================
     function filterOrders(status) {
       activeOrderFilter = status;
       document.querySelectorAll('.order-filter-btn').forEach(b => {
         b.className = 'order-filter-btn bg-white text-gray-600 border text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap';
       });
-      event.target.className = 'order-filter-btn bg-[#059669] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap';
+      event.target.className = 'order-filter-btn bg-[#047857] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap';
       renderOrdersList();
     }
 
@@ -1579,10 +1624,10 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
         container.innerHTML = `
           <div class="bg-white rounded-3xl p-8 text-center space-y-2 border border-gray-100 shadow-sm">
             <img src="markaz_assets/Illustration.png" class="w-28 h-28 object-contain mx-auto" alt="Empty" onerror="this.style.display='none'" />
-            <h4 class="font-black text-sm text-gray-800">Yahan filhal koi orders nae hain</h4>
-            <p class="text-xs text-gray-500">پروڈکٹس دیکھیں اور اپنے کسٹمرز کو شیئر کر کے پہلا آرڈر حاصل کریں!</p>
-            <button onclick="switchTab('home')" class="mt-2 bg-[#059669] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
-              Products Daikhain ←
+            <h4 class="font-black text-sm text-gray-800">Yahan filhal koi orders nahi hain</h4>
+            <p class="text-xs text-gray-500">Products dekhein aur customers ko share kar ke pehla order hasil karein!</p>
+            <button onclick="switchTab('home')" class="mt-2 bg-[#047857] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+              Products Dekhein →
             </button>
           </div>
         `;
@@ -1593,8 +1638,8 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-2.5">
           <div class="flex items-center justify-between border-b pb-2">
             <div>
-              <span class="font-mono text-xs font-black text-[#059669]">${o.tracking_id}</span>
-              <span class="mr-1.5 text-[10px] px-2 py-0.5 rounded bg-gray-100 font-bold text-gray-700">${o.order_type || 'ری سیل'}</span>
+              <span class="font-mono text-xs font-black text-[#047857]">${o.tracking_id}</span>
+              <span class="ml-1.5 text-[10px] px-2 py-0.5 rounded bg-gray-100 font-bold text-gray-700">${o.order_type || 'Resell'}</span>
             </div>
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black ${
               o.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800' :
@@ -1602,27 +1647,27 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
               o.status === 'Returned' ? 'bg-purple-100 text-purple-800' :
               o.status === 'Cancelled' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
             }">${
-              o.status === 'Delivered' ? 'ڈیلیور ہو چکا' :
-              o.status === 'Dispatched' ? 'راستے میں (In Transit)' :
-              o.status === 'Returned' ? 'واپس آیا (Returned)' :
-              o.status === 'Cancelled' ? 'کینسلڈ' : 'ویریفیکیشن پینڈنگ'
+              o.status === 'Delivered' ? 'Delivered' :
+              o.status === 'Dispatched' ? 'Raaste Mein' :
+              o.status === 'Returned' ? 'Returned' :
+              o.status === 'Cancelled' ? 'Cancelled' : 'Verification Pending'
             }</span>
           </div>
 
           <div class="text-xs space-y-1">
             <p class="font-black text-gray-900">${o.product_title}</p>
-            <p class="text-gray-500 font-medium">کسٹمر: <strong class="text-gray-800">${o.customer_name}</strong> (${o.customer_city || 'Pakistan'})</p>
-            <p class="text-gray-500 font-medium">پتہ: ${o.customer_address}</p>
+            <p class="text-gray-500 font-medium">Customer: <strong class="text-gray-800">${o.customer_name}</strong> (${o.customer_city || 'Pakistan'})</p>
+            <p class="text-gray-500 font-medium">Pata: ${o.customer_address}</p>
           </div>
 
           <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs">
             <div>
-              <span class="text-gray-500 font-medium">کل رقم: </span>
+              <span class="text-gray-500 font-medium">Total: </span>
               <strong class="font-black text-gray-900">Rs. ${o.total_amount}</strong>
             </div>
-            <div class="text-left">
-              <span class="text-[10px] text-gray-400 font-medium">آپ کا منافع: </span>
-              <strong class="font-black text-[#059669]">+Rs. ${o.reseller_profit}</strong>
+            <div class="text-right">
+              <span class="text-[10px] text-gray-400 font-medium">Aap Ka Profit: </span>
+              <strong class="font-black text-[#047857]">+Rs. ${o.reseller_profit}</strong>
             </div>
           </div>
         </div>
@@ -1631,22 +1676,24 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
 
     // ==================== WALLET & SETTINGS ====================
     function renderWalletUI() {
-      document.getElementById('homeWalletBalance').innerText = `Rs. ${wallet.available_balance.toLocaleString()}`;
-      document.getElementById('homePendingProfit').innerText = `Rs. ${wallet.pending_profit.toLocaleString()}`;
-      document.getElementById('bizStoreName').innerText = wallet.store_name;
-      document.getElementById('bizPaymentMethod').innerText = wallet.payment_method;
-      document.getElementById('bizAccountNumber').innerText = wallet.account_number;
-      document.getElementById('bizAccountTitle').innerText = wallet.account_title;
-      document.getElementById('bizPaidBalance').innerText = `Rs. ${wallet.total_withdrawn.toLocaleString()}`;
-      document.getElementById('bizPendingBalance').innerText = `Rs. ${wallet.pending_profit.toLocaleString()}`;
-      document.getElementById('withdrawAvailBal').innerText = `Rs. ${wallet.available_balance.toLocaleString()}`;
+      document.getElementById('homeWalletBalance').innerText = `Rs. ${(wallet.available_balance || 0).toLocaleString()}`;
+      document.getElementById('homePendingProfit').innerText = `Rs. ${(wallet.pending_profit || 0).toLocaleString()}`;
+      document.getElementById('bizStoreName').innerText = wallet.store_name || 'Mera Online Store';
+      document.getElementById('bizPaymentMethod').innerText = wallet.payment_method || 'Not Set';
+      document.getElementById('bizAccountNumber').innerText = wallet.account_number || 'Not Set';
+      document.getElementById('bizAccountTitle').innerText = wallet.account_title || 'Not Set';
+      document.getElementById('bizPaidBalance').innerText = `Rs. ${(wallet.total_withdrawn || 0).toLocaleString()}`;
+      document.getElementById('bizPendingBalance').innerText = `Rs. ${(wallet.pending_profit || 0).toLocaleString()}`;
+      document.getElementById('withdrawAvailBal').innerText = `Rs. ${(wallet.available_balance || 0).toLocaleString()}`;
+      
+      setTimeMetrics(timeMetricMode);
     }
 
     function openEditStoreModal() {
-      document.getElementById('inpStoreName').value = wallet.store_name;
-      document.getElementById('inpPaymentMethod').value = wallet.payment_method;
-      document.getElementById('inpAccountNumber').value = wallet.account_number;
-      document.getElementById('inpAccountTitle').value = wallet.account_title;
+      document.getElementById('inpStoreName').value = wallet.store_name || '';
+      document.getElementById('inpPaymentMethod').value = wallet.payment_method !== 'Not Set' ? wallet.payment_method : 'EasyPaisa';
+      document.getElementById('inpAccountNumber').value = wallet.account_number !== 'Not Set' ? wallet.account_number : '';
+      document.getElementById('inpAccountTitle').value = wallet.account_title !== 'Not Set' ? wallet.account_title : '';
       document.getElementById('editStoreModal').classList.remove('hidden');
     }
 
@@ -1656,14 +1703,14 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
 
     function saveStoreSettings(e) {
       e.preventDefault();
-      wallet.store_name = document.getElementById('inpStoreName').value.trim();
+      wallet.store_name = document.getElementById('inpStoreName').value.trim() || 'Mera Online Store';
       wallet.payment_method = document.getElementById('inpPaymentMethod').value;
       wallet.account_number = document.getElementById('inpAccountNumber').value.trim();
       wallet.account_title = document.getElementById('inpAccountTitle').value.trim();
 
       renderWalletUI();
       closeEditStoreModal();
-      showToast('ری سیلر پروفائل اور اکاؤنٹ کامیابی سے اپ ڈیٹ ہو گیا!');
+      showToast('Profile & Payout details save ho gayi!');
     }
 
     function openWithdrawModal() {
@@ -1678,11 +1725,11 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       e.preventDefault();
       const amt = parseInt(document.getElementById('inpWithdrawAmount').value) || 0;
       if (amt < 500) {
-        showToast('کم از کم رقم Rs. 500 ہونی چاہیے۔');
+        showToast('Min withdraw amount Rs. 500 hai.');
         return;
       }
       if (amt > wallet.available_balance) {
-        showToast('بیلنس ناکافی ہے!');
+        showToast('Available balance na kafi hai.');
         return;
       }
 
@@ -1690,7 +1737,7 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       wallet.total_withdrawn += amt;
       renderWalletUI();
       closeWithdrawModal();
-      showToast(`Rs. ${amt} کی درخواست موصول ہو گئی۔ 24 گھنٹے میں ٹرانسفر ہو جائے گی!`);
+      showToast(`Rs. ${amt} payout request submit ho gayi. 24h mein transfer ho jayegi.`);
     }
 
     // ==================== WISHLIST / FAVORITES ====================
@@ -1698,12 +1745,12 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       const idx = wishlist.findIndex(x => x.id === prodId);
       if (idx >= 0) {
         wishlist.splice(idx, 1);
-        showToast('Product Removed from favorites');
+        showToast('Item removed from wishlist');
       } else {
         const p = products.find(x => x.id === prodId);
         if (p) {
           wishlist.push(p);
-          showToast('Product Added to favorites (پسندیدہ میں شامل ہو گیا)');
+          showToast('Product added to wishlist');
         }
       }
       updateBadges();
@@ -1713,18 +1760,18 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
     function openWishlistModal() {
       const container = document.getElementById('wishlistItemsList');
       if (wishlist.length === 0) {
-        container.innerHTML = '<div class="text-center py-6 text-gray-500 font-medium">کوئی پروڈکٹ فیورٹ نہیں کی گئی۔</div>';
+        container.innerHTML = '<div class="text-center py-6 text-gray-500 font-medium">Koi product wishlist mein nahi hai.</div>';
       } else {
         container.innerHTML = wishlist.map(p => `
           <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50 border">
-            <div class="flex items-center space-x-2 space-x-reverse">
+            <div class="flex items-center space-x-2">
               <img src="${p.image_url}" class="w-10 h-10 object-cover rounded-lg" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
               <div>
-                <p class="font-bold text-xs text-gray-900 line-clamp-1">${p.urdu_title || p.title}</p>
-                <p class="text-[11px] font-black text-[#059669]">Rs. ${p.wholesale_price}</p>
+                <p class="font-bold text-xs text-gray-900 line-clamp-1">${p.title}</p>
+                <p class="text-[11px] font-black text-[#047857]">Rs. ${p.wholesale_price}</p>
               </div>
             </div>
-            <button onclick="openProductModal('${p.id}'); closeWishlistModal();" class="text-xs bg-[#059669] text-white px-2.5 py-1 rounded-lg font-bold">دیکھیں</button>
+            <button onclick="openProductModal('${p.id}'); closeWishlistModal();" class="text-xs bg-[#047857] text-white px-2.5 py-1 rounded-lg font-bold">Dekhein</button>
           </div>
         `).join('');
       }
@@ -1749,20 +1796,20 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       const profit = parseInt(document.getElementById('detCustomProfit') ? document.getElementById('detCustomProfit').value : 500) || 500;
       const customerPrice = currentProduct.wholesale_price + profit;
       const shareText = 
-`*🔥 ${currentProduct.urdu_title || currentProduct.title}*
+`*🔥 ${currentProduct.title}*
 -----------------------------------
-💰 *قیمت:* صرف Rs. ${customerPrice} (کیش آن ڈیلیوری)
-🚚 *ڈیلیوری چارجز:* فلیٹ Rs. 125 پورے پاکستان میں
-✨ 100% اصلی کوالٹی اور 7 دن کی آسان واپسی کی گارنٹی!
+💰 *Price:* Rs. ${customerPrice} (Cash on Delivery)
+🚚 *Delivery:* Flat Rs. 125 across Pakistan
+✨ 100% Original Quality & 7 Days Free Return!
 -----------------------------------
-آرڈر بک کروانے کے لیے اپنا نام، فون اور پتہ واٹس ایپ پر میسج کریں۔`;
+Order karne k liye apna Naam, Phone aur Delivery Address send karein.`;
 
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText);
       }
       const waUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
       window.open(waUrl, '_blank');
-      showToast('تفصیلات کاپی ہو گئیں اور واٹس ایپ اوپن ہو رہا ہے!');
+      showToast('Text copy ho gaya aur WhatsApp open ho raha hai!');
     }
 
     // ==================== CHATBOT FAQ ====================
@@ -1780,27 +1827,27 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       let q = '', a = '';
 
       if (topic === 'order_process') {
-        q = 'آرڈر کیسے کریں؟';
-        a = 'کسی بھی پروڈکٹ پر کلک کریں، اپنا منافع شامل کریں اور "آرڈر کریں" پر کلک کریں۔ کسٹمر کا نام، پتہ درج کر کے ایک کلک سے واٹس ایپ پر بھیج دیں۔ باقی پیکنگ اور ترسیل ہم کریں گے!';
+        q = 'Order kaise karein?';
+        a = 'Kisi bhi product ko open karein, apna profit likhein aur "Order Now" par click karein. Customer ka name aur address fill kar k WhatsApp par send kar dein!';
       } else if (topic === 'delivery_fee') {
-        q = 'ڈیلیوری چارجز کتنے ہیں؟';
-        a = 'پورے پاکستان کے تمام شہروں اور دیہاتوں میں فلیٹ ڈیلیوری فیس صرف Rs. 125 ہے، چاہے پارسل کتنا بھی بھاری ہو۔ ایڈوانس ادائیگی پر ڈیلیوری بالکل مفت ہے!';
+        q = 'Delivery charges kitne hain?';
+        a = 'Poore Pakistan mein standard delivery charges flat Rs. 125 hain. Advance payment par delivery bilkul FREE hai!';
       } else if (topic === 'reseller_profit') {
-        q = 'منافع کب اور کیسے ملے گا؟';
-        a = 'جیسے ہی کسٹمر پارسل وصول کرے گا، آپ کا پورا منافع 24 سے 48 گھنٹوں کے اندر آپ کے ایزی پیسہ، جاز کیش یا بینک اکاؤنٹ میں خودکار ٹرانسفر کر دیا جائے گا۔';
-      } else if (topic === 'return_policy') {
-        q = 'ریٹرن اور ریفنڈ پالیسی کیا ہے؟';
-        a = 'اگر کسٹمر کو پروڈکٹ پسند نہ آئے یا ڈیمج ملے تو 7 دن کے اندر بغیر کسی اضافی چارجز کے پارسل تبدیل یا مکمل رقم واپس کر دی جاتی ہے۔';
+        q = 'Munafa kab aur kaise milta hai?';
+        a = 'Customer ko parcel deliver hone ke 24 se 48 hours ke andar aap ka munafa aap ke JazzCash / EasyPaisa account mein transfer kar diya jata hai.';
       } else if (topic === 'advance_discount') {
-        q = 'ایڈوانس رعایت کیا ہے؟';
-        a = 'اگر کسٹمر یا آپ ایڈوانس آن لائن ادائیگی کرتے ہیں تو Rs. 100 فلیٹ ڈسکاؤنٹ اور ساتھ ڈیلیوری چارجز بالکل مفت ملتے ہیں (کل Rs. 225 کی بچت)!';
+        q = 'Advance payment discount kya hai?';
+        a = 'Advance Online payment karne par flat Rs. 200 ka special discount aur Free Delivery milti hai (Total Rs. 325 ki bachat)!';
+      } else if (topic === 'return_policy') {
+        q = 'Return policy kya hai?';
+        a = 'Product mein kisi bhi kharabi ya mismatch ki soorat mein 7 din ke andar free exchange ya 100% refund mil jata hai.';
       }
 
       box.innerHTML += `
-        <div class="bg-[#059669] text-white p-2.5 rounded-2xl rounded-tl-none font-bold mr-6 shadow-sm">
+        <div class="bg-[#047857] text-white p-2.5 rounded-2xl rounded-tr-none font-bold ml-6 shadow-sm">
           ${q}
         </div>
-        <div class="bg-white text-gray-800 p-3 rounded-2xl rounded-tr-none shadow-sm border border-gray-100 leading-relaxed ml-6">
+        <div class="bg-white text-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 leading-relaxed mr-6">
           ${a}
         </div>
       `;
@@ -1815,7 +1862,7 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
         const lq = q.toLowerCase();
         const res = products.filter(p => 
           p.title.toLowerCase().includes(lq) || 
-          (p.urdu_title && p.urdu_title.includes(q)) || 
+          (p.urdu_title && p.urdu_title.toLowerCase().includes(lq)) || 
           p.category.toLowerCase().includes(lq)
         );
         renderFilteredProducts(res);
@@ -1829,15 +1876,15 @@ _تجارت ایپ - پاکستان کا تیز ترین ری سیلنگ نیٹ 
       const container = document.getElementById('productsGrid');
       if (!container) return;
       if (list.length === 0) {
-        container.innerHTML = '<div class="col-span-2 text-center py-8 text-gray-500 font-bold">کوئی پروڈکٹ نہیں ملی۔</div>';
+        container.innerHTML = '<div class="col-span-2 text-center py-8 text-gray-500 font-bold">Koi product nahi mili.</div>';
         return;
       }
       container.innerHTML = list.map(prod => `
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm border p-3 flex flex-col justify-between">
           <img src="${prod.image_url}" class="w-full h-36 object-cover rounded-2xl cursor-pointer" onclick="openProductModal('${prod.id}')" />
-          <h4 class="font-black text-xs text-gray-900 mt-2 line-clamp-1">${prod.urdu_title || prod.title}</h4>
-          <p class="font-black text-sm text-[#059669] mt-1">Rs. ${prod.wholesale_price}</p>
-          <button onclick="openProductModal('${prod.id}')" class="mt-2 bg-[#059669] text-white text-[10px] font-black py-1.5 rounded-xl">آرڈر کریں</button>
+          <h4 class="font-black text-xs text-gray-900 mt-2 line-clamp-1">${prod.title}</h4>
+          <p class="font-black text-sm text-[#047857] mt-1">Rs. ${prod.wholesale_price}</p>
+          <button onclick="openProductModal('${prod.id}')" class="mt-2 bg-[#047857] text-white text-[10px] font-black py-1.5 rounded-xl">Order Karein</button>
         </div>
       `).join('');
     }
