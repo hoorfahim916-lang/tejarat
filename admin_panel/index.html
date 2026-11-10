@@ -177,7 +177,7 @@
             <thead class="bg-gray-100 text-gray-600 uppercase font-bold">
               <tr>
                 <th class="px-4 py-3">Store / Brand Name</th>
-                <th class="px-4 py-3">Phone</th>
+                <th class="px-4 py-3">Gmail / Phone</th>
                 <th class="px-4 py-3">Available Balance</th>
                 <th class="px-4 py-3">Pending Profit</th>
                 <th class="px-4 py-3">Total Withdrawn</th>
@@ -512,7 +512,7 @@
       tbody.innerHTML = users.map(u => `
         <tr class="hover:bg-gray-50">
           <td class="px-4 py-3 font-bold text-gray-900">${u.store_name} <span class="text-[10px] text-gray-400 block">${u.user_id}</span></td>
-          <td class="px-4 py-3 font-mono">${u.phone}</td>
+          <td class="px-4 py-3 font-mono text-xs font-bold text-gray-800">${u.email || u.phone || 'N/A'}</td>
           <td class="px-4 py-3 font-black text-emerald-600">Rs. ${u.available_balance}</td>
           <td class="px-4 py-3 font-bold text-amber-600">Rs. ${u.pending_profit}</td>
           <td class="px-4 py-3 font-bold text-gray-700">Rs. ${u.total_withdrawn}</td>
