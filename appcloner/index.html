@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>App Cloner VIP</title>
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --card-bg: rgba(22, 30, 49, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --neon-green: #00E676;
+            --neon-cyan: #00B0FF;
+            --neon-gold: #F59E0B;
+            --text-main: #F1F5F9;
+            --text-sub: #94A3B8;
+            --danger: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 14px;
+            padding-bottom: 90px;
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        /* Top Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 14px;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            box-shadow: 0 0 16px rgba(0, 230, 118, 0.4);
+        }
+
+        .brand-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #FFFFFF, #38BDF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .vip-unlocked-badge {
+            background: linear-gradient(135deg, #059669, #10B981);
+            color: #FFFFFF;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 7px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-left: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Quick Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px 8px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--neon-green);
+        }
+
+        .stat-lbl {
+            font-size: 9px;
+            color: var(--text-sub);
+            margin-top: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Action Buttons Row */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .btn-action-banner {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 176, 255, 0.15));
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-action-banner:active {
+            transform: scale(0.98);
+            border-color: var(--neon-green);
+        }
+
+        .btn-banner-icon {
+            font-size: 24px;
+        }
+
+        .btn-banner-text {
+            font-size: 13px;
+            font-weight: 800;
+            color: #FFF;
+        }
+
+        .btn-banner-sub {
+            font-size: 10px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* Main Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            gap: 4px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            text-align: center;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            color: var(--text-sub);
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active-green {
+            background: linear-gradient(135deg, #059669, #10B981);
+            color: #FFF;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .nav-tab.active-blue {
+            background: linear-gradient(135deg, #0284C7, #0284C7);
+            color: #FFF;
+            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Search Box */
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 12px 14px 12px 40px;
+            border-radius: 12px;
+            color: #FFF;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--neon-cyan);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        /* Apps List */
+        .apps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .app-row {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.15s;
+        }
+
+        .app-row:active {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(0.99);
+        }
+
+        .app-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            flex-shrink: 0;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-fallback-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            background: #1E293B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .app-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .app-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFF;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-pkg {
+            font-size: 11px;
+            color: var(--text-sub);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .social-pill {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--neon-green);
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-left: 6px;
+        }
+
+        .btn-clone-action {
+            background: linear-gradient(135deg, #00E676, #00B0FF);
+            color: #000;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0, 230, 118, 0.3);
+        }
+
+        /* CLONED APKS CARDS (AppListo Style) */
+        .cloned-apk-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .cloned-apk-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cloned-apk-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 13px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .cloned-apk-details {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .cloned-apk-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFF;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cloned-apk-meta {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 3px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cloned-apk-chip {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 10px;
+            color: #93C5FD;
+        }
+
+        .cloned-apk-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-install {
+            flex: 2;
+            background: linear-gradient(135deg, #00E676, #059669);
+            color: #000;
+            border: none;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 230, 118, 0.35);
+        }
+
+        .btn-share {
+            flex: 1.5;
+            background: linear-gradient(135deg, #0284C7, #0369A1);
+            color: #FFF;
+            border: none;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+            width: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        /* Modal Sheet */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .modal-sheet {
+            background: #111827;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.25s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFF;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #FFF;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* ICON STUDIO LIVE PREVIEW */
+        .studio-preview-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .preview-canvas-wrapper {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin-bottom: 10px;
+        }
+
+        #iconPreviewCanvas {
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background: #1E293B;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .studio-tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .slider-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .slider-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .slider-control {
+            width: 100%;
+            accent-color: var(--neon-green);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            padding: 11px 14px;
+            border-radius: 12px;
+            color: #FFF;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .color-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .color-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.15s;
+        }
+
+        .color-dot.active {
+            transform: scale(1.15);
+            border-color: #FFF;
+            box-shadow: 0 0 10px #FFF;
+        }
+
+        /* CLONING PROGRESS MODAL */
+        .progress-box {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .progress-spinner {
+            font-size: 42px;
+            margin-bottom: 14px;
+            animation: spin 1.5s infinite linear;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00E676, #00B0FF);
+            transition: width 0.3s ease;
+        }
+
+        .btn-update-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #FFF;
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.2), rgba(0, 176, 255, 0.2));
+            border: 1px solid rgba(0, 230, 118, 0.4);
+            padding: 6px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .btn-update-pill:active {
+            transform: scale(0.95);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .update-badge-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #EF4444;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #EF4444;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="brand-box">
+            <img src="app_logo.png" class="brand-icon" alt="Logo">
+            <div>
+                <div class="brand-title">APP CLONER <span class="vip-unlocked-badge">VIP UNLOCKED</span></div>
+                <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px;">
+                    Real Standalone Cloner &amp; Installer
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+            <button class="btn-update-pill" onclick="openUpdateModal()" title="Auto Update & Live Sync">
+                <span class="live-dot"></span>
+                <span>🔄 آٹو اپ ڈیٹ</span>
+                <span class="update-badge-dot" id="headerUpdateDot"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-val" id="statAppsFound">0</div>
+            <div class="stat-lbl">Apps on Phone</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="statClonedApks">0</div>
+            <div class="stat-lbl">Cloned APKs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" style="color: var(--neon-cyan);">STANDALONE</div>
+            <div class="stat-lbl">Native Mode</div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Banner -->
+    <div class="action-grid">
+        <div class="btn-action-banner" onclick="pickApkFromStorage()">
+            <span class="btn-banner-icon">📁</span>
+            <div>
+                <div class="btn-banner-text">فائل مینیجر</div>
+                <div class="btn-banner-sub">Pick APK from Storage</div>
+            </div>
+        </div>
+        <div class="btn-action-banner" onclick="switchTab('clonedApks')">
+            <span class="btn-banner-icon">📦</span>
+            <div>
+                <div class="btn-banner-text">کلون شدہ ایپس</div>
+                <div class="btn-banner-sub">View Cloned Apps (<span id="quickClonedCount">0</span>)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Tabs: 2 Clear Side-by-Side Options -->
+    <div class="nav-tabs">
+        <div class="nav-tab active-green" id="tabInstalled" onclick="switchTab('installed')">
+            📱 ایپس (<span id="installedCountTab">0</span>)
+        </div>
+        <div class="nav-tab" id="tabClonedApks" onclick="switchTab('clonedApks')">
+            📦 کلون ایپس (<span id="clonedApksCountTab">0</span>)
+        </div>
+    </div>
+
+    <!-- VIEW 1: ALL APPS ON PHONE -->
+    <div id="viewInstalledApps">
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="searchAppInput" placeholder="Search any app (Facebook, Messenger, etc)..." oninput="filterInstalledApps()">
+        </div>
+
+        <!-- Apps List Container -->
+        <div class="apps-list" id="appsListContainer">
+            <div style="text-align: center; padding: 30px; color: var(--text-sub);">
+                Loading installed applications...
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 2: CLONED APKS (INSTALLED OUTSIDE ON HOME SCREEN) -->
+    <div id="viewClonedApks" style="display: none;">
+        <div class="apps-list" id="clonedApksContainer">
+            <!-- Populated dynamically -->
+        </div>
+
+        <div id="emptyClonedApksState" style="display: none; text-align: center; padding: 40px 20px; background: var(--card-bg); border: 1px dashed var(--card-border); border-radius: 16px; color: var(--text-sub);">
+            <div style="font-size: 38px; margin-bottom: 10px;">📦</div>
+            <div style="font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 6px;">ابھی کوئی ایپ کلون نہیں ہوئی</div>
+            <div style="font-size: 12px; margin-bottom: 14px;">پہلے آپشن 'ایپس' پر جائیں اور فیس بک یا میسنجر کے آگے '+ CLONE' دبائیں۔</div>
+            <button class="btn-clone-action" onclick="switchTab('installed')">ایپس دیکھیں (Browse Apps)</button>
+        </div>
+    </div>
+
+    <!-- MODAL 1: APPLISTO-STYLE CLONE CUSTOMIZER & ICON STUDIO -->
+    <div class="modal-overlay" id="customizeCloneModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div class="modal-title">🎨 Clone &amp; Icon Studio</div>
+                <button class="modal-close" onclick="closeModal('customizeCloneModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- Live Icon Preview Canvas -->
+                <div class="studio-preview-box">
+                    <div class="preview-canvas-wrapper">
+                        <canvas id="iconPreviewCanvas" width="128" height="128"></canvas>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="file" id="customPhotoInput" accept="image/*" style="display: none;" onchange="handleCustomPhotoUpload(event)">
+                        <button class="btn-clone-action" style="padding: 6px 12px; font-size: 11px;" onclick="document.getElementById('customPhotoInput').click()">
+                            🖼️ ڈی پی / تصویر تبدیل کریں
+                        </button>
+                        <button class="btn-icon" style="background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: #FFF; width: 34px; height: 34px; border-radius: 8px;" title="Reset Icon" onclick="resetIconFilters()">🔄</button>
+                    </div>
+                </div>
+
+                <!-- Icon Coloring & Zoom Controls (AppListo Style) -->
+                <div class="studio-tools-grid">
+                    <div class="slider-box">
+                        <div class="slider-label">
+                            <span>🎨 کلرنگ (Color Tint)</span>
+                            <span id="hueVal">0°</span>
+                        </div>
+                        <input type="range" class="slider-control" id="hueSlider" min="0" max="360" value="0" oninput="updateIconCanvas()">
+                    </div>
+
+                    <div class="slider-box">
+                        <div class="slider-label">
+                            <span>🔍 زوم (Scale / Zoom)</span>
+                            <span id="zoomVal">100%</span>
+                        </div>
+                        <input type="range" class="slider-control" id="zoomSlider" min="50" max="150" value="100" oninput="updateIconCanvas()">
+                    </div>
+
+                    <div class="slider-box">
+                        <div class="slider-label">
+                            <span>✨ چمک (Saturation)</span>
+                            <span id="satVal">100%</span>
+                        </div>
+                        <input type="range" class="slider-control" id="satSlider" min="0" max="200" value="100" oninput="updateIconCanvas()">
+                    </div>
+
+                    <div class="slider-box">
+                        <div class="slider-label">
+                            <span>🔄 روٹیٹ (Rotate &amp; Flip)</span>
+                            <span id="rotVal">0°</span>
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-top: 2px;">
+                            <button class="btn-icon" style="background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: #FFF; height: 28px; width: 50%; font-size: 11px; border-radius: 6px;" onclick="toggleFlipHorizontal()">Flip ↔</button>
+                            <button class="btn-icon" style="background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); color: #FFF; height: 28px; width: 50%; font-size: 11px; border-radius: 6px;" onclick="rotateIcon90()">+90°</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- App Name & Badge -->
+                <div class="form-group">
+                    <label class="form-label">کلون کا نام درج کریں (Display Name on Home Screen)</label>
+                    <input type="text" class="form-input" id="cloneNameInput" placeholder="e.g. Facebook Meta #1">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">بیج نمبر / فیو آئیکن (Badge Text e.g. 1, 2, VIP, WORK)</label>
+                    <input type="text" class="form-input" id="badgeTextInput" value="1" placeholder="Badge text e.g. 1, 2, VIP" oninput="updateIconCanvas()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">بیج کا رنگ منتخب کریں</label>
+                    <div class="color-row">
+                        <div class="color-dot active" style="background: #00E676;" onclick="selectColor(this, '#00E676')"></div>
+                        <div class="color-dot" style="background: #00B0FF;" onclick="selectColor(this, '#00B0FF')"></div>
+                        <div class="color-dot" style="background: #8B5CF6;" onclick="selectColor(this, '#8B5CF6')"></div>
+                        <div class="color-dot" style="background: #F59E0B;" onclick="selectColor(this, '#F59E0B')"></div>
+                        <div class="color-dot" style="background: #EC4899;" onclick="selectColor(this, '#EC4899')"></div>
+                        <div class="color-dot" style="background: #EF4444;" onclick="selectColor(this, '#EF4444')"></div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(0, 230, 118, 0.08); border: 1px solid rgba(0, 230, 118, 0.2); padding: 12px; border-radius: 12px; margin-bottom: 14px; font-size: 12px; color: #E2E8F0;">
+                    ⚡ <b>ریئل انسٹالیشن:</b> کلون مکمل ہوتے ہی یہ ایپ خودکار طریقے سے <b>کلون ایپس</b> والے آپشن میں چلی جائے گی جہاں سے آپ اسے براہ راست اپنے موبائل کی ہوم اسکرین پر انسٹال کر سکتے ہیں۔
+                </div>
+
+                <button class="btn-clone-action" style="width: 100%; padding: 14px; font-size: 14px;" onclick="confirmStartCloning()">
+                    🚀 کلون کمپائل کریں (BUILD &amp; COMPILE APK)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CLONING PROGRESS MODAL -->
+    <div class="modal-overlay" id="cloningProgressModal">
+        <div class="modal-sheet">
+            <div class="modal-body progress-box">
+                <div class="progress-spinner">⚙️</div>
+                <div style="font-size: 17px; font-weight: 800; color: #FFF; margin-bottom: 6px;" id="cloneStatusTitle">ایپلی کیشن کلون ہو رہی ہے...</div>
+                <div style="font-size: 12px; color: var(--text-sub);" id="cloneStatusMsg">64-bit لائبریریاں اور نیا نام لاگو ہو رہا ہے...</div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="cloneProgressBar"></div>
+                </div>
+
+                <div style="font-size: 14px; font-weight: 800; color: var(--neon-cyan);" id="cloneProgressPercent">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: AUTO-UPDATE & OTA SYNC -->
+    <div class="modal-overlay" id="updateModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div class="modal-title">🔄 آٹو اپ ڈیٹ (Auto-Update System)</div>
+                <button class="modal-close" onclick="closeModal('updateModal')">✕</button>
+            </div>
+            <div class="modal-body" style="text-align: center; padding: 22px 18px;">
+                <div style="width: 68px; height: 68px; border-radius: 18px; background: rgba(0, 230, 118, 0.15); border: 1px solid rgba(0, 230, 118, 0.3); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 14px auto;">
+                    🚀
+                </div>
+                <div style="font-size: 18px; font-weight: 800; color: #FFF; margin-bottom: 4px;">App Cloner VIP</div>
+                <div style="font-size: 13px; color: var(--neon-cyan); margin-bottom: 16px;">
+                    موجودہ ورژن: <span id="currentVersionLabel">v1.0.0 (Build 100)</span>
+                </div>
+
+                <!-- OTA Live Sync Status Box -->
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 14px; padding: 14px; text-align: right; margin-bottom: 16px; direction: rtl;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: 700; font-size: 13px; color: #FFF;">⚡ لائیو کلاؤڈ سِنک (OTA):</span>
+                        <span style="font-size: 11px; color: var(--neon-green); font-weight: 700;">فعال (Active)</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-sub); line-height: 1.6;">
+                        کلاؤڈ سے تازہ ترین تبدیلیاں خودکار سِنک ہوتی ہیں، تاکہ آپ کو بار بار ایپ دوبارہ انسٹال نہ کرنی پڑے۔
+                    </div>
+                </div>
+
+                <!-- Update Status Message -->
+                <div id="updateStatusBox" style="font-size: 13px; color: var(--text-sub); min-height: 24px; margin-bottom: 16px;">
+                    تازہ ترین اپ ڈیٹ چیک کرنے کے لیے نیچے بٹن دبائیں۔
+                </div>
+
+                <!-- Download Progress Bar (Hidden by default) -->
+                <div id="updateProgressContainer" style="display: none; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-sub); margin-bottom: 6px;">
+                        <span>ڈاؤن لوڈ ہو رہا ہے...</span>
+                        <span id="updateProgressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar-container" style="margin: 0;">
+                        <div class="progress-bar-fill" id="updateProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn-clone-action" id="btnCheckUpdate" onclick="triggerUpdateCheck()" style="width: 100%; padding: 14px; font-size: 14px;">
+                        🔍 اپ ڈیٹ چیک کریں (Check Update)
+                    </button>
+                    <button class="btn-clone-action" id="btnInstallUpdate" onclick="triggerUpdateDownload()" style="display: none; width: 100%; padding: 14px; font-size: 14px; background: linear-gradient(135deg, #0284C7, #00E676);">
+                        ⬇️ ابھی نیا ورژن انسٹال کریں
+                    </button>
+                    <button class="btn-action-banner" onclick="forceOtaReload()" style="justify-content: center; padding: 10px;">
+                        <span style="font-size: 12px; color: var(--text-sub);">🔄 ریفریش لائیو سسٹم (Sync Now)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allInstalledApps = [];
+        let selectedAppToClone = null;
+        let selectedBadgeColor = "#00E676";
+
+        let baseIconImage = new Image();
+        let currentRotation = 0;
+        let isFlipped = false;
+
+        window.onload = function() {
+            initApp();
+        };
+
+        function initApp() {
+            loadInstalledApps();
+            loadClonedApks();
+        }
+
+        window.onCloneProgress = function(percent, msg) {
+            document.getElementById("cloneProgressBar").style.width = percent + "%";
+            document.getElementById("cloneProgressPercent").innerText = percent + "%";
+            document.getElementById("cloneStatusMsg").innerText = msg;
+        };
+
+        window.onCloneSuccess = function() {
+            closeModal("cloningProgressModal");
+            switchTab('clonedApks');
+            if (window.AndroidBridge && window.AndroidBridge.showToast) {
+                window.AndroidBridge.showToast("🎉 کلون تیار ہے! اب 'INSTALL' دبائیں تاکہ ہوم اسکرین پر انسٹال ہو جائے۔");
+            }
+        };
+
+        window.onCloneError = function(errMsg) {
+            closeModal("cloningProgressModal");
+            alert("❌ Cloning Error: " + errMsg);
+        };
+
+        window.onApkPicked = function(apkInfo) {
+            if (!apkInfo) return;
+            selectedAppToClone = {
+                packageName: apkInfo.packageName,
+                appName: apkInfo.appName,
+                sourceApkPath: apkInfo.sourceApkPath,
+                iconBase64: apkInfo.iconBase64
+            };
+            openStudioModal(selectedAppToClone);
+        };
+
+        function pickApkFromStorage() {
+            if (window.AndroidBridge && window.AndroidBridge.pickApkFromFileManager) {
+                window.AndroidBridge.pickApkFromFileManager();
+            } else {
+                alert("Simulated: Open File Manager to pick an APK file.");
+            }
+        }
+
+        function switchTab(tab) {
+            const tabInst = document.getElementById("tabInstalled");
+            const tabClon = document.getElementById("tabClonedApks");
+            const viewInst = document.getElementById("viewInstalledApps");
+            const viewClon = document.getElementById("viewClonedApks");
+
+            if (tab === 'installed') {
+                tabInst.className = "nav-tab active-green";
+                tabClon.className = "nav-tab";
+                viewInst.style.display = "block";
+                viewClon.style.display = "none";
+            } else {
+                tabInst.className = "nav-tab";
+                tabClon.className = "nav-tab active-blue";
+                viewInst.style.display = "none";
+                viewClon.style.display = "block";
+                loadClonedApks();
+            }
+        }
+
+        function loadInstalledApps() {
+            try {
+                if (window.AndroidBridge && window.AndroidBridge.getInstalledApps) {
+                    allInstalledApps = JSON.parse(window.AndroidBridge.getInstalledApps());
+                } else {
+                    allInstalledApps = [
+                        { appName: "Facebook", packageName: "com.facebook.katana", isSocialTarget: true },
+                        { appName: "Messenger", packageName: "com.facebook.orca", isSocialTarget: true },
+                        { appName: "WhatsApp", packageName: "com.whatsapp", isSocialTarget: true },
+                        { appName: "Instagram", packageName: "com.instagram.android", isSocialTarget: true },
+                        { appName: "TikTok", packageName: "com.zhiliaoapp.musically", isSocialTarget: true }
+                    ];
+                }
+
+                document.getElementById("statAppsFound").innerText = allInstalledApps.length;
+                document.getElementById("installedCountTab").innerText = allInstalledApps.length;
+                renderInstalledApps(allInstalledApps);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function renderInstalledApps(apps) {
+            const container = document.getElementById("appsListContainer");
+            if (!apps || apps.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-sub);">No apps found matching your query.</div>`;
+                return;
+            }
+
+            let html = "";
+            apps.forEach(app => {
+                const iconHtml = app.iconBase64 ? 
+                    `<img src="${app.iconBase64}" class="app-icon" alt="icon">` : 
+                    `<div class="app-fallback-icon">📱</div>`;
+
+                const socialBadge = app.isSocialTarget ? `<span class="social-pill">⭐ SOCIAL</span>` : "";
+
+                html += `
+                    <div class="app-row">
+                        ${iconHtml}
+                        <div class="app-info">
+                            <div class="app-name">${app.appName} ${socialBadge}</div>
+                            <div class="app-pkg">${app.packageName}</div>
+                        </div>
+                        <button class="btn-clone-action" onclick="openCloneConfig('${app.packageName}', '${escape(app.appName)}')">
+                            + CLONE
+                        </button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterInstalledApps() {
+            const query = document.getElementById("searchAppInput").value.toLowerCase();
+            const filtered = allInstalledApps.filter(a => 
+                a.appName.toLowerCase().includes(query) || a.packageName.toLowerCase().includes(query)
+            );
+            renderInstalledApps(filtered);
+        }
+
+        function openCloneConfig(pkg, encodedName) {
+            const appName = unescape(encodedName);
+            const found = allInstalledApps.find(a => a.packageName === pkg);
+            selectedAppToClone = { 
+                packageName: pkg, 
+                appName: appName,
+                iconBase64: found ? found.iconBase64 : ""
+            };
+            openStudioModal(selectedAppToClone);
+        }
+
+        function openStudioModal(app) {
+            let count = 1;
+            if (window.AndroidBridge && window.AndroidBridge.getClonedApks) {
+                try {
+                    const clonedList = JSON.parse(window.AndroidBridge.getClonedApks());
+                    clonedList.forEach(c => {
+                        if (c.originalPackage === app.packageName) count++;
+                    });
+                } catch (ignored) {}
+            }
+
+            document.getElementById("cloneNameInput").value = app.appName + " #" + count;
+            document.getElementById("badgeTextInput").value = "" + count;
+
+            resetIconFilters();
+
+            if (app.iconBase64) {
+                baseIconImage.onload = function() {
+                    updateIconCanvas();
+                };
+                baseIconImage.src = app.iconBase64;
+            } else {
+                updateIconCanvas();
+            }
+
+            document.getElementById("customizeCloneModal").style.display = "flex";
+        }
+
+        function resetIconFilters() {
+            document.getElementById("hueSlider").value = 0;
+            document.getElementById("zoomSlider").value = 100;
+            document.getElementById("satSlider").value = 100;
+            currentRotation = 0;
+            isFlipped = false;
+            document.getElementById("hueVal").innerText = "0°";
+            document.getElementById("zoomVal").innerText = "100%";
+            document.getElementById("satVal").innerText = "100%";
+            document.getElementById("rotVal").innerText = "0°";
+            updateIconCanvas();
+        }
+
+        function toggleFlipHorizontal() {
+            isFlipped = !isFlipped;
+            updateIconCanvas();
+        }
+
+        function rotateIcon90() {
+            currentRotation = (currentRotation + 90) % 360;
+            document.getElementById("rotVal").innerText = currentRotation + "°";
+            updateIconCanvas();
+        }
+
+        function handleCustomPhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    baseIconImage.onload = function() {
+                        updateIconCanvas();
+                    };
+                    baseIconImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function selectColor(el, color) {
+            document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+            el.classList.add("active");
+            selectedBadgeColor = color;
+            updateIconCanvas();
+        }
+
+        function updateIconCanvas() {
+            const canvas = document.getElementById("iconPreviewCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const w = canvas.width;
+            const h = canvas.height;
+
+            const hue = document.getElementById("hueSlider").value;
+            const zoom = document.getElementById("zoomSlider").value / 100.0;
+            const sat = document.getElementById("satSlider").value;
+            const badgeText = document.getElementById("badgeTextInput").value.trim();
+
+            document.getElementById("hueVal").innerText = hue + "°";
+            document.getElementById("zoomVal").innerText = Math.round(zoom * 100) + "%";
+            document.getElementById("satVal").innerText = sat + "%";
+
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.save();
+            ctx.beginPath();
+            roundRect(ctx, 4, 4, w - 8, h - 8, 24);
+            ctx.clip();
+
+            ctx.filter = `hue-rotate(${hue}deg) saturate(${sat}%)`;
+
+            ctx.translate(w / 2, h / 2);
+            ctx.rotate((currentRotation * Math.PI) / 180);
+            ctx.scale(isFlipped ? -zoom : zoom, zoom);
+
+            if (baseIconImage && baseIconImage.complete && baseIconImage.naturalWidth > 0) {
+                ctx.drawImage(baseIconImage, -w / 2, -h / 2, w, h);
+            } else {
+                ctx.fillStyle = selectedBadgeColor;
+                ctx.fillRect(-w / 2, -h / 2, w, h);
+                ctx.fillStyle = "#FFFFFF";
+                ctx.font = "bold 44px sans-serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("📱", 0, 0);
+            }
+            ctx.restore();
+
+            if (badgeText) {
+                ctx.save();
+                const badgeRadius = 18;
+                const bx = w - badgeRadius - 6;
+                const by = h - badgeRadius - 6;
+
+                ctx.beginPath();
+                ctx.arc(bx, by, badgeRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = selectedBadgeColor;
+                ctx.shadowColor = "rgba(0,0,0,0.6)";
+                ctx.shadowBlur = 6;
+                ctx.fill();
+
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.stroke();
+
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = "#FFFFFF";
+                ctx.font = "bold 14px sans-serif";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(badgeText, bx, by);
+                ctx.restore();
+            }
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function confirmStartCloning() {
+            if (!selectedAppToClone) return;
+
+            const name = document.getElementById("cloneNameInput").value || selectedAppToClone.appName;
+            const canvas = document.getElementById("iconPreviewCanvas");
+            const customIconBase64 = canvas ? canvas.toDataURL("image/png") : "";
+
+            const cloneConfig = {
+                targetPackage: selectedAppToClone.packageName,
+                sourceApkPath: selectedAppToClone.sourceApkPath || "",
+                appName: name,
+                cloneNumber: 1,
+                customIconBase64: customIconBase64
+            };
+
+            closeModal("customizeCloneModal");
+
+            document.getElementById("cloneProgressBar").style.width = "0%";
+            document.getElementById("cloneProgressPercent").innerText = "0%";
+            document.getElementById("cloneStatusMsg").innerText = "Starting standalone clone engine...";
+            document.getElementById("cloningProgressModal").style.display = "flex";
+
+            if (window.AndroidBridge && window.AndroidBridge.startApkCloning) {
+                window.AndroidBridge.startApkCloning(JSON.stringify(cloneConfig));
+            } else {
+                setTimeout(() => window.onCloneProgress(30, "Patching package name & label..."), 500);
+                setTimeout(() => window.onCloneProgress(70, "Signing APK..."), 1000);
+                setTimeout(() => window.onCloneSuccess(), 1500);
+            }
+        }
+
+        function loadClonedApks() {
+            try {
+                let apks = [];
+                if (window.AndroidBridge && window.AndroidBridge.getClonedApks) {
+                    apks = JSON.parse(window.AndroidBridge.getClonedApks());
+                }
+
+                document.getElementById("statClonedApks").innerText = apks.length;
+                document.getElementById("clonedApksCountTab").innerText = apks.length;
+                document.getElementById("quickClonedCount").innerText = apks.length;
+
+                const container = document.getElementById("clonedApksContainer");
+                const emptyState = document.getElementById("emptyClonedApksState");
+
+                if (!apks || apks.length === 0) {
+                    container.innerHTML = "";
+                    emptyState.style.display = "block";
+                    return;
+                }
+
+                emptyState.style.display = "none";
+                let html = "";
+                apks.forEach(item => {
+                    const iconHtml = item.iconBase64 ? 
+                        `<img src="${item.iconBase64}" class="cloned-apk-icon">` : 
+                        `<div class="cloned-apk-icon" style="background: #1E293B; display: flex; align-items: center; justify-content: center; font-size: 22px;">📦</div>`;
+
+                    const sizeMb = (item.fileSize / (1024 * 1024)).toFixed(1);
+
+                    html += `
+                        <div class="cloned-apk-card">
+                            <div class="cloned-apk-top">
+                                ${iconHtml}
+                                <div class="cloned-apk-details">
+                                    <div class="cloned-apk-title">${item.appName}</div>
+                                    <div class="cloned-apk-meta">
+                                        <span class="cloned-apk-chip">📦 ${item.clonedPackage}</span>
+                                        <span class="cloned-apk-chip">${sizeMb} MB</span>
+                                        <span class="cloned-apk-chip" style="color: #4ADE80;">✓ Signed Release</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cloned-apk-actions">
+                                <button class="btn-install" onclick="installApk('${escape(item.apkPath)}')">
+                                    📥 INSTALL (انسٹال کریں)
+                                </button>
+                                <button class="btn-share" onclick="shareApk('${escape(item.apkPath)}')">
+                                    📤 SHARE
+                                </button>
+                                <button class="btn-delete" title="Delete APK" onclick="deleteApk('${escape(item.apkPath)}')">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function installApk(escapedPath) {
+            const path = unescape(escapedPath);
+            if (window.AndroidBridge && window.AndroidBridge.installClonedApk) {
+                window.AndroidBridge.installClonedApk(path);
+            } else {
+                alert("Installing APK: " + path);
+            }
+        }
+
+        function shareApk(escapedPath) {
+            const path = unescape(escapedPath);
+            if (window.AndroidBridge && window.AndroidBridge.shareClonedApk) {
+                window.AndroidBridge.shareClonedApk(path);
+            } else {
+                alert("Sharing APK: " + path);
+            }
+        }
+
+        function deleteApk(escapedPath) {
+            const path = unescape(escapedPath);
+            if (confirm("Delete this cloned APK file?")) {
+                if (window.AndroidBridge && window.AndroidBridge.deleteClonedApk) {
+                    window.AndroidBridge.deleteClonedApk(path);
+                }
+                loadClonedApks();
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // --- AUTO-UPDATE & LIVE OTA SYSTEM ---
+        let latestUpdateData = null;
+
+        function openUpdateModal() {
+            document.getElementById('updateModal').style.display = 'flex';
+            if (window.AndroidBridge && window.AndroidBridge.getAppVersion) {
+                try {
+                    const ver = JSON.parse(window.AndroidBridge.getAppVersion());
+                    document.getElementById('currentVersionLabel').innerText = 'v' + ver.versionName + ' (Build ' + ver.versionCode + ')';
+                } catch(e) {}
+            }
+        }
+
+        function triggerUpdateCheck() {
+            const btn = document.getElementById('btnCheckUpdate');
+            const statusBox = document.getElementById('updateStatusBox');
+            btn.disabled = true;
+            btn.innerText = '🔍 چیک کیا جا رہا ہے...';
+            statusBox.style.color = 'var(--neon-cyan)';
+            statusBox.innerText = 'کلاؤڈ سرور سے جدید ترین ورژن کی تصدیق کی جا رہی ہے...';
+
+            if (window.AndroidBridge && window.AndroidBridge.checkForAppUpdate) {
+                window.AndroidBridge.checkForAppUpdate();
+            } else {
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.innerText = '🔍 اپ ڈیٹ چیک کریں (Check Update)';
+                    statusBox.style.color = 'var(--neon-green)';
+                    statusBox.innerText = 'آپ کا ایپ جدید ترین ورژن پر ہے! کوئی نئی اپ ڈیٹ درکار نہیں۔';
+                }, 1200);
+            }
+        }
+
+        window.onUpdateCheckResult = function(data) {
+            const btnCheck = document.getElementById('btnCheckUpdate');
+            const btnInstall = document.getElementById('btnInstallUpdate');
+            const statusBox = document.getElementById('updateStatusBox');
+            btnCheck.disabled = false;
+            btnCheck.innerText = '🔍 دوبارہ چیک کریں';
+
+            latestUpdateData = data;
+            if (data.hasUpdate) {
+                const dot = document.getElementById('headerUpdateDot');
+                if (dot) dot.style.display = 'block';
+                statusBox.style.color = 'var(--neon-green)';
+                statusBox.innerHTML = `
+                    <div style="font-weight: 800; font-size: 14px; margin-bottom: 4px;">🎉 نیا ورژن دستیاب ہے: v${data.serverVersionName}</div>
+                    <div style="font-size: 12px; color: var(--text-sub);">${data.changelog || 'بہترین کارکردگی اور نئے فیچرز کے ساتھ۔'}</div>
+                `;
+                btnInstall.style.display = 'block';
+                btnInstall.innerText = `⬇️ ابھی اپ ڈیٹ انسٹال کریں (v${data.serverVersionName})`;
+            } else {
+                const dot = document.getElementById('headerUpdateDot');
+                if (dot) dot.style.display = 'none';
+                statusBox.style.color = 'var(--neon-green)';
+                statusBox.innerText = `✅ آپ کے پاس پہلے ہی جدید ترین ورژن موجود ہے (v${data.currentVersionName})۔`;
+                btnInstall.style.display = 'none';
+            }
+        };
+
+        window.onUpdateCheckError = function(errMsg) {
+            const btn = document.getElementById('btnCheckUpdate');
+            const statusBox = document.getElementById('updateStatusBox');
+            btn.disabled = false;
+            btn.innerText = '🔍 دوبارہ چیک کریں';
+            statusBox.style.color = 'var(--danger)';
+            statusBox.innerText = 'اپ ڈیٹ چیک نہیں ہو سکی: ' + errMsg;
+        };
+
+        function triggerUpdateDownload() {
+            if (!latestUpdateData || !latestUpdateData.downloadUrl) {
+                alert('ڈاؤن لوڈ لنک دستیاب نہیں ہے۔');
+                return;
+            }
+            const btnInstall = document.getElementById('btnInstallUpdate');
+            btnInstall.disabled = true;
+            btnInstall.innerText = '⏳ ڈاؤن لوڈ شروع ہو رہا ہے...';
+
+            document.getElementById('updateProgressContainer').style.display = 'block';
+            document.getElementById('updateProgressBar').style.width = '0%';
+            document.getElementById('updateProgressPercent').innerText = '0%';
+
+            if (window.AndroidBridge && window.AndroidBridge.downloadAndInstallUpdate) {
+                window.AndroidBridge.downloadAndInstallUpdate(latestUpdateData.downloadUrl);
+            } else {
+                alert('ڈاؤن لوڈنگ: ' + latestUpdateData.downloadUrl);
+            }
+        }
+
+        window.onUpdateDownloadProgress = function(percent) {
+            document.getElementById('updateProgressBar').style.width = percent + '%';
+            document.getElementById('updateProgressPercent').innerText = percent + '%';
+        };
+
+        window.onUpdateDownloadSuccess = function() {
+            const statusBox = document.getElementById('updateStatusBox');
+            statusBox.style.color = 'var(--neon-green)';
+            statusBox.innerText = '✅ ڈاؤن لوڈ مکمل! انسٹالیشن شروع ہو رہی ہے...';
+            document.getElementById('btnInstallUpdate').innerText = '✅ انسٹال کیا جا رہا ہے';
+        };
+
+        window.onUpdateDownloadError = function(err) {
+            const btnInstall = document.getElementById('btnInstallUpdate');
+            btnInstall.disabled = false;
+            btnInstall.innerText = '⬇️ دوبارہ ڈاؤن لوڈ کی کوشش کریں';
+            const statusBox = document.getElementById('updateStatusBox');
+            statusBox.style.color = 'var(--danger)';
+            statusBox.innerText = 'ڈاؤن لوڈ میں خرابی: ' + err;
+        };
+
+        function forceOtaReload() {
+            if (window.AndroidBridge && window.AndroidBridge.refreshApp) {
+                window.AndroidBridge.refreshApp();
+            } else {
+                window.location.reload();
+            }
+        }
+
+        // Silent background check 4 seconds after launch
+        setTimeout(function() {
+            if (window.AndroidBridge && window.AndroidBridge.checkForAppUpdate) {
+                window.AndroidBridge.checkForAppUpdate();
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
