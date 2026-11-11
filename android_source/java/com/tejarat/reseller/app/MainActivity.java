@@ -82,7 +82,8 @@ public class MainActivity extends Activity {
                     url.startsWith("tel:") || 
                     url.startsWith("mailto:") ||
                     url.contains("accounts.google.com") ||
-                    url.contains("myaccount.google.com")) {
+                    url.contains("myaccount.google.com") ||
+                    url.contains("/auth/v1/authorize")) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
