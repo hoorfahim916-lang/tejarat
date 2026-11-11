@@ -75,12 +75,14 @@ public class MainActivity extends Activity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url == null) return false;
 
-                // Open WhatsApp, dialer, email externally in their native apps
+                // Open WhatsApp, dialer, email, Google accounts externally in their native apps/browser
                 if (url.startsWith("whatsapp://") || 
                     url.contains("wa.me/") || 
                     url.contains("api.whatsapp.com") ||
                     url.startsWith("tel:") || 
-                    url.startsWith("mailto:")) {
+                    url.startsWith("mailto:") ||
+                    url.contains("accounts.google.com") ||
+                    url.contains("myaccount.google.com")) {
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
