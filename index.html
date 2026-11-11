@@ -34,48 +34,67 @@
       src: url('markaz_assets/nunito_bold.ttf') format('truetype');
       font-weight: 700;
     }
-    
+
     :root {
       --primary: #047857;
       --primary-dark: #064E3B;
       --primary-light: #ECFDF5;
       --accent: #F59E0B;
-      --safe-top: env(safe-area-inset-top, 24px);
-      --safe-bottom: env(safe-area-inset-bottom, 16px);
     }
-    
+
+    /* Completely eliminate all browser scrollbars across all Android devices */
     * {
       -webkit-tap-highlight-color: transparent;
       box-sizing: border-box;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
     }
-    
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       min-height: 100%;
-      background-color: #F3F4F6;
+      background-color: #F8F9FA;
       font-family: 'Nunito', 'Plus Jakarta Sans', sans-serif;
       color: #111827;
       user-select: none;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden !important;
+      scrollbar-width: none !important;
     }
-    
-    /* Android Safe-Area Inset Handling */
-    .top-safe-header { padding-top: max(var(--safe-top), 28px); }
-    
-    .bottom-safe-nav { height: 72px; padding-bottom: 12px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08); }
-    
-    #appShell { padding-bottom: 86px; min-height: 100vh; max-width: 100vw; overflow-x: hidden; }
-    
-    .no-scrollbar::-webkit-scrollbar { display: none; }
+
+    /* Clean Android Header (Compact & Native) */
+    .top-safe-header {
+      padding-top: 8px;
+    }
+
+    /* Clean Android Bottom Navigation (Exact Markaz App Sizing) */
+    .bottom-safe-nav {
+      height: 58px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    #appShell {
+      padding-bottom: 66px;
+      min-height: 100vh;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none !important; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    
+
     @keyframes slideUp {
       from { transform: translateY(100%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    .modal-sheet { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+    .modal-sheet { animation: slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1); }
   </style>
 </head>
 <body class="bg-[#F3F4F6] text-gray-900">
@@ -94,7 +113,7 @@
           <div>
             <div class="flex items-center space-x-1.5">
               <h1 class="font-black text-lg tracking-tight leading-none">Tejarat App</h1>
-              <span id="headerBrandBadge" class="text-[9px] bg-emerald-800/80 text-emerald-200 font-bold px-1.5 py-0.5 rounded uppercase border border-emerald-500/30">OFFICIAL</span>
+              
             </div>
             <p class="text-[11px] text-emerald-100 font-semibold leading-tight mt-0.5">Zero Investment Reselling & Shopping</p>
           </div>
@@ -157,7 +176,7 @@
             <div id="carouselSlider" class="flex transition-transform duration-500 ease-out h-full">
               <!-- Slide 1: Royal 12-Mix Dry Fruit in Sidr Honey -->
               <div class="w-full h-full flex-shrink-0 relative">
-                <img src="markaz_assets/honey_dryfruit_jar_front.jpg" class="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=900&auto=format&fit=crop" class="w-full h-full object-cover" />
                 <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent p-5 flex flex-col justify-center text-white">
                   <span class="bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase w-max mb-1 shadow">⭐ Flagship Wholesale</span>
                   <h3 class="text-base font-black leading-tight">12 Mix Dry Fruits مع خالص بیری شہد</h3>
@@ -2088,18 +2107,19 @@
     let currentProductPhotos = [];
     let activePhotoIndex = 0;
     let currentSelectedWholesalePrice = 0;
-    const ADVANCE_DISCOUNT_AMOUNT = 200;
-
+    
     function switchProductPhoto(index) {
       if (!currentProductPhotos[index]) return;
       activePhotoIndex = index;
       const detImage = document.getElementById('detImage');
+      const item = currentProductPhotos[index];
+      const photoUrl = typeof item === 'object' ? item.url : item;
       if (detImage) {
         detImage.style.opacity = '0.3';
         setTimeout(() => {
-          detImage.src = currentProductPhotos[index];
+          detImage.src = photoUrl;
           detImage.style.opacity = '1';
-        }, 100);
+        }, 80);
       }
       const counter = document.getElementById('detImageCounter');
       if (counter) counter.innerText = `${index + 1}/${currentProductPhotos.length}`;
@@ -2113,11 +2133,19 @@
         container.innerHTML = '';
         return;
       }
-      container.innerHTML = currentProductPhotos.map((url, idx) => `
-        <button type="button" onclick="switchProductPhoto(${idx})" class="w-14 h-14 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${idx === activePhotoIndex ? 'border-amber-500 scale-105 shadow-md ring-2 ring-amber-400/50' : 'border-gray-200 opacity-60 hover:opacity-100'}">
-          <img src="${url}" class="w-full h-full object-cover" />
-        </button>
-      `).join('');
+      container.innerHTML = currentProductPhotos.map((item, idx) => {
+        const url = typeof item === 'object' ? item.url : item;
+        const label = typeof item === 'object' ? item.label : `Photo ${idx + 1}`;
+        const isSelected = idx === activePhotoIndex;
+        return `
+          <button type="button" onclick="switchProductPhoto(${idx})" class="flex flex-col items-center flex-shrink-0 group">
+            <div class="w-13 h-13 rounded-xl overflow-hidden border-2 transition-all ${isSelected ? 'border-amber-500 ring-2 ring-amber-400/50 scale-105 shadow-md' : 'border-gray-200 opacity-60 hover:opacity-100'}">
+              <img src="${url}" class="w-13 h-13 object-cover" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
+            </div>
+            <span class="text-[9px] font-black mt-1 ${isSelected ? 'text-amber-800' : 'text-gray-400'}">${label}</span>
+          </button>
+        `;
+      }).join('');
     }
 
     function handleSizeDropdownChange(e) {
@@ -2172,13 +2200,14 @@ ${currentProduct.description}
       // Setup multi-image gallery
       if (p.id === 'prod_honey_dryfruit_12mix') {
         currentProductPhotos = [
-          'markaz_assets/honey_dryfruit_jar_front.jpg',
-          'markaz_assets/honey_dryfruit_jar_side.jpg',
-          'markaz_assets/honey_dryfruit_jar_close.jpg',
-          'markaz_assets/honey_dryfruit_jar_bottom.jpg'
+          { url: 'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=900&auto=format&fit=crop', label: '✨ Studio View' },
+          { url: 'markaz_assets/honey_dryfruit_jar_front.jpg', label: '📸 Real Front' },
+          { url: 'markaz_assets/honey_dryfruit_jar_side.jpg', label: '📸 Real Side' },
+          { url: 'markaz_assets/honey_dryfruit_jar_close.jpg', label: '📸 Close-Up' },
+          { url: 'markaz_assets/honey_dryfruit_jar_bottom.jpg', label: '📸 Bottom Nuts' }
         ];
       } else {
-        currentProductPhotos = [p.image_url];
+        currentProductPhotos = [{ url: p.image_url, label: '✨ Studio View' }];
       }
       activePhotoIndex = 0;
       switchProductPhoto(0);

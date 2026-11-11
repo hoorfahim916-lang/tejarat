@@ -51,7 +51,7 @@ $alignedApk = Join-Path $buildDir "aligned.apk"
 if ($LASTEXITCODE -ne 0) { throw "zipalign failed with code $LASTEXITCODE" }
 
 Write-Host "Step 6: Signing APK with release keystore..."
-$outApk = Join-Path $baseDir "Tejarat-App-v3.2-PRO.apk"
+$outApk = Join-Path $baseDir "Tejarat-App-v3.3-PRO.apk"
 & cmd /c "$apksigner" sign --ks $keystore --ks-pass pass:tejarat123 --out "$outApk" "$alignedApk"
 if ($LASTEXITCODE -ne 0) { throw "apksigner failed with code $LASTEXITCODE" }
 
@@ -59,7 +59,8 @@ Write-Host "Step 7: Verifying signed APK..."
 & cmd /c "$apksigner" verify "$outApk"
 if ($LASTEXITCODE -ne 0) { throw "apksigner verify failed with code $LASTEXITCODE" }
 
-# Also update Tejarat-App-v3.1-MidnightGold.apk
+# Also sync other filenames
+Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.2-PRO.apk") -Force
 Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.1-MidnightGold.apk") -Force
 
 Write-Host "SUCCESS! Output APK generated at: $outApk"
