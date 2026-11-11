@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="gold2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="30%" stop-color="#FCD34D"/>
+      <stop offset="70%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" rx="100" fill="url(#bg2)"/>
+  <!-- Hexagon Outer -->
+  <polygon points="250,50 420,150 420,350 250,450 80,350 80,150" fill="none" stroke="url(#gold2)" stroke-width="8"/>
+  <polygon points="250,75 395,162 395,338 250,425 105,338 105,162" fill="#047857" stroke="url(#gold2)" stroke-width="2" opacity="0.3"/>
+  <!-- Central Icon (Honeycomb & Crown) -->
+  <g fill="url(#gold2)">
+    <!-- Urdu Tejarat Center -->
+    <text x="250" y="240" font-family="Arial, sans-serif" font-weight="900" font-size="70" fill="url(#gold2)" text-anchor="middle">تجارت</text>
+    <text x="250" y="295" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" text-anchor="middle" letter-spacing="6">TEJARAT</text>
+    <text x="250" y="325" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="14" fill="#FCD34D" text-anchor="middle" letter-spacing="3">WHOLESALE APP</text>
+  </g>
+  <!-- 5 Gold Stars -->
+  <g fill="#FCD34D" transform="translate(170, 345)">
+    <polygon points="10,1 4,19 19,7 1,7 16,19"/>
+    <polygon points="45,1 39,19 54,7 36,7 51,19"/>
+    <polygon points="80,1 74,19 89,7 71,7 86,19"/>
+    <polygon points="115,1 109,19 124,7 106,7 121,19"/>
+    <polygon points="150,1 144,19 159,7 141,7 156,19"/>
+  </g>
+</svg>

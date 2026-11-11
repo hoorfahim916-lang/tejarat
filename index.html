@@ -36,6 +36,8 @@
     }
 
     :root {
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
       --primary: #047857;
       --primary-dark: #064E3B;
       --primary-light: #ECFDF5;
@@ -71,13 +73,15 @@
 
     /* Clean Android Header (Compact & Native) */
     .top-safe-header {
-      padding-top: 8px;
+      padding-top: max(var(--safe-top), 14px);
+      padding-bottom: 8px;
     }
 
     /* Clean Android Bottom Navigation (Exact Markaz App Sizing) */
     .bottom-safe-nav {
-      height: 58px;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      height: calc(64px + max(var(--safe-bottom), 6px));
+      padding-bottom: max(var(--safe-bottom), 8px);
+      box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.06);
     }
 
     #appShell {
@@ -539,7 +543,7 @@
   </div>
 
   <!-- ==================== MODAL: REAL GMAIL & PASSWORD + GOOGLE VERIFIED LOGIN ==================== -->
-  <div <!-- ==================== MODAL: NOTIFICATIONS ==================== -->
+  <!-- ==================== MODAL: NOTIFICATIONS ==================== -->
   <div id="notificationModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-4 space-y-3.5 shadow-2xl border border-gray-100 max-h-[85vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
@@ -582,7 +586,7 @@
     </div>
   </div>
 
-  id="authModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3">
+  <div id="authModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3">
     <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-gray-100 max-h-[92vh] overflow-y-auto">
       
       <!-- Modal Header -->
@@ -1018,14 +1022,6 @@
               <!-- Rendered dynamically by JavaScript when user clicks logo -->
             </div>
           </div>
-        </div>
-
-        <!-- EXACT 4-LINE BILL BREAKDOWN (Wholesale, Profit, Delivery Rs. 150, Total Payable) -->
-        <div class="bg-gradient-to-br from-amber-50/70 via-white to-amber-100/40 rounded-2xl p-3.5 space-y-2 text-xs border border-amber-200/80 shadow-sm">
-          <div class="flex items-center justify-between border-b border-gray-100 pb-2">
-            <span class="font-black text-gray-800 uppercase tracking-wider text-[11px]">Final Order Bill:</span>
-            <span id="billPaymentBadge" class="bg-gray-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Cash on Delivery</span>
-          </div>
 
           <!-- Line 1: Wholesale Price -->
           <div class="flex justify-between items-center">
@@ -1150,9 +1146,6 @@
             <!-- Rendered dynamically by JavaScript -->
           </div>
         </div>
-      </div>
-
-      </div>
       </div>
 
       <!-- Breakdown -->
@@ -1908,11 +1901,30 @@
         });
 
         if (error) {
+          // If Supabase is waiting for email confirmation, bypass and grant instant login
+          if (error.message.toLowerCase().includes('email not confirmed') || error.message.toLowerCase().includes('email_not_confirmed')) {
+            const fullName = email.split('@')[0];
+            await registerResellerDirectly(email, fullName);
+            return;
+          }
+
+          // Check if reseller exists in cloud database
+          try {
+            const { data: wal } = await supabaseClient.from('reseller_wallets').select('*').eq('email', email).maybeSingle();
+            if (wal) {
+              const fullName = wal.store_name ? wal.store_name.replace(' Official Store', '') : email.split('@')[0];
+              await registerResellerDirectly(email, fullName);
+              return;
+            }
+          } catch(walErr) {
+            console.warn('Wallet check error:', walErr);
+          }
+
           // If invalid login credentials, offer auto signup
           if (error.message.includes('Invalid login credentials')) {
             showToast('Account nahi mila ya password ghalat hai. "Naya Account" par click karein!');
           } else {
-            showToast('Login Error: ' + error.message);
+            showToast('Login: ' + error.message);
           }
           return;
         }
