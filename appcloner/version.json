@@ -1,7 +1,7 @@
 {
-  "versionCode": 101,
-  "versionName": "1.0.1",
+  "versionCode": 102,
+  "versionName": "1.0.2",
   "downloadUrl": "https://hoorfahim916-lang.github.io/tejarat/appcloner/App-Cloner-VIP.apk",
-  "changelog": "🔥 اہم فکس: کلون ایپس میں پیکیج پارسنگ ایرر (There was a problem parsing the package) مکمل حل! لیڈ جنریشن و آٹو ای میل مارکیٹنگ ٹول شامل۔",
-  "forceUpdate": true
+  "changelog": "⚡ کلون پارسنگ ایرر مکمل فکس اور کلین انٹرفیس۔",
+  "forceUpdate": false
 }
