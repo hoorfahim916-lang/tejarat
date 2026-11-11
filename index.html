@@ -105,55 +105,54 @@
     <!-- ==================== TOP APP BAR ==================== -->
     <header class="bg-gradient-to-r from-[#030712] via-[#0F172A] to-[#1E293B] text-white sticky top-0 z-30 shadow-lg border-b border-amber-500/25 top-safe-header">
       <!-- Main Top Bar -->
-      <div class="px-4 pt-2 pb-2.5 flex items-center justify-between">
-        <div class="flex items-center space-x-2.5">
-          <div class="w-10 h-10 rounded-2xl overflow-hidden shadow-md border border-emerald-400/30 flex items-center justify-center bg-white flex-shrink-0">
+      <div class="px-4 py-2 flex items-center justify-between">
+        <!-- Left: Logo + "Tejarat" -->
+        <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchTab('home')">
+          <div class="w-10 h-10 rounded-2xl overflow-hidden shadow-md border border-amber-400/40 flex items-center justify-center bg-white flex-shrink-0">
             <img src="markaz_assets/tejarat_logo.png" onerror="this.onerror=null; this.src='tejarat_logo.png';" alt="Tejarat Logo" class="w-full h-full object-cover" />
           </div>
           <div>
-            <div class="flex items-center space-x-1.5">
-              <h1 class="font-black text-lg tracking-tight leading-none">Tejarat App</h1>
-              
-            </div>
-            <p class="text-[11px] text-emerald-100 font-semibold leading-tight mt-0.5">Zero Investment Reselling & Shopping</p>
+            <h1 class="font-black text-xl tracking-tight leading-none bg-gradient-to-r from-white via-amber-200 to-amber-400 bg-clip-text text-transparent">Tejarat</h1>
+            <p class="text-[10px] text-amber-200/90 font-bold leading-tight mt-0.5">Zero Investment Reselling & Shopping</p>
           </div>
         </div>
 
-        <div class="flex items-center space-x-2">
-          <!-- Theme Picker Button -->
-          <button onclick="openThemePickerModal()" title="App Ka Color Badlein" class="flex items-center space-x-1 bg-black/25 hover:bg-black/40 border border-white/20 px-2.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm">
-            <span>🎨 Color</span>
-          </button>
-
-          <!-- Chatbot Help Pill -->
-          <button onclick="openChatbotModal()" class="flex items-center space-x-1 bg-black/25 hover:bg-black/40 border border-white/20 px-2.5 py-1.5 rounded-full text-xs font-bold transition shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-            <span>Madad</span>
+        <!-- Right: Actions (Notification, Wishlist, Cart, Theme) -->
+        <div class="flex items-center space-x-1.5">
+          <!-- Notification Bell Button -->
+          <button onclick="openNotificationModal()" title="Notifications" class="relative p-2 bg-white/10 hover:bg-white/20 rounded-full transition">
+            <i data-lucide="bell" class="w-5 h-5 text-amber-300"></i>
+            <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-[#0F172A]"></span>
           </button>
 
           <!-- Wishlist / Favorites -->
-          <button onclick="openWishlistModal()" class="relative p-2 bg-emerald-900/40 rounded-full hover:bg-emerald-900/70 transition">
-            <i data-lucide="heart" class="w-5 h-5 text-white"></i>
+          <button onclick="openWishlistModal()" title="Favorites" class="relative p-2 bg-white/10 hover:bg-white/20 rounded-full transition">
+            <i data-lucide="heart" class="w-5 h-5 text-rose-300"></i>
             <span id="wishlistBadge" class="hidden absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
           </button>
 
           <!-- Cart Button -->
-          <button onclick="openCartModal()" class="relative p-2 bg-emerald-900/40 rounded-full hover:bg-emerald-900/70 transition">
-            <i data-lucide="shopping-bag" class="w-5 h-5 text-white"></i>
+          <button onclick="openCartModal()" title="Cart" class="relative p-2 bg-white/10 hover:bg-white/20 rounded-full transition">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-300"></i>
             <span id="cartBadge" class="hidden absolute -top-1 -right-1 bg-amber-400 text-gray-950 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">0</span>
+          </button>
+
+          <!-- Theme Picker Button -->
+          <button onclick="openThemePickerModal()" title="App Theme" class="p-2 bg-white/10 hover:bg-white/20 rounded-full transition text-xs">
+            🎨
           </button>
         </div>
       </div>
 
       <!-- Search Bar inside Header -->
-      <div class="px-4 pb-3 pt-0.5">
+      <div class="px-4 pb-2.5 pt-0.5">
         <div class="relative flex items-center bg-white rounded-2xl shadow-inner overflow-hidden">
           <i data-lucide="search" class="w-4 h-4 text-gray-400 ml-3.5"></i>
           <input
             id="searchInput"
             type="text"
             oninput="handleSearch(this.value)"
-            placeholder="Search karein: Lawn suit, Honey, Walnuts, Desi Ghee, Watches..."
+            placeholder="Search karein: Dry Fruits, Honey, Desi Ghee, Olive Oil..."
             class="w-full py-2.5 px-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-none font-medium"
           />
           <button id="clearSearchBtn" onclick="clearSearch()" class="hidden pr-3 text-gray-400 hover:text-gray-600">
@@ -316,12 +315,22 @@
       </section>
 
       <!-- ==================== TAB 2: CATEGORIES ==================== -->
-      <section id="tab-categories" class="tab-view hidden px-4 py-4 space-y-4">
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-          <h2 class="text-base font-black text-gray-900">All Wholesale Catalogs</h2>
-          <p class="text-xs text-gray-500 mt-0.5">Kisi bhi catalog ko select karein aur products WhatsApp par share karein</p>
+      <section id="tab-categories" class="tab-view hidden px-4 py-3 space-y-3.5">
+        <!-- Category Filter Chips -->
+        <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="text-xs font-black text-gray-900 uppercase tracking-wider">Wholesale Categories</h2>
+            <span id="catProductCountBadge" class="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded-md">5 Items</span>
+          </div>
+          <div id="categoryTabChips" class="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
+            <!-- Chips rendered dynamically -->
+          </div>
         </div>
-        <div id="categoriesFullList" class="space-y-3"></div>
+
+        <!-- 2-COLUMN SIDE-BY-SIDE MARKETPLACE GRID (Left & Right Aligned) -->
+        <div id="categoryProductsGrid" class="grid grid-cols-2 gap-2.5 sm:gap-3">
+          <!-- Populated dynamically via JS -->
+        </div>
       </section>
 
       <!-- ==================== TAB 3: ORDERS & TRACKING ==================== -->
@@ -351,159 +360,147 @@
       </section>
 
       <!-- ==================== TAB 4: PROFILE & BUSINESS DASHBOARD ==================== -->
-      <section id="tab-business" class="tab-view hidden px-4 py-4 space-y-4">
-        
+      <section id="tab-business" class="tab-view hidden px-4 py-3 space-y-3.5">
         <!-- User Login / Profile Card -->
-        <div id="userProfileHeaderCard" class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 flex items-center justify-between">
+        <div id="userProfileHeaderCard" class="bg-white rounded-3xl p-3.5 shadow-sm border border-gray-100 flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <div id="userAvatarBox" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#047857] to-teal-700 text-white font-black text-xl flex items-center justify-center shadow-md">
+            <div id="userAvatarBox" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0F172A] to-slate-800 text-amber-400 font-black text-xl flex items-center justify-center shadow border border-amber-400/40">
               <span id="userAvatarText">T</span>
             </div>
             <div>
               <div class="flex items-center space-x-1.5">
                 <h3 id="profileUserFullName" class="font-black text-sm text-gray-900">Mehmon Reseller</h3>
-                <span id="profileVerifiedBadge" class="bg-gray-100 text-gray-500 text-[10px] font-bold px-1.5 py-0.5 rounded">Guest (Unverified)</span>
+                <span id="profileVerifiedBadge" class="bg-gray-100 text-gray-500 text-[9px] font-bold px-1.5 py-0.5 rounded">Guest (Unverified)</span>
               </div>
-              <p id="profileUserEmail" class="text-xs text-gray-500 font-medium mt-0.5">Gmail se login karein</p>
+              <p id="profileUserEmail" class="text-[11px] text-gray-500 font-medium mt-0.5">Gmail se login karein</p>
             </div>
           </div>
           <div>
-            <button id="authActionBtn" onclick="openAuthModal()" class="bg-[#047857] hover:bg-emerald-800 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-sm transition">
+            <button id="authActionBtn" onclick="openAuthModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 text-xs font-black px-3.5 py-2 rounded-xl shadow transition">
               Login Karein
             </button>
           </div>
         </div>
 
-        <!-- Markaz-Style Profit Card -->
-        <div class="rounded-3xl p-5 text-white shadow-xl relative overflow-hidden border border-emerald-500/20" style="background-image: linear-gradient(135deg, rgba(4,120,87,0.95), rgba(6,78,59,0.98)), url('markaz_assets/wallet_bg.png'); background-size: cover; background-position: center;">
-          <div class="flex items-center justify-between relative z-10">
+        <!-- Markaz-Style Top Sales & Profit Banner -->
+        <div class="rounded-3xl p-4 text-white shadow-xl relative overflow-hidden border border-amber-500/20 bg-gradient-to-br from-[#030712] via-[#0F172A] to-[#1E293B]">
+          <div class="flex items-center justify-between relative z-10 pb-2 border-b border-white/10">
             <div>
-              <span id="bizStoreSubtitle" class="text-[11px] text-emerald-200 uppercase font-bold tracking-wider">Reseller Store</span>
-              <h2 id="bizStoreName" class="text-xl font-black mt-0.5">Mera Online Store</h2>
+              <span class="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Mera Reseller Dashboard</span>
+              <h2 id="bizStoreName" class="text-base font-black text-white mt-0.5">Mera Online Store</h2>
             </div>
-            <button onclick="openEditStoreModal()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1 transition">
-              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-              <span>Edit Name</span>
+            <button onclick="openEditStoreModal()" class="bg-white/15 hover:bg-white/25 text-white text-[11px] font-bold px-2.5 py-1 rounded-xl flex items-center space-x-1 transition">
+              <i data-lucide="edit-3" class="w-3 h-3"></i>
+              <span>Edit Store</span>
             </button>
           </div>
 
-          <!-- Time Filter (All Time vs This Month) -->
-          <div class="flex justify-center mt-4 relative z-10">
-            <div class="bg-black/30 p-1 rounded-xl flex space-x-1 text-xs font-bold">
-              <button id="timeTabAll" onclick="setTimeMetrics('all')" class="bg-white text-gray-900 px-3.5 py-1 rounded-lg transition shadow">All Time</button>
-              <button id="timeTabMonth" onclick="setTimeMetrics('month')" class="text-white hover:text-emerald-200 px-3.5 py-1 rounded-lg transition">This Month</button>
-            </div>
+          <!-- Total Sales Headline -->
+          <div class="text-center py-2.5 relative z-10">
+            <span class="text-[11px] text-gray-400 font-semibold">Total Reseller Sales</span>
+            <p id="bizMetricSales" class="text-2xl font-black text-amber-300 tracking-tight mt-0.5">Rs. 0</p>
           </div>
 
-          <!-- KPI Metrics Cards Grid (Zero Defaults for Real Users) -->
-          <div class="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t border-white/15 text-center relative z-10">
-            <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">Total Sales</p>
-              <p id="bizMetricSales" class="text-base font-black text-white mt-0.5">Rs. 0</p>
+          <!-- 3 Columns (Completed Orders, Total Profit, Total Bonus) -->
+          <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 text-center relative z-10">
+            <div class="bg-white/5 rounded-xl p-2 border border-white/5">
+              <p class="text-[10px] text-gray-400 font-medium">Completed</p>
+              <p id="bizMetricOrders" class="text-xs font-black text-white mt-0.5">0 Orders</p>
             </div>
-            <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">Total Munafa</p>
-              <p id="bizMetricProfit" class="text-base font-black text-amber-300 mt-0.5">Rs. 0</p>
+            <div class="bg-white/5 rounded-xl p-2 border border-white/5">
+              <p class="text-[10px] text-gray-400 font-medium">Total Munafa</p>
+              <p id="bizMetricProfit" class="text-xs font-black text-emerald-400 mt-0.5">Rs. 0</p>
             </div>
-            <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">Delivered Orders</p>
-              <p id="bizMetricOrders" class="text-base font-black text-emerald-300 mt-0.5">0 Orders</p>
-            </div>
-            <div class="bg-black/25 backdrop-blur-sm rounded-2xl p-3 border border-white/10">
-              <p class="text-[11px] text-emerald-200 font-medium">Total Bonus</p>
-              <p id="bizMetricBonus" class="text-base font-black text-white mt-0.5">Rs. 0</p>
-            </div>
-          </div>
-
-          <button onclick="openWithdrawModal()" class="w-full mt-4 bg-amber-400 hover:bg-amber-300 text-gray-950 font-black py-3 rounded-2xl shadow-lg flex items-center justify-center space-x-2 text-xs relative z-10 transition">
-            <i data-lucide="wallet" class="w-4 h-4"></i>
-            <span>Munafa JazzCash / EasyPaisa Par Withdraw Karein</span>
-          </button>
-        </div>
-
-        <!-- Meri Payment (Paid vs Pending) -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-xs font-black text-gray-800 uppercase">💳 Meri Payment</h3>
-            <span class="text-[11px] font-bold text-[#047857]">Auto Transfer</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2.5">
-            <div class="bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-              <span class="text-[10px] text-gray-500 font-semibold">Paid Munafa</span>
-              <p id="bizPaidBalance" class="text-sm font-black text-[#047857] mt-0.5">Rs. 0</p>
-            </div>
-            <div class="bg-amber-50 rounded-xl p-3 border border-amber-100">
-              <span class="text-[10px] text-gray-500 font-semibold">Pending Munafa</span>
-              <p id="bizPendingBalance" class="text-sm font-black text-amber-700 mt-0.5">Rs. 0</p>
+            <div class="bg-white/5 rounded-xl p-2 border border-white/5">
+              <p class="text-[10px] text-gray-400 font-medium">Total Bonus</p>
+              <p id="bizMetricBonus" class="text-xs font-black text-amber-300 mt-0.5">Rs. 0</p>
             </div>
           </div>
         </div>
 
-        <!-- Meri Offers / Bonus Targets -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-xs font-black text-gray-800 uppercase">🎯 Meri Offers & Bonuses</h3>
-            <span class="text-[11px] font-bold text-emerald-600">Active</span>
-          </div>
-          <div class="bg-emerald-50/70 rounded-xl p-3 flex items-center justify-between border border-emerald-100">
-            <div class="flex items-center space-x-2.5">
-              <img src="markaz_assets/ic_100_rupee.png" class="w-10 h-10 object-contain flex-shrink-0" alt="Bonus" onerror="this.style.display='none'" />
-              <div>
-                <p class="text-xs font-bold text-gray-900">First Order Bonus</p>
-                <p class="text-[11px] text-gray-600">Pehlay kamyab order par Rs. 100 extra reward</p>
-                <div class="w-28 bg-gray-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
-                  <div id="bonusProgFirst" class="bg-[#047857] h-1.5 rounded-full" style="width: 0%"></div>
-                </div>
-              </div>
+        <!-- TWO PROMINENT FEATURE CARDS: MERI PAYMENTS & MERI OFFERS -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Card 1: Meri Payments -->
+          <div onclick="openMeriPaymentsModal()" class="bg-white rounded-3xl p-3.5 shadow-sm border border-gray-100 flex flex-col items-center text-center cursor-pointer hover:border-amber-400 hover:shadow-md transition group">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-gray-950 flex items-center justify-center shadow-md mb-2 group-hover:scale-105 transition">
+              <svg viewBox="0 0 24 24" class="w-8 h-8 fill-current text-gray-950" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.98 1-1.72V9c0-.74-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5V5z"/>
+                <circle cx="16" cy="12" r="1.5"/>
+              </svg>
             </div>
-            <span class="bg-[#047857] text-white text-xs font-black px-2.5 py-1 rounded-lg shadow">+Rs. 100</span>
+            <h4 class="font-black text-xs text-gray-900 group-hover:text-amber-800 transition">Meri Payments</h4>
+            <p class="text-[10px] text-gray-500 font-semibold mt-0.5">Paid & Pending Munafa</p>
+            <span class="mt-2 text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60">Tafseelat Dekhein →</span>
           </div>
-          <div class="bg-amber-50/70 rounded-xl p-3 flex items-center justify-between border border-amber-100">
-            <div>
-              <p class="text-xs font-bold text-gray-900">10 Orders Milestone</p>
-              <p class="text-[11px] text-gray-600">10 orders complete karne par Rs. 1,000 cash bonus</p>
-              <div class="w-28 bg-gray-200 rounded-full h-1.5 mt-1.5 overflow-hidden">
-                <div id="bonusProgTen" class="bg-amber-500 h-1.5 rounded-full" style="width: 0%"></div>
-              </div>
+
+          <!-- Card 2: Meri Offers -->
+          <div onclick="openMeriOffersModal()" class="bg-white rounded-3xl p-3.5 shadow-sm border border-gray-100 flex flex-col items-center text-center cursor-pointer hover:border-emerald-400 hover:shadow-md transition group">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-600 to-emerald-700 text-white flex items-center justify-center shadow-md mb-2 group-hover:scale-105 transition">
+              <svg viewBox="0 0 24 24" class="w-8 h-8 fill-current text-white" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+              </svg>
             </div>
-            <span class="bg-amber-500 text-gray-950 text-xs font-black px-2.5 py-1 rounded-lg shadow">+Rs. 1,000</span>
+            <h4 class="font-black text-xs text-gray-900 group-hover:text-emerald-800 transition">Meri Offers</h4>
+            <p class="text-[10px] text-gray-500 font-semibold mt-0.5">Bonus & Rewards Hub</p>
+            <span class="mt-2 text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">Offers Dekhein →</span>
           </div>
         </div>
 
-        <!-- Profit Account / Payment Details -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-black text-gray-800 uppercase">🏦 Profit Account (Payout Details)</h3>
-            <button onclick="openEditStoreModal()" class="text-xs font-bold text-[#047857]">Change</button>
-          </div>
-          <div class="flex items-center justify-between text-xs py-2 border-b border-gray-50">
-            <span class="text-gray-500">Method:</span>
-            <span id="bizPaymentMethod" class="font-bold text-gray-900">Not Set</span>
-          </div>
-          <div class="flex items-center justify-between text-xs py-2 border-b border-gray-50">
-            <span class="text-gray-500">Account Number:</span>
-            <span id="bizAccountNumber" class="font-mono font-bold text-gray-900">Not Set</span>
-          </div>
-          <div class="flex items-center justify-between text-xs py-2">
-            <span class="text-gray-500">Account Title:</span>
-            <span id="bizAccountTitle" class="font-bold text-gray-900">Not Set</span>
-          </div>
-        </div>
+        <!-- Withdraw Munafa Action Button -->
+        <button onclick="openProfitAccountModal()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-black py-3 rounded-2xl shadow-lg flex items-center justify-center space-x-2 text-xs transition active:scale-98">
+          <i data-lucide="credit-card" class="w-4 h-4"></i>
+          <span>Add Account for Profit Withdraw (EasyPaisa/JazzCash)</span>
+        </button>
 
-        <!-- Terms, Support & Help Section -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-2.5 text-xs">
-          <button onclick="openChatbotModal()" class="w-full text-left py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
-            <span>❓ Frequently Asked Questions (FAQ & Chatbot)</span>
+        <!-- Markaz-Style Account List (Clean Dividers) -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden divide-y divide-gray-100 text-xs">
+          <div class="p-3.5 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition" onclick="openBusinessDetailsModal()">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-amber-50 rounded-xl text-amber-800"><i data-lucide="store" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">Business Details</span>
+            </div>
             <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-          </button>
-          <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Tejarat%20Support" target="_blank" class="w-full text-left py-2 border-b border-gray-100 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
-            <span>📞 Customer Support Helpline (03190328256)</span>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition" onclick="openProfitAccountModal()">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-emerald-50 rounded-xl text-emerald-800"><i data-lucide="credit-card" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">Profit Account (EasyPaisa/JazzCash)</span>
+            </div>
             <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition" onclick="openWishlistModal()">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-rose-50 rounded-xl text-rose-600"><i data-lucide="heart" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">My Favorites (Pasandeeda Items)</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition" onclick="switchTab('orders')">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-blue-50 rounded-xl text-blue-700"><i data-lucide="package" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">Mere Orders & Status Tracking</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition" onclick="openChatbotModal()">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-purple-50 rounded-xl text-purple-700"><i data-lucide="message-square" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">Tejarat AI Assistant (Help & FAQ)</span>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+          </div>
+
+          <a href="https://wa.me/923190328256?text=Assalam%20o%20Alaikum%20Tejarat%20Help%2C%20mujhe%20support%20chahiye." target="_blank" class="p-3.5 flex items-center justify-between hover:bg-gray-50 transition">
+            <div class="flex items-center space-x-3">
+              <span class="p-2 bg-green-50 rounded-xl text-green-600"><i data-lucide="phone-call" class="w-4 h-4"></i></span>
+              <span class="font-bold text-gray-800">WhatsApp Support (03190328256)</span>
+            </div>
+            <i data-lucide="external-link" class="w-4 h-4 text-gray-400"></i>
           </a>
-          <button onclick="showToast('Tejarat Reseller Policy: Flat Rs. 150 COD delivery across Pakistan. Delivered hone par reseller ka profit 24 se 48 hours mein account mein transfer kiya jata hai.')" class="w-full text-left py-2 flex items-center justify-between font-bold text-gray-700 hover:text-[#047857]">
-            <span>📜 Terms & Conditions</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-          </button>
         </div>
       </section>
 
@@ -542,7 +539,50 @@
   </div>
 
   <!-- ==================== MODAL: REAL GMAIL & PASSWORD + GOOGLE VERIFIED LOGIN ==================== -->
-  <div id="authModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3">
+  <div <!-- ==================== MODAL: NOTIFICATIONS ==================== -->
+  <div id="notificationModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-4 space-y-3.5 shadow-2xl border border-gray-100 max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-black text-sm text-gray-900">Notifications</h3>
+        </div>
+        <button onclick="closeNotificationModal()" class="p-1 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-3 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-amber-900 text-xs">🔥 Full Advance Discount Offer</span>
+            <span class="text-[9px] bg-amber-400 text-gray-950 font-black px-1.5 py-0.5 rounded">SAVE RS. 100</span>
+          </div>
+          <p class="text-gray-700 leading-relaxed font-medium">EasyPaisa, JazzCash ya Meezan Bank se full advance payment par Flat Rs. 100 Discount hasil karein!</p>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-3 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-emerald-900 text-xs">📦 Flat Delivery All Pakistan</span>
+            <span class="text-[9px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded">Rs. 150/KG</span>
+          </div>
+          <p class="text-gray-700 leading-relaxed font-medium">Poore Pakistan mein TCS aur Leopards ke zariye flat Rs. 150/KG courier delivery.</p>
+        </div>
+
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-gray-900 text-xs">💰 Zero Investment Reselling</span>
+            <span class="text-[9px] bg-gray-200 text-gray-700 font-bold px-1.5 py-0.5 rounded">Tejarat</span>
+          </div>
+          <p class="text-gray-700 leading-relaxed font-medium">Apna munafa khud set karein aur customer ko seedha delivery bhejein. Har hafte munafa JazzCash/EasyPaisa par lein!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  id="authModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3">
     <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-gray-100 max-h-[92vh] overflow-y-auto">
       
       <!-- Modal Header -->
@@ -654,156 +694,382 @@
   </div>
 
   <!-- ==================== MODAL 1: PRODUCT DETAILS VIEW ==================== -->
+  <!-- ==================== MODAL 1: COMPLETE 3-STEP MARKAZ ORDER FLOW ==================== -->
   <div id="productModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-white w-full max-w-md mx-auto max-h-[92vh] rounded-t-3xl sm:rounded-3xl overflow-y-auto overflow-x-hidden modal-sheet p-4 space-y-4 border-t border-gray-100 shadow-2xl relative">
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b pb-3">
-        <span id="detCategory" class="text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200/60 px-3 py-1 rounded-full"></span>
-        <button onclick="closeProductModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
-          <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-      </div>
-
-      <!-- Image Display & Multi-Angle Gallery -->
-      <div class="space-y-2">
-        <div class="relative rounded-2xl overflow-hidden bg-gray-100 h-64 shadow-inner border border-gray-100">
-          <img id="detImage" src="" alt="Product" class="w-full h-full object-cover transition-opacity duration-200" />
-          <span class="absolute top-3 left-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 text-xs font-black px-3 py-1 rounded-xl shadow-md flex items-center space-x-1">
-            <span>⭐ 100% Asli Organic</span>
-          </span>
-          <span id="detImageCounter" class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow">
-            1/4
-          </span>
-        </div>
-
-        <!-- Thumbnails Gallery Row -->
-        <div id="detThumbnailsRow" class="flex space-x-2 overflow-x-auto no-scrollbar py-1">
-          <!-- Populated dynamically: front, side, close, bottom -->
-        </div>
-      </div>
-
-      <!-- Title & Stock -->
-      <div>
-        <h2 id="detTitle" class="text-base font-black text-gray-900 leading-snug"></h2>
-        <p id="detUrduTitle" class="text-xs text-amber-800 mt-1 font-bold"></p>
-      </div>
-
-      <!-- Pricing Card (Wholesale vs Retail vs Profit) -->
-      <div class="bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 border border-amber-200/80 rounded-2xl p-3.5 grid grid-cols-3 gap-2 text-center shadow-sm">
-        <div>
-          <p class="text-[10px] text-gray-500 uppercase font-black">Wholesale Price</p>
-          <p id="detWholesale" class="text-base font-black text-[#0F172A]">Rs. 0</p>
-        </div>
-        <div class="border-x border-amber-200/70">
-          <p class="text-[10px] text-gray-500 uppercase font-black">Market Retail</p>
-          <p id="detRetail" class="text-sm font-bold text-gray-700">Rs. 0</p>
-        </div>
-        <div>
-          <p class="text-[10px] text-emerald-800 uppercase font-black">Aap Ka Munafa</p>
-          <p id="detMargin" class="text-sm font-black text-emerald-700">+Rs. 0</p>
-        </div>
-      </div>
-
-      <!-- Variants (Size / Pack Selector) -->
-      <div class="space-y-1.5">
-        <label class="block text-xs font-black text-gray-800">Size / Pack & Wazan Select Karein:</label>
-        <select id="detSizeSelect" onchange="handleSizeDropdownChange(event)" class="w-full border-2 border-amber-400/80 rounded-xl px-3 py-2.5 text-xs font-black text-gray-900 bg-amber-50/30 focus:outline-none focus:border-amber-600 shadow-sm"></select>
-      </div>
-
-      <!-- DUAL MODE: RESELL vs BUY FOR SELF -->
-      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3">
-        <label class="block text-xs font-black text-gray-900">Order Ka Maqsad Select Karein:</label>
-        <div class="grid grid-cols-2 gap-2">
-          <button type="button" id="modeBtnResell" onclick="setOrderMode('Resell')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-amber-500 bg-[#0F172A] text-amber-400 flex items-center justify-center space-x-1.5 transition shadow">
-            <span>💰 Resell & Kamayein</span>
-          </button>
-          <button type="button" id="modeBtnSelf" onclick="setOrderMode('Self')" class="py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 transition">
-            <span>🛍️ Apne Liye Kharidein</span>
+    <div class="bg-white w-full max-w-md mx-auto max-h-[92vh] rounded-t-3xl sm:rounded-3xl overflow-y-auto overflow-x-hidden modal-sheet border-t border-gray-100 shadow-2xl relative flex flex-col">
+      
+      <!-- ==================== STEP 1: PRODUCT DETAILS & RESELL PROFIT ==================== -->
+      <div id="orderStep1" class="p-4 space-y-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div class="flex items-center space-x-2">
+            <span id="detCategory" class="text-xs font-black bg-amber-50 text-amber-800 border border-amber-200/80 px-3 py-1 rounded-full"></span>
+            <span class="text-[10px] text-gray-500 font-bold bg-gray-100 px-2 py-0.5 rounded-full">Step 1 of 3</span>
+          </div>
+          <button onclick="closeProductModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-6 h-6"></i>
           </button>
         </div>
 
-        <!-- Reseller Margin Field -->
-        <div id="resellerProfitBox" class="pt-1 space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="text-xs font-bold text-amber-900">Apna Munafa (Profit) Likhein (Rs.):</label>
-            <span class="text-[11px] text-gray-500 font-medium">Customer se COD par liya jayega</span>
+        <!-- Image Display & Multi-Angle Gallery -->
+        <div class="space-y-2">
+          <div class="relative rounded-2xl overflow-hidden bg-gray-100 h-60 shadow-inner border border-gray-100">
+            <img id="detImage" src="" alt="Product" class="w-full h-full object-cover transition-opacity duration-200" />
+            <span class="absolute top-3 left-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 text-xs font-black px-3 py-1 rounded-xl shadow-md">
+              ⭐ 100% Asli Organic
+            </span>
+            <span id="detImageCounter" class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow">
+              1/5
+            </span>
           </div>
-          <div class="flex items-center space-x-2">
-            <input
-              id="detCustomProfit"
-              type="number"
-              min="0"
-              value="500"
-              oninput="updateLiveOrderCalculation()"
-              class="w-full border-2 border-amber-500 rounded-xl px-3 py-2 text-sm font-black text-gray-900 focus:outline-none text-left bg-white"
-            />
-            <button type="button" onclick="setQuickProfit(300)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+300</button>
-            <button type="button" onclick="setQuickProfit(500)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+500</button>
-            <button type="button" onclick="setQuickProfit(700)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+700</button>
+
+          <!-- Thumbnails Gallery Row -->
+          <div id="detThumbnailsRow" class="flex space-x-2 overflow-x-auto no-scrollbar py-1">
+            <!-- Populated dynamically via JS -->
           </div>
         </div>
 
-        <div class="bg-white rounded-xl p-2.5 border border-gray-200 flex items-center justify-between text-xs shadow-sm">
-          <span class="text-gray-600 font-semibold">Customer Total COD (+Rs. 150 Delivery):</span>
-          <span id="detFinalCustomerCOD" class="text-sm font-black text-[#0F172A]">Rs. 0</span>
+        <!-- Title & Urdu Title -->
+        <div>
+          <h2 id="detTitle" class="text-base font-black text-gray-900 leading-snug"></h2>
+          <p id="detUrduTitle" class="text-xs text-amber-800 mt-1 font-bold"></p>
         </div>
-      </div>
 
-      <!-- Delivery Details & Return Policy -->
-      <div class="border border-gray-200 rounded-2xl overflow-hidden divide-y divide-gray-100 text-xs shadow-sm">
-        <div class="p-3 bg-white flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">🚚</span>
-            <div>
-              <p class="font-bold text-gray-900">Delivery Details (2-4 Days)</p>
-              <p class="text-[11px] text-gray-500">Flat Rs. 150/KG Cash on Delivery poore Pakistan mein</p>
+        <!-- Pricing Card (Wholesale vs Retail vs Profit) -->
+        <div class="bg-gradient-to-br from-amber-50/80 via-white to-amber-100/40 border border-amber-200/80 rounded-2xl p-3.5 grid grid-cols-3 gap-2 text-center shadow-sm">
+          <div>
+            <p class="text-[10px] text-gray-500 uppercase font-black">Wholesale Price</p>
+            <p id="detWholesale" class="text-base font-black text-[#0F172A]">Rs. 0</p>
+          </div>
+          <div class="border-x border-amber-200/70">
+            <p class="text-[10px] text-gray-500 uppercase font-black">Market Retail</p>
+            <p id="detRetail" class="text-sm font-bold text-gray-700">Rs. 0</p>
+          </div>
+          <div>
+            <p class="text-[10px] text-emerald-800 uppercase font-black">Aap Ka Munafa</p>
+            <p id="detMargin" class="text-sm font-black text-emerald-700">+Rs. 0</p>
+          </div>
+        </div>
+
+        <!-- Variants (Size / Pack Selector) -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-black text-gray-800">Size / Pack & Wazan Select Karein:</label>
+          <select id="detSizeSelect" onchange="handleSizeDropdownChange(event)" class="w-full border-2 border-amber-400/80 rounded-xl px-3 py-2.5 text-xs font-black text-gray-900 bg-amber-50/30 focus:outline-none focus:border-amber-600 shadow-sm"></select>
+        </div>
+
+        <!-- DUAL MODE: RESELL vs BUY FOR SELF -->
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3">
+          <label class="block text-xs font-black text-gray-900">Order Ka Maqsad Select Karein:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="modeBtnResell" onclick="setOrderMode('Resell')" class="py-2.5 px-3 rounded-xl font-black text-xs border-2 border-amber-500 bg-[#0F172A] text-amber-400 flex items-center justify-center space-x-1.5 transition shadow">
+              <span>💰 Resell & Kamayein</span>
+            </button>
+            <button type="button" id="modeBtnSelf" onclick="setOrderMode('Self')" class="py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1.5 transition">
+              <span>🛍️ Apne Liye Kharidein</span>
+            </button>
+          </div>
+
+          <!-- Reseller Margin Field -->
+          <div id="resellerProfitBox" class="pt-1 space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-amber-900">Apna Munafa (Profit) Likhein (Rs.):</label>
+              <span class="text-[11px] text-gray-500 font-medium">Customer se COD par liya jayega</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <input
+                id="detCustomProfit"
+                type="number"
+                min="0"
+                value="500"
+                oninput="updateLiveOrderCalculation()"
+                class="w-full border-2 border-amber-500 rounded-xl px-3 py-2 text-sm font-black text-gray-900 focus:outline-none text-left bg-white"
+              />
+              <button type="button" onclick="setQuickProfit(300)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+300</button>
+              <button type="button" onclick="setQuickProfit(500)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+500</button>
+              <button type="button" onclick="setQuickProfit(700)" class="px-2.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-black">+700</button>
             </div>
           </div>
-          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded">TCS / Leopards</span>
-        </div>
-        <div class="p-3 bg-amber-50/50 flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">⚡</span>
-            <div>
-              <p class="font-bold text-amber-950">Advance Payment Offer</p>
-              <p class="text-[11px] text-amber-800">EasyPaisa / JazzCash advance payment par Flat Rs. 200 Discount</p>
-            </div>
+
+          <div class="bg-white rounded-xl p-2.5 border border-gray-200 flex items-center justify-between text-xs shadow-sm">
+            <span class="text-gray-600 font-semibold">Customer Total COD (+Rs. 150 Delivery):</span>
+            <span id="detFinalCustomerCOD" class="text-sm font-black text-[#0F172A]">Rs. 0</span>
           </div>
-          <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded">Rs. 200 OFF</span>
         </div>
-        <div class="p-3 bg-white flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">🛡️</span>
-            <div>
-              <p class="font-bold text-gray-900">7 Days Easy Return Policy</p>
-              <p class="text-[11px] text-gray-500">Damage ya fault hone par 100% Free exchange ya full refund</p>
+
+        <!-- Delivery Details & Return Policy -->
+        <div class="border border-gray-200 rounded-2xl overflow-hidden divide-y divide-gray-100 text-xs shadow-sm">
+          <div class="p-3 bg-white flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">🚚</span>
+              <div>
+                <p class="font-bold text-gray-900">Delivery Details (2-4 Days)</p>
+                <p class="text-[11px] text-gray-500">Flat Rs. 150/KG Cash on Delivery poore Pakistan mein</p>
+              </div>
             </div>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded">TCS / Leopards</span>
           </div>
-          <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded">100% Guarantee</span>
+          <div class="p-3 bg-amber-50/50 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">⚡</span>
+              <div>
+                <p class="font-bold text-amber-950">Full Advance Payment Offer</p>
+                <p class="text-[11px] text-amber-800">EasyPaisa / JazzCash / Meezan advance par Flat Rs. 100 Discount</p>
+              </div>
+            </div>
+            <span class="bg-amber-400 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded">Rs. 100 OFF</span>
+          </div>
+          <div class="p-3 bg-white flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">🛡️</span>
+              <div>
+                <p class="font-bold text-gray-900">7 Days Easy Return Policy</p>
+                <p class="text-[11px] text-gray-500">Damage ya fault hone par 100% Free exchange ya refund</p>
+              </div>
+            </div>
+            <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded">100% Guarantee</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="space-y-1.5 pb-2">
+          <h4 class="text-xs font-black text-gray-900">Product Tafseelat (Details):</h4>
+          <p id="detDesc" class="text-xs text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 p-3 rounded-xl border border-gray-200 font-medium"></p>
+        </div>
+
+        <!-- Sticky Action Bar Step 1 (Copy, Share, Next to Step 2) -->
+        <div class="sticky bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-100 pt-3 pb-6 px-1 grid grid-cols-3 gap-2 z-20">
+          <button onclick="copyProductDetails()" class="py-3 px-2 rounded-xl border border-amber-500 bg-amber-50 text-amber-900 hover:bg-amber-100 font-black text-xs flex items-center justify-center space-x-1 transition shadow-sm min-w-0">
+            <i data-lucide="copy" class="w-4 h-4 flex-shrink-0"></i>
+            <span class="truncate">Copy</span>
+          </button>
+          <button onclick="shareActiveProduct()" class="py-3 px-2 rounded-xl border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-black text-xs flex items-center justify-center space-x-1 transition min-w-0">
+            <i data-lucide="share-2" class="w-4 h-4 flex-shrink-0"></i>
+            <span class="truncate">Share</span>
+          </button>
+          <button onclick="goToOrderStep(2)" class="py-3 px-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-black text-xs shadow-lg flex items-center justify-center space-x-1 transition min-w-0">
+            <span>Aage Barhein →</span>
+          </button>
         </div>
       </div>
 
-      <!-- Description -->
-      <div class="space-y-1.5 pb-2">
-        <h4 class="text-xs font-black text-gray-900">Product Tafseelat (Details):</h4>
-        <p id="detDesc" class="text-xs text-gray-700 leading-relaxed whitespace-pre-line bg-gray-50 p-3 rounded-xl border border-gray-200 font-medium"></p>
+      <!-- ==================== STEP 2: CUSTOMER DELIVERY DETAILS ==================== -->
+      <div id="orderStep2" class="hidden p-4 space-y-4">
+        <!-- Header with Back Button -->
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <button onclick="goToOrderStep(1)" class="flex items-center space-x-1 text-xs font-black text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Wapas (Step 1)</span>
+          </button>
+          <span class="text-[11px] font-black bg-amber-100 text-amber-900 px-3 py-1 rounded-full">Step 2 of 3: Customer Details</span>
+          <button onclick="closeProductModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-3 flex items-center space-x-3">
+          <img id="step2ProdImg" src="" class="w-12 h-12 object-cover rounded-xl shadow-sm border border-amber-300" />
+          <div class="flex-1 min-w-0">
+            <h4 id="step2ProdTitle" class="text-xs font-black text-gray-900 truncate"></h4>
+            <p id="step2ProdVariant" class="text-[11px] text-amber-800 font-bold truncate"></p>
+            <p id="step2ProdItemTotal" class="text-xs font-black text-[#0F172A]"></p>
+          </div>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Customer Ka Mukammal Naam *</label>
+            <input type="text" id="chkCustomerName" placeholder="Jaise: Ali Ahmed" class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-white transition" />
+          </div>
+
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Customer Mobile Number (Calling + WhatsApp) *</label>
+            <input type="tel" id="chkCustomerPhone" placeholder="03001234567" class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs font-bold outline-none font-mono bg-white transition" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">Province (Subah) *</label>
+              <select id="chkCustomerProvince" class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-white transition">
+                <option value="Punjab">Punjab</option>
+                <option value="Sindh">Sindh</option>
+                <option value="Khyber Pakhtunkhwa">KPK</option>
+                <option value="Balochistan">Balochistan</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Azad Kashmir">AJK</option>
+                <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-700 mb-1">City (Shehar) *</label>
+              <input type="text" id="chkCustomerCity" placeholder="Jaise: Lahore / Karachi" class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-white transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Mukammal Delivery Address *</label>
+            <textarea id="chkCustomerAddress" rows="2" placeholder="House #, Street #, Mohalla, Gali, Qareebi Mashhoor Jagah..." class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl p-3 text-xs font-semibold outline-none bg-white transition"></textarea>
+          </div>
+
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Aap Ka Reseller Store Naam (Customer Slip Par Ayega)</label>
+            <input type="text" id="chkResellerStore" placeholder="Mera Online Store" class="w-full border-2 border-gray-200 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-white transition" />
+          </div>
+        </div>
+
+        <!-- Sticky Action Bar Step 2 -->
+        <div class="sticky bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-100 pt-3 pb-6 grid grid-cols-2 gap-2.5 z-20">
+          <button onclick="goToOrderStep(1)" class="py-3 px-3 rounded-xl border-2 border-gray-300 text-gray-700 font-black text-xs hover:bg-gray-100 transition">
+            ← Wapas
+          </button>
+          <button onclick="goToOrderStep(3)" class="py-3 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-black text-xs shadow-lg flex items-center justify-center space-x-1 transition">
+            <span>Aage Barhein (Payment) →</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Sticky Responsive Action Bar (Copy Details, Share, Order Now) -->
-      <div class="sticky bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-100 pt-3 pb-6 px-1 grid grid-cols-3 gap-2 z-20">
-        <button onclick="copyProductDetails()" class="py-3 px-2 rounded-xl border border-amber-500 bg-amber-50 text-amber-900 hover:bg-amber-100 font-black text-xs flex items-center justify-center space-x-1 transition shadow-sm min-w-0">
-          <i data-lucide="copy" class="w-4 h-4 flex-shrink-0"></i>
-          <span class="truncate">Copy</span>
-        </button>
-        <button onclick="shareActiveProduct()" class="py-3 px-2 rounded-xl border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-black text-xs flex items-center justify-center space-x-1 transition min-w-0">
-          <i data-lucide="share-2" class="w-4 h-4 flex-shrink-0"></i>
-          <span class="truncate">Share</span>
-        </button>
-        <button onclick="addSelectedProductToCart(true)" class="py-3 px-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-black text-xs shadow-lg flex items-center justify-center space-x-1 transition min-w-0">
-          <i data-lucide="shopping-cart" class="w-4 h-4 flex-shrink-0"></i>
-          <span class="truncate">Order Now</span>
-        </button>
+      <!-- ==================== STEP 3: PAYMENT METHOD & 4-LINE FINAL BILL ==================== -->
+      <div id="orderStep3" class="hidden p-4 space-y-4">
+        <!-- Header with Back Button -->
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <button onclick="goToOrderStep(2)" class="flex items-center space-x-1 text-xs font-black text-gray-700 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Address Badlein</span>
+          </button>
+          <span class="text-[11px] font-black bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full">Step 3 of 3: Payment & Confirm</span>
+          <button onclick="closeProductModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- PAYMENT METHOD SELECTION: COD vs FULL ADVANCE (RS. 100 OFF) -->
+        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3.5 space-y-3 text-xs">
+          <label class="block font-black text-gray-900">Payment Ka Tariqa Select Karein:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <!-- COD Card -->
+            <button type="button" id="payMethodCOD" onclick="setPaymentMethod('COD')" class="p-3 rounded-2xl font-black text-xs border-2 border-gray-900 bg-[#0F172A] text-white flex flex-col items-center justify-center space-y-1 transition shadow-md">
+              <span class="text-base">📦</span>
+              <span>Cash on Delivery</span>
+              <span class="text-[9px] text-amber-300 font-bold">Standard COD</span>
+            </button>
+            
+            <!-- Full Advance Card -->
+            <button type="button" id="payMethodAdvance" onclick="setPaymentMethod('Advance')" class="p-3 rounded-2xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center space-y-1 transition">
+              <span class="text-base">⚡</span>
+              <span class="font-black text-gray-900">Full Advance Payment</span>
+              <span class="text-[9px] text-amber-600 font-extrabold bg-amber-100 px-1.5 py-0.5 rounded-full">Flat Rs. 100 OFF</span>
+            </button>
+          </div>
+
+          <!-- COD Notice -->
+          <div id="codNoticeBox" class="bg-blue-50 border border-blue-200/80 rounded-xl p-2.5 text-[11px] text-blue-950 space-y-1">
+            <p class="font-bold flex items-center space-x-1.5">
+              <span>🚚</span>
+              <span>Cash on Delivery (COD) Rules:</span>
+            </p>
+            <p class="text-gray-600 text-[10px] leading-relaxed">
+              Poori raqam delivery ke waqt courier rider ko ada karein. Delivery charges flat Rs. 150 COD mein shamil hain.
+            </p>
+          </div>
+
+          <!-- ADVANCE PAYMENT SECTION (LOGOS ONLY INITIALLY, EXPANDS ON CLICK) -->
+          <div id="advancePaymentBox" class="hidden space-y-2.5 pt-1">
+            <div class="flex items-center justify-between">
+              <p class="font-black text-amber-950 text-xs">🌟 Account Select Karein:</p>
+              <span class="bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-black text-[9px] px-2 py-0.5 rounded-full shadow-sm">Flat Rs. 100 Discount</span>
+            </div>
+            <p class="text-[10px] text-gray-500 font-medium">Neeche diye gaye kisi bhi logo par click karein taake account number show ho:</p>
+
+            <!-- 3 Branded Channel Cards (EasyPaisa, JazzCash, Meezan Bank) -->
+            <div class="grid grid-cols-3 gap-2">
+              <!-- EasyPaisa -->
+              <button type="button" id="advTabEasyPaisa" onclick="selectAdvanceChannel('easypaisa')" class="adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-[#00A859] text-white flex flex-col items-center justify-center shadow font-black text-xs mb-1 group-hover:scale-105 transition">
+                  <span class="tracking-tighter font-extrabold text-[12px] leading-tight">easy</span>
+                  <span class="text-[8px] font-semibold tracking-wider text-emerald-100 uppercase -mt-0.5">paisa</span>
+                </div>
+                <span class="font-black text-[11px] text-gray-900 leading-tight">EasyPaisa</span>
+                <span id="checkEasyPaisa" class="hidden absolute -top-1.5 -right-1.5 bg-emerald-600 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+              </button>
+
+              <!-- JazzCash -->
+              <button type="button" id="advTabJazzCash" onclick="selectAdvanceChannel('jazzcash')" class="adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#E11932] via-[#B80D22] to-[#FF5E00] text-white flex flex-col items-center justify-center shadow font-black text-xs mb-1 group-hover:scale-105 transition">
+                  <span class="font-black text-[12px] tracking-tight leading-tight">Jazz</span>
+                  <span class="text-[8px] font-bold tracking-wider text-amber-200 uppercase -mt-0.5">Cash</span>
+                </div>
+                <span class="font-black text-[11px] text-gray-900 leading-tight">JazzCash</span>
+                <span id="checkJazzCash" class="hidden absolute -top-1.5 -right-1.5 bg-red-600 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+              </button>
+
+              <!-- Meezan Bank -->
+              <button type="button" id="advTabMeezan" onclick="selectAdvanceChannel('meezan')" class="adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#002D62] via-[#0F172A] to-[#D4AF37] text-white flex flex-col items-center justify-center shadow font-black text-xs mb-1 group-hover:scale-105 transition">
+                  <span class="font-black text-[10px] tracking-tight text-amber-300 leading-tight">Meezan</span>
+                  <span class="text-[8px] font-bold tracking-wider text-gray-200 uppercase -mt-0.5">Bank</span>
+                </div>
+                <span class="font-black text-[11px] text-gray-900 leading-tight">Meezan</span>
+                <span id="checkMeezan" class="hidden absolute -top-1.5 -right-1.5 bg-blue-700 text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shadow">✓</span>
+              </button>
+            </div>
+
+            <!-- Dynamic Channel Details Container (Hidden until user clicks one of the logos) -->
+            <div id="advDetailsCard" class="hidden bg-gradient-to-br from-amber-50/90 to-white rounded-2xl p-3.5 border-2 border-amber-300 shadow-sm space-y-2.5">
+              <!-- Rendered dynamically by JavaScript when user clicks logo -->
+            </div>
+          </div>
+        </div>
+
+        <!-- EXACT 4-LINE BILL BREAKDOWN (Wholesale, Profit, Delivery Rs. 150, Total Payable) -->
+        <div class="bg-gradient-to-br from-amber-50/70 via-white to-amber-100/40 rounded-2xl p-3.5 space-y-2 text-xs border border-amber-200/80 shadow-sm">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+            <span class="font-black text-gray-800 uppercase tracking-wider text-[11px]">Final Order Bill:</span>
+            <span id="billPaymentBadge" class="bg-gray-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">Cash on Delivery</span>
+          </div>
+
+          <!-- Line 1: Wholesale Price -->
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600 font-semibold">1. Wholesale Price:</span>
+            <span id="billWholesale" class="font-bold text-gray-900">Rs. 0</span>
+          </div>
+
+          <!-- Line 2: Reseller Profit -->
+          <div class="flex justify-between items-center">
+            <span class="text-emerald-800 font-semibold">2. Aap Ka Profit:</span>
+            <span id="billProfit" class="font-black text-emerald-700">+Rs. 0</span>
+          </div>
+
+          <!-- Line 3: Delivery Charges -->
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600 font-semibold">3. Delivery Charges:</span>
+            <span id="billDelivery" class="font-bold text-gray-900">Rs. 150</span>
+          </div>
+
+          <!-- Line 4: Advance Discount (Only visible if advance selected) -->
+          <div id="billDiscountRow" class="hidden flex justify-between items-center bg-emerald-50 px-2 py-1 rounded-lg text-emerald-900 font-bold">
+            <span>⚡ Full Advance Discount:</span>
+            <span id="billDiscount">-Rs. 100</span>
+          </div>
+
+          <!-- Final Line: Total Payable -->
+          <div class="flex justify-between items-center pt-2 border-t-2 border-amber-200 text-sm">
+            <span class="font-black text-gray-900">Total Payable Amount:</span>
+            <span id="billTotalPayable" class="font-black text-[#0F172A] text-base">Rs. 0</span>
+          </div>
+        </div>
+
+        <!-- Sticky Action Bar Step 3: Confirm & WhatsApp Send -->
+        <div class="sticky bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-100 pt-3 pb-6 grid grid-cols-3 gap-2 z-20">
+          <button onclick="goToOrderStep(2)" class="py-3 px-2 rounded-xl border-2 border-gray-300 text-gray-700 font-black text-xs hover:bg-gray-100 transition min-w-0">
+            ← Address
+          </button>
+          <button onclick="confirmAndPlaceOrder()" class="col-span-2 py-3.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-black text-xs shadow-xl flex items-center justify-center space-x-1.5 transition active:scale-98 min-w-0">
+            <i data-lucide="send" class="w-4 h-4 flex-shrink-0"></i>
+            <span class="truncate">Order Confirm (WhatsApp) 🚀</span>
+          </button>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -1091,7 +1357,7 @@
     const ORDER_WHATSAPP_NUMBER = "923222089610";
     const SUPPORT_WHATSAPP_NUMBER = "923190328256";
     const FLAT_DELIVERY_FEE = 150;
-    const ADVANCE_DISCOUNT_AMOUNT = 200; // Rs. 200 Discount on Advance Payment
+    const ADVANCE_DISCOUNT_AMOUNT = 100; // Rs. 100 Discount on Full Advance Payment
 
     // State Variables
     let products = [];
@@ -1243,6 +1509,7 @@
 
     // ==================== TAB NAVIGATION ====================
     function switchTab(tabId) {
+      if (tabId === 'categories') renderCategoryTabProducts();
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
       const activeTab = document.getElementById('tab-' + tabId);
       if (activeTab) activeTab.classList.remove('hidden');
@@ -2139,10 +2406,14 @@
     }
 
     // ==================== PRODUCT DETAILS MODAL ====================
+    
     let currentProductPhotos = [];
     let activePhotoIndex = 0;
     let currentSelectedWholesalePrice = 0;
+    let currentOrderStep = 1;
+    let selectedAdvanceChannel = null;
     
+    // Multi-Angle Gallery
     function switchProductPhoto(index) {
       if (!currentProductPhotos[index]) return;
       activePhotoIndex = index;
@@ -2174,10 +2445,10 @@
         const isSelected = idx === activePhotoIndex;
         return `
           <button type="button" onclick="switchProductPhoto(${idx})" class="flex flex-col items-center flex-shrink-0 group">
-            <div class="w-13 h-13 rounded-xl overflow-hidden border-2 transition-all ${isSelected ? 'border-amber-500 ring-2 ring-amber-400/50 scale-105 shadow-md' : 'border-gray-200 opacity-60 hover:opacity-100'}">
-              <img src="${url}" class="w-13 h-13 object-cover" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
+            <div class="w-12 h-12 rounded-xl overflow-hidden border-2 transition-all ${isSelected ? 'border-amber-500 ring-2 ring-amber-400/50 scale-105 shadow-md' : 'border-gray-200 opacity-60 hover:opacity-100'}">
+              <img src="${url}" class="w-full h-full object-cover" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
             </div>
-            <span class="text-[9px] font-black mt-1 ${isSelected ? 'text-amber-800' : 'text-gray-400'}">${label}</span>
+            <span class="text-[9px] font-black mt-0.5 ${isSelected ? 'text-amber-800' : 'text-gray-400'}">${label}</span>
           </button>
         `;
       }).join('');
@@ -2211,7 +2482,7 @@ ${currentProduct.urdu_title ? currentProduct.urdu_title + '\n' : ''}
 📝 *Tafseelat (Details):*
 ${currentProduct.description}
 
-🚚 *Delivery:* Poore Pakistan mein Flat Rs. 150/KG (Advance payment par Flat Rs. 200 Discount!)
+🚚 *Delivery:* Poore Pakistan mein Flat Rs. 150/KG (Full Advance Payment par Flat Rs. 100 Discount!)
 🛡️ *Guarantee:* 7 Din ki Easy Return Policy (Damage ya fault par 100% Free exchange)
 
 📲 Order karne ke liye inbox ya WhatsApp karein: 03222089610`;
@@ -2220,7 +2491,7 @@ ${currentProduct.description}
         navigator.clipboard.writeText(textToCopy).then(() => {
           showToast('✅ Tafseelat copy ho gayi hain! WhatsApp ya Facebook par share karein.');
         }).catch(() => {
-          showToast('Tafseelat copy ho gayi hain.');
+          showToast('✅ Tafseelat copy ho gayi hain!');
         });
       } else {
         showToast('✅ Tafseelat copy ho gayi hain!');
@@ -2271,8 +2542,11 @@ ${currentProduct.description}
       document.getElementById('detCustomProfit').value = 500;
       updateLiveOrderCalculation();
 
+      // Start at Step 1
+      goToOrderStep(1);
+
       document.getElementById('productModal').classList.remove('hidden');
-      lucide.createIcons();
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeProductModal() {
@@ -2313,68 +2587,119 @@ ${currentProduct.description}
       document.getElementById('detFinalCustomerCOD').innerText = `Rs. ${total.toLocaleString()}`;
     }
 
-    // ==================== CART & ORDER SUBMISSION ====================
-    function addSelectedProductToCart(openImmediately = true) {
+    // ==================== 3-STEP MARKAZ CHECKOUT CONTROLLER ====================
+    function goToOrderStep(step) {
       if (!currentProduct) return;
-      const profit = selectedOrderMode === 'Resell' ? (parseInt(document.getElementById('detCustomProfit').value) || 0) : 0;
-      const size = document.getElementById('detSizeSelect').value;
-      const wsPrice = currentSelectedWholesalePrice || currentProduct.wholesale_price;
 
-      cart = [{
-        product: currentProduct,
-        customWholesalePrice: wsPrice,
-        quantity: 1,
-        mode: selectedOrderMode,
-        profit: profit,
-        size: size,
-        color: 'Default'
-      }];
+      const s1 = document.getElementById('orderStep1');
+      const s2 = document.getElementById('orderStep2');
+      const s3 = document.getElementById('orderStep3');
 
-      updateBadges();
-      closeProductModal();
-      if (openImmediately) openCartModal();
-    }
+      if (step === 2) {
+        // Validate Step 1
+        s1.classList.add('hidden');
+        s2.classList.remove('hidden');
+        s3.classList.add('hidden');
+        currentOrderStep = 2;
 
-    function openCartModal() {
-      if (cart.length === 0) {
-        showToast('Shopping bag khali hai! Pehle koi product select karein.');
-        return;
-      }
-      document.getElementById('chkResellerStore').value = wallet.store_name || 'Mera Online Store';
-      setPaymentMethod(selectedPaymentMethod);
-      renderCartModalItems();
-      document.getElementById('cartModal').classList.remove('hidden');
-      lucide.createIcons();
-    }
+        // Populate Step 2 preview
+        const firstPhoto = currentProductPhotos[0];
+        document.getElementById('step2ProdImg').src = typeof firstPhoto === 'object' ? firstPhoto.url : firstPhoto;
+        document.getElementById('step2ProdTitle').innerText = currentProduct.title;
+        document.getElementById('step2ProdVariant').innerText = document.getElementById('detSizeSelect').value;
+        const ws = currentSelectedWholesalePrice || currentProduct.wholesale_price;
+        const pf = selectedOrderMode === 'Resell' ? (parseInt(document.getElementById('detCustomProfit').value) || 0) : 0;
+        document.getElementById('step2ProdItemTotal').innerText = `Wholesale: Rs. ${ws.toLocaleString()} + Profit: Rs. ${pf.toLocaleString()}`;
 
-    function closeCartModal() {
-      document.getElementById('cartModal').classList.add('hidden');
-    }
+        // Auto pre-fill store name if empty
+        if (!document.getElementById('chkResellerStore').value) {
+          document.getElementById('chkResellerStore').value = wallet.store_name || 'Mera Online Store';
+        }
+      } else if (step === 3) {
+        // Validate Step 2 inputs
+        const name = document.getElementById('chkCustomerName').value.trim();
+        const phone = document.getElementById('chkCustomerPhone').value.trim();
+        const city = document.getElementById('chkCustomerCity').value.trim();
+        const address = document.getElementById('chkCustomerAddress').value.trim();
 
-    // Advance Payment (Rs. 200 Discount) vs COD
-    let selectedAdvanceChannel = 'easypaisa'; // 'easypaisa', 'jazzcash', 'meezan'
+        if (!name) {
+          showToast('Barahe karam Customer Ka Naam likhein.');
+          document.getElementById('chkCustomerName').focus();
+          return;
+        }
+        if (!phone || phone.length < 10) {
+          showToast('Barahe karam Customer Ka Sahih Mobile Number likhein.');
+          document.getElementById('chkCustomerPhone').focus();
+          return;
+        }
+        if (!city) {
+          showToast('Barahe karam Shehar (City) Ka Naam likhein.');
+          document.getElementById('chkCustomerCity').focus();
+          return;
+        }
+        if (!address || address.length < 5) {
+          showToast('Barahe karam Mukammal Delivery Address likhein.');
+          document.getElementById('chkCustomerAddress').focus();
+          return;
+        }
 
-    function copyToClipboard(text, msg) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast(msg || 'Copied!');
-        }).catch(() => {
-          showToast(msg || 'Copied!');
-        });
+        s1.classList.add('hidden');
+        s2.classList.add('hidden');
+        s3.classList.remove('hidden');
+        currentOrderStep = 3;
+
+        // Default to COD
+        setPaymentMethod(selectedPaymentMethod || 'COD');
+        calculateOrderBill();
       } else {
-        showToast(msg || 'Copied!');
+        // Step 1
+        s1.classList.remove('hidden');
+        s2.classList.add('hidden');
+        s3.classList.add('hidden');
+        currentOrderStep = 1;
       }
+
+      const modalContainer = document.querySelector('#productModal > div');
+      if (modalContainer) modalContainer.scrollTop = 0;
+      if (window.lucide) lucide.createIcons();
     }
 
+    // Payment Method Selection: COD vs Full Advance
+    function setPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      const btnCOD = document.getElementById('payMethodCOD');
+      const btnAdv = document.getElementById('payMethodAdvance');
+      const codNotice = document.getElementById('codNoticeBox');
+      const advBox = document.getElementById('advancePaymentBox');
+      const discRow = document.getElementById('billDiscountRow');
+      const badge = document.getElementById('billPaymentBadge');
+
+      if (method === 'COD') {
+        btnCOD.className = 'p-3 rounded-2xl font-black text-xs border-2 border-gray-900 bg-[#0F172A] text-white flex flex-col items-center justify-center space-y-1 transition shadow-md';
+        btnAdv.className = 'p-3 rounded-2xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center space-y-1 transition hover:bg-gray-50';
+        codNotice.classList.remove('hidden');
+        advBox.classList.add('hidden');
+        discRow.classList.add('hidden');
+        badge.innerText = 'Cash on Delivery (COD)';
+        badge.className = 'bg-gray-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md';
+      } else {
+        btnAdv.className = 'p-3 rounded-2xl font-black text-xs border-2 border-amber-500 bg-[#0F172A] text-amber-400 flex flex-col items-center justify-center space-y-1 transition shadow-md';
+        btnCOD.className = 'p-3 rounded-2xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center space-y-1 transition hover:bg-gray-50';
+        codNotice.classList.add('hidden');
+        advBox.classList.remove('hidden');
+        discRow.classList.remove('hidden');
+        badge.innerText = 'Full Advance Payment (Rs. 100 OFF)';
+        badge.className = 'bg-gradient-to-r from-amber-500 to-amber-600 text-gray-950 text-[10px] font-black px-2 py-0.5 rounded-md';
+      }
+      calculateOrderBill();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Select Advance Channel: EasyPaisa, JazzCash, Meezan Bank (Expands on Click!)
     function selectAdvanceChannel(channel) {
       selectedAdvanceChannel = channel;
-      renderAdvanceChannelDetails();
-    }
 
-    function renderAdvanceChannelDetails() {
       const card = document.getElementById('advDetailsCard');
-      if (!card) return;
-
       const btnEP = document.getElementById('advTabEasyPaisa');
       const btnJC = document.getElementById('advTabJazzCash');
       const btnMZ = document.getElementById('advTabMeezan');
@@ -2383,10 +2708,10 @@ ${currentProduct.description}
       const chkJC = document.getElementById('checkJazzCash');
       const chkMZ = document.getElementById('checkMeezan');
 
-      // Reset tabs
-      if (btnEP) btnEP.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative';
-      if (btnJC) btnJC.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative';
-      if (btnMZ) btnMZ.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative';
+      // Reset styles
+      if (btnEP) btnEP.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group';
+      if (btnJC) btnJC.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group';
+      if (btnMZ) btnMZ.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-gray-200 bg-white hover:bg-gray-50 flex flex-col items-center justify-center transition shadow-sm relative group';
 
       if (chkEP) chkEP.classList.add('hidden');
       if (chkJC) chkJC.classList.add('hidden');
@@ -2395,36 +2720,33 @@ ${currentProduct.description}
       const holderName = 'MUHAMMAD YAQOOB';
       let acctNumber = '';
       let brandTitle = '';
-      let badgeLabel = '';
       let themeColorClass = '';
 
-      if (selectedAdvanceChannel === 'easypaisa') {
+      if (channel === 'easypaisa') {
         acctNumber = '03190328256';
         brandTitle = 'EasyPaisa';
-        badgeLabel = '🟢 EasyPaisa Account (Muhammad Yaqoob)';
         themeColorClass = 'text-[#00A859]';
         if (btnEP) btnEP.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-emerald-500 bg-emerald-50/70 flex flex-col items-center justify-center transition shadow-md relative ring-2 ring-emerald-400/40';
         if (chkEP) chkEP.classList.remove('hidden');
-      } else if (selectedAdvanceChannel === 'jazzcash') {
+      } else if (channel === 'jazzcash') {
         acctNumber = '03222089610';
         brandTitle = 'JazzCash';
-        badgeLabel = '🔴 JazzCash Account (Muhammad Yaqoob)';
         themeColorClass = 'text-[#E11932]';
         if (btnJC) btnJC.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-red-500 bg-red-50/70 flex flex-col items-center justify-center transition shadow-md relative ring-2 ring-red-400/40';
         if (chkJC) chkJC.classList.remove('hidden');
       } else {
         acctNumber = '03190328256';
         brandTitle = 'Meezan Bank';
-        badgeLabel = '🏛️ Meezan Bank / Raast ID (Muhammad Yaqoob)';
         themeColorClass = 'text-[#002D62]';
         if (btnMZ) btnMZ.className = 'adv-channel-btn p-2 rounded-2xl border-2 border-blue-600 bg-blue-50/70 flex flex-col items-center justify-center transition shadow-md relative ring-2 ring-blue-400/40';
         if (chkMZ) chkMZ.classList.remove('hidden');
       }
 
+      card.classList.remove('hidden');
       card.innerHTML = `
         <div class="flex items-center justify-between border-b border-amber-200/60 pb-2">
-          <span class="font-black text-xs text-gray-900">${badgeLabel}</span>
-          <span class="text-[10px] bg-gradient-to-r from-amber-400 to-amber-500 text-gray-950 font-black px-2 py-0.5 rounded-md shadow-sm">Save Rs. 200</span>
+          <span class="font-black text-xs text-gray-900">🏦 ${brandTitle} Account Details</span>
+          <span class="text-[10px] bg-amber-400 text-gray-950 font-black px-2 py-0.5 rounded-md">Save Rs. 100</span>
         </div>
 
         <div class="bg-white rounded-xl p-3 border border-amber-200/60 space-y-2 shadow-sm">
@@ -2457,130 +2779,77 @@ ${currentProduct.description}
         </div>
 
         <p class="text-[10px] text-gray-600 font-semibold leading-relaxed">
-          💡 Raqam bhej kar screenshot le lein aur neeche diye gaye button se receipt WhatsApp par bhej dein taake aap ka order foran confirm ho jaye:
+          💡 Raqam bhej kar screenshot le lein aur order confirm karne ke baad WhatsApp par bhej dein taake aap ka order foran confirm ho jaye:
         </p>
 
-        <a href="https://wa.me/923222089610?text=${encodeURIComponent('Assalam o Alaikum Tejarat Team, maine ' + brandTitle + ' (' + acctNumber + ' - ' + holderName + ') par advance payment ki hai, ye payment ka screenshot hai.')}" target="_blank" class="w-full inline-flex items-center justify-center space-x-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-xs py-2.5 px-3 rounded-xl shadow-md transition active:scale-98">
+        <a href="https://wa.me/923222089610?text=${encodeURIComponent('Assalam o Alaikum Tejarat, maine ' + brandTitle + ' (' + acctNumber + ' - ' + holderName + ') par advance payment bhej di hai, ye receipt screenshot hai.')}" target="_blank" class="w-full inline-flex items-center justify-center space-x-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-xs py-2 px-3 rounded-xl shadow-md transition active:scale-98">
           <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>WhatsApp Par Payment Screenshot Bhejein</span>
+          <span>WhatsApp Par Screenshot Bhejein</span>
         </a>
       `;
       if (window.lucide) lucide.createIcons();
     }
 
-    function setPaymentMethod(method) {
-      selectedPaymentMethod = method;
-      const btnCOD = document.getElementById('payMethodCOD');
-      const btnAdv = document.getElementById('payMethodAdvance');
-      const advInfo = document.getElementById('advancePaymentInfo');
-      const discRow = document.getElementById('sumDiscountRow');
+    // 4-Line Bill Calculation
+    function calculateOrderBill() {
+      if (!currentProduct) return;
+      const wholesale = currentSelectedWholesalePrice || currentProduct.wholesale_price;
+      const profit = selectedOrderMode === 'Resell' ? (parseInt(document.getElementById('detCustomProfit').value) || 0) : 0;
+      const delivery = FLAT_DELIVERY_FEE;
+      const discount = selectedPaymentMethod === 'Advance' ? ADVANCE_DISCOUNT_AMOUNT : 0;
+      const total = Math.max(0, wholesale + profit + delivery - discount);
 
-      if (method === 'COD') {
-        btnCOD.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-gray-900 bg-[#0F172A] text-white flex items-center justify-center space-x-1 transition shadow';
-        btnAdv.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex flex-col items-center justify-center transition';
-        advInfo.classList.add('hidden');
-        discRow.classList.add('hidden');
-      } else {
-        btnAdv.className = 'py-2.5 px-3 rounded-xl font-black text-xs border-2 border-amber-500 bg-[#0F172A] text-amber-400 flex flex-col items-center justify-center transition shadow';
-        btnCOD.className = 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 border-gray-300 bg-white text-gray-700 flex items-center justify-center space-x-1 transition';
-        advInfo.classList.remove('hidden');
-        discRow.classList.remove('hidden');
-        renderAdvanceChannelDetails();
-      }
-      renderCartModalItems();
+      document.getElementById('billWholesale').innerText = `Rs. ${wholesale.toLocaleString()}`;
+      document.getElementById('billProfit').innerText = `+Rs. ${profit.toLocaleString()}`;
+      document.getElementById('billDelivery').innerText = `Rs. ${delivery.toLocaleString()}`;
+      document.getElementById('billDiscount').innerText = `-Rs. ${discount.toLocaleString()}`;
+      document.getElementById('billTotalPayable').innerText = `Rs. ${total.toLocaleString()}`;
     }
 
-    function renderCartModalItems() {
-      const container = document.getElementById('cartItemsList');
-      let totalWholesale = 0;
-      let totalProfit = 0;
+    // Final Order Confirmation & WhatsApp Sync
+    async function confirmAndPlaceOrder() {
+      if (!currentProduct) return;
 
-      container.innerHTML = cart.map((item, idx) => {
-        const itemWholesale = item.customWholesalePrice || item.product.wholesale_price;
-        totalWholesale += itemWholesale * item.quantity;
-        totalProfit += item.profit * item.quantity;
-
-        return `
-          <div class="bg-gray-50 rounded-2xl p-3 flex items-center justify-between border border-gray-100">
-            <div class="flex items-center space-x-3">
-              <img src="${item.product.image_url}" class="w-12 h-12 object-cover rounded-xl shadow-sm" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
-              <div>
-                <h4 class="font-black text-xs text-gray-900 line-clamp-1">${item.product.title}</h4>
-                <p class="text-[10px] text-amber-800 font-bold">${item.size}</p>
-                <p class="text-[11px] font-black text-[#0F172A]">Rs. ${itemWholesale.toLocaleString()} <span class="text-[10px] text-emerald-800 font-bold">(+Rs. ${item.profit} profit)</span></p>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="changeCartQty(${idx}, -1)" class="w-6 h-6 rounded-lg bg-gray-200 text-gray-700 font-black flex items-center justify-center hover:bg-gray-300">-</button>
-              <span class="font-black text-xs">${item.quantity}</span>
-              <button onclick="changeCartQty(${idx}, 1)" class="w-6 h-6 rounded-lg bg-gray-200 text-gray-700 font-black flex items-center justify-center hover:bg-gray-300">+</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      let deliveryFee = FLAT_DELIVERY_FEE;
-      let advanceDiscount = 0;
-
-      if (selectedPaymentMethod === 'Advance') {
-        advanceDiscount = ADVANCE_DISCOUNT_AMOUNT; // Flat Rs. 200 Discount
-      }
-
-      const totalCharged = Math.max(0, totalWholesale + totalProfit + deliveryFee - advanceDiscount);
-
-      document.getElementById('sumWholesale').innerText = `Rs. ${totalWholesale.toLocaleString()}`;
-      document.getElementById('sumProfit').innerText = `+Rs. ${totalProfit.toLocaleString()}`;
-      document.getElementById('sumDelivery').innerText = `Rs. ${deliveryFee}`;
-      document.getElementById('sumTotalCOD').innerText = `Rs. ${totalCharged.toLocaleString()}`;
-    }
-
-    function changeCartQty(idx, delta) {
-      if (!cart[idx]) return;
-      cart[idx].quantity += delta;
-      if (cart[idx].quantity <= 0) {
-        cart.splice(idx, 1);
-      }
-      if (cart.length === 0) closeCartModal();
-      else renderCartModalItems();
-      updateBadges();
-    }
-
-    // Submit Order to WhatsApp 03222089610 + Supabase Sync
-    async function submitCustomerOrder(e) {
-      e.preventDefault();
-      if (cart.length === 0) return;
-
-      const item = cart[0];
       const customerName = document.getElementById('chkCustomerName').value.trim();
       const customerPhone = document.getElementById('chkCustomerPhone').value.trim();
       const customerProvince = document.getElementById('chkCustomerProvince').value;
-      const customerCity = document.getElementById('chkCustomerCity').value;
+      const customerCity = document.getElementById('chkCustomerCity').value.trim();
       const customerAddress = document.getElementById('chkCustomerAddress').value.trim();
-      const resellerStore = document.getElementById('chkResellerStore').value.trim() || wallet.store_name;
+      const resellerStore = document.getElementById('chkResellerStore').value.trim() || wallet.store_name || 'Mera Online Store';
+
+      const wholesale = currentSelectedWholesalePrice || currentProduct.wholesale_price;
+      const profit = selectedOrderMode === 'Resell' ? (parseInt(document.getElementById('detCustomProfit').value) || 0) : 0;
+      const delivery = FLAT_DELIVERY_FEE;
+      const discount = selectedPaymentMethod === 'Advance' ? ADVANCE_DISCOUNT_AMOUNT : 0;
+      const totalAmount = Math.max(0, wholesale + profit + delivery - discount);
+      const variantSize = document.getElementById('detSizeSelect').value;
 
       const trackingId = 'TRX-' + Math.floor(10000 + Math.random() * 90000);
-      const deliveryFee = FLAT_DELIVERY_FEE;
-      const advanceDiscount = selectedPaymentMethod === 'Advance' ? ADVANCE_DISCOUNT_AMOUNT : 0;
-      const itemWholesale = item.customWholesalePrice || item.product.wholesale_price;
-      const totalAmount = Math.max(0, (itemWholesale * item.quantity) + (item.profit * item.quantity) + deliveryFee - advanceDiscount);
 
-      // WhatsApp Roman Urdu Message
+      let paymentLabel = '📦 Cash on Delivery (COD)';
+      let paymentAccountText = '';
+      if (selectedPaymentMethod === 'Advance') {
+        const channelName = selectedAdvanceChannel ? selectedAdvanceChannel.toUpperCase() : 'ONLINE';
+        paymentLabel = `⚡ Full Advance Online via ${channelName} (Rs. 100 Discount Applied)`;
+        paymentAccountText = `• Advance Account: MUHAMMAD YAQOOB (${selectedAdvanceChannel === 'jazzcash' ? '03222089610' : '03190328256'})\n`;
+      }
+
+      // Exact WhatsApp Order Message (Full Roman Urdu Details)
       const waMessage = 
 `*🛍️ NAYA ORDER DETAILS (Tejarat App)*
 -----------------------------------
 *📦 Tracking ID:* ${trackingId}
 *🏷️ Reseller Store:* ${resellerStore}
-*💳 Payment Method:* ${selectedPaymentMethod === 'Advance' ? `⚡ Advance Online via ${selectedAdvanceChannel === 'easypaisa' ? 'EasyPaisa (03190328256)' : (selectedAdvanceChannel === 'jazzcash' ? 'JazzCash (03222089610)' : 'Meezan Bank (03190328256)')} - Title: MUHAMMAD YAQOOB (Rs. 200 OFF)` : '📦 Cash on Delivery (COD)'}
-
+*💳 Payment Method:* ${paymentLabel}
+${paymentAccountText}
 *🛒 Product Details:*
-• Item: ${item.product.title}
-• Quantity: ${item.quantity}
-• Variant / Size: ${item.size}
-• Wholesale: Rs. ${itemWholesale * item.quantity}
-• Reseller Profit: Rs. ${item.profit * item.quantity}
-• Delivery Fee: Rs. ${deliveryFee} (Flat all over Pakistan)
-${advanceDiscount > 0 ? `• Advance Discount: -Rs. ${advanceDiscount}
-` : ''}*💰 Total COD Payable:* *Rs. ${totalAmount.toLocaleString()}*
+• Item: ${currentProduct.title}
+• Variant / Size: ${variantSize}
+• 1. Wholesale Price: Rs. ${wholesale.toLocaleString()}
+• 2. Reseller Profit: Rs. ${profit.toLocaleString()}
+• 3. Delivery Charges: Rs. ${delivery} (Flat all over Pakistan)
+${discount > 0 ? `• 4. Full Advance Discount: -Rs. ${discount}\n` : ''}-----------------------------------
+*💰 Total Payable Amount:* *Rs. ${totalAmount.toLocaleString()}*
 
 *👤 Customer Info:*
 • Name: ${customerName}
@@ -2596,50 +2865,156 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
       const orderPayload = {
         id: 'ord_' + Date.now(),
         tracking_id: trackingId,
-        product_id: item.product.id,
-        product_title: item.product.title,
+        product_id: currentProduct.id,
+        product_title: currentProduct.title,
         customer_name: customerName,
         customer_phone: customerPhone,
         customer_city: customerCity,
         customer_address: `${customerAddress}, ${customerCity}, ${customerProvince}`,
-        wholesale_price: itemWholesale,
-        profit_amount: item.profit,
-        delivery_fee: deliveryFee,
+        wholesale_price: wholesale,
+        profit_amount: profit,
+        delivery_fee: delivery,
         total_amount: totalAmount,
         status: 'In-progress',
         reseller_id: currentUser ? currentUser.id : 'guest_reseller',
         payment_method: selectedPaymentMethod,
         order_details: {
-          quantity: item.quantity,
-          size: item.size,
-          color: item.color,
-          advance_discount: advanceDiscount
+          quantity: 1,
+          size: variantSize,
+          advance_discount: discount,
+          advance_channel: selectedAdvanceChannel
         }
       };
 
       try {
         await supabaseClient.from('orders').insert([orderPayload]);
       } catch (err) {
-        console.warn('Supabase sync warning:', err);
+        console.warn('Supabase order insert:', err);
       }
 
-      // Add to local orders and update wallet
+      // Update local wallet & orders list
       orders.unshift(orderPayload);
-      wallet.pending_payout += item.profit;
+      wallet.pending_payout += profit;
       wallet.completed_orders += 1;
       wallet.total_sales += totalAmount;
       saveLocalState();
       updateBadges();
       renderOrdersList();
 
-      cart = [];
-      updateBadges();
-      closeCartModal();
-
-      showToast('🎉 Shukriya! Order place ho gaya hai. WhatsApp redirect ho raha hai...');
+      closeProductModal();
+      showToast('🎉 Shukriya! Order confirm ho gaya hai. WhatsApp open ho raha hai...');
       setTimeout(() => {
         window.open(waUrl, '_blank');
       }, 700);
+    }
+
+    // ----------------------------------------------------
+    // NOTIFICATION MODAL HELPERS
+    // ----------------------------------------------------
+    function openNotificationModal() {
+      document.getElementById('notificationModal').classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeNotificationModal() {
+      document.getElementById('notificationModal').classList.add('hidden');
+    }
+
+    // ----------------------------------------------------
+    // TAB 2 (CATEGORIES) MARKETPLACE 2-COLUMN GRID ENGINE
+    // ----------------------------------------------------
+    function renderCategoryTabProducts() {
+      const chipsContainer = document.getElementById('categoryTabChips');
+      const gridContainer = document.getElementById('categoryProductsGrid');
+      const countBadge = document.getElementById('catProductCountBadge');
+      if (!chipsContainer || !gridContainer) return;
+
+      const cats = ['All', 'Dry Fruits & Nuts', 'Pure Sidr Honey', 'Desi Ghee'];
+
+      // Render top chips
+      chipsContainer.innerHTML = cats.map(c => `
+        <button onclick="selectCategoryInTab('${c}')" class="category-tab-chip px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition ${activeCategoryFilter === c ? 'bg-[#0F172A] text-amber-300 shadow-sm border border-amber-500/50' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+          ${c === 'All' ? '📦 Sab Products' : c}
+        </button>
+      `).join('');
+
+      const filtered = activeCategoryFilter === 'All' 
+        ? products 
+        : products.filter(p => p.category === activeCategoryFilter);
+
+      if (countBadge) countBadge.innerText = `${filtered.length} Items`;
+
+      if (filtered.length === 0) {
+        gridContainer.innerHTML = `
+          <div class="col-span-2 bg-white rounded-3xl p-6 text-center space-y-2 border border-gray-100 shadow-sm">
+            <p class="font-black text-xs text-gray-800">Is category mein jald products add honge</p>
+            <button onclick="selectCategoryInTab('All')" class="text-xs bg-amber-500 text-gray-950 font-black px-3 py-1.5 rounded-xl">Sab Dekhein</button>
+          </div>
+        `;
+        return;
+      }
+
+      // Render 2-column side-by-side marketplace cards
+      gridContainer.innerHTML = filtered.map(prod => {
+        const estProfit = Math.max(300, (prod.suggested_retail_price || prod.wholesale_price + 500) - prod.wholesale_price);
+        const isFav = wishlist.some(w => w.id === prod.id);
+
+        return `
+          <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col justify-between transition group">
+            <!-- Product Square Image -->
+            <div class="relative aspect-square w-full bg-gray-100 overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
+              <img src="${prod.image_url}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
+              
+              <!-- Profit Tag -->
+              <span class="absolute top-2 left-2 bg-[#0F172A] text-amber-300 border border-amber-500/40 text-[9px] font-black px-2 py-0.5 rounded-lg shadow">
+                +Rs. ${estProfit}
+              </span>
+
+              <!-- Wishlist Heart -->
+              <button onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow hover:scale-110 transition">
+                <i data-lucide="heart" class="w-3.5 h-3.5 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-gray-400'}"></i>
+              </button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-2.5 flex-1 flex flex-col justify-between space-y-1.5">
+              <div>
+                <span class="text-[9px] font-bold text-amber-800 uppercase tracking-wider">${prod.category}</span>
+                <h4 onclick="openProductModal('${prod.id}')" class="font-black text-xs text-gray-900 leading-snug line-clamp-2 h-8 cursor-pointer hover:text-amber-800 mt-0.5">${prod.title}</h4>
+              </div>
+
+              <!-- Price Row -->
+              <div class="pt-1 border-t border-gray-100">
+                <div class="flex items-baseline justify-between">
+                  <div>
+                    <span class="text-[9px] text-gray-400 font-bold">Wholesale:</span>
+                    <span class="text-xs font-black text-[#0F172A]">Rs. ${prod.wholesale_price}</span>
+                  </div>
+                  <span class="text-[9px] line-through text-gray-400">Rs. ${prod.suggested_retail_price || prod.wholesale_price + 600}</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-2 gap-1.5 pt-1">
+                <button onclick="quickShare('${prod.id}')" class="py-1.5 px-2 rounded-xl border border-gray-300 hover:bg-gray-100 text-gray-800 text-[10px] font-black flex items-center justify-center space-x-1 transition min-w-0">
+                  <i data-lucide="share-2" class="w-3 h-3 flex-shrink-0"></i>
+                  <span>Share</span>
+                </button>
+                <button onclick="openProductModal('${prod.id}')" class="py-1.5 px-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-950 text-[10px] font-black flex items-center justify-center space-x-1 shadow transition min-w-0">
+                  <i data-lucide="shopping-bag" class="w-3 h-3 flex-shrink-0"></i>
+                  <span>Order</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function selectCategoryInTab(catName) {
+      activeCategoryFilter = catName;
+      renderCategoryTabProducts();
     }
 
     function handleSearch(q) {

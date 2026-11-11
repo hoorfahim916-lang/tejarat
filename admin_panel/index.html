@@ -131,6 +131,17 @@
         </button>
       </div>
 
+      <!-- Category Filter Tabs & Fast Add By Category -->
+      <div class="bg-white rounded-2xl p-3 border border-gray-200 shadow-sm space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-black text-gray-700 uppercase tracking-wider">Category Filter:</span>
+          <span id="admCatCount" class="text-xs font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full">Showing All</span>
+        </div>
+        <div id="admCategoryChips" class="flex space-x-2 overflow-x-auto pb-1 no-scrollbar">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
       <div id="adminProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
     </section>
 
@@ -318,16 +329,15 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-gray-700 mb-1">Category *</label>
-            <select id="admProdCategory" required class="w-full border rounded-xl px-3 py-2">
-              <option value="Women Clothes">👗 Women Clothes</option>
-              <option value="Men Clothes">👔 Men Clothes</option>
-              <option value="Smart Gadgets">⌚ Smart Gadgets</option>
-              <option value="Dry Fruits & Nuts">🥜 Dry Fruits & Nuts</option>
-              <option value="Pure Sidr Honey">🍯 Pure Sidr Honey</option>
-              <option value="Desi Ghee & Makhan">🧈 Desi Ghee & Makhan</option>
-              <option value="Beauty & Cosmetics">💄 Beauty & Cosmetics</option>
-              <option value="Home & Bedding">🛏️ Home & Bedding</option>
-              <option value="Watches & Jewelry">💍 Watches & Jewelry</option>
+            <select id="admProdCategory" required class="w-full border rounded-xl px-3 py-2 font-bold text-xs">
+              <option value="Dry Fruits & Nuts">🥜 Dry Fruits & Nuts (خشک میوہ جات)</option>
+              <option value="Pure Sidr Honey">🍯 Pure Sidr Honey (خالص بیری شہد)</option>
+              <option value="Desi Ghee">🧈 Desi Ghee (خالص دیسی گھی)</option>
+              <option value="Olive Oil & Salajeet">🫒 Olive Oil & Salajeet (زیتون و سلاجیت)</option>
+              <option value="Ladies Suits">👗 Ladies Suits (خواتین کے کپڑے)</option>
+              <option value="Men Clothes">👔 Men Clothes (مردانہ کپڑے)</option>
+              <option value="Pants & Jeans">👖 Pants & Jeans (پینٹس)</option>
+              <option value="Cosmetics">💄 Cosmetics (میک اپ و خوبصورتی)</option>
             </select>
           </div>
           <div>
@@ -408,9 +418,54 @@
       }
     }
 
+    let selectedAdminCategory = 'All';
+
+    function renderAdminCategoryChips() {
+      const container = document.getElementById('admCategoryChips');
+      if (!container) return;
+      const cats = [
+        'All',
+        'Dry Fruits & Nuts',
+        'Pure Sidr Honey',
+        'Desi Ghee',
+        'Olive Oil & Salajeet',
+        'Ladies Suits',
+        'Men Clothes',
+        'Cosmetics'
+      ];
+      container.innerHTML = cats.map(c => `
+        <button type="button" onclick="filterAdminCategory('${c}')" class="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${selectedAdminCategory === c ? 'bg-[#5C1D8D] text-white shadow' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">
+          ${c === 'All' ? '📦 Sab Categories' : c}
+        </button>
+      `).join('');
+    }
+
+    function filterAdminCategory(cat) {
+      selectedAdminCategory = cat;
+      const badge = document.getElementById('admCatCount');
+      if (badge) badge.innerText = cat === 'All' ? 'Showing All' : 'Category: ' + cat;
+      renderAdminCategoryChips();
+      renderAdminProducts();
+    }
+
     function renderAdminProducts() {
+      renderAdminCategoryChips();
       const grid = document.getElementById('adminProductsGrid');
-      grid.innerHTML = products.map(p => `
+      const filtered = selectedAdminCategory === 'All'
+        ? products
+        : products.filter(p => p.category === selectedAdminCategory);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl p-8 text-center border border-dashed border-gray-300">
+            <p class="font-bold text-sm text-gray-600">Is category '${selectedAdminCategory}' mein abhi koi product nahi hai.</p>
+            <button onclick="openProductModalForCategory('${selectedAdminCategory}')" class="mt-3 bg-[#5C1D8D] text-white text-xs font-bold px-4 py-2 rounded-xl">+ Is Category Mein Product Add Karein</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
         <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm flex flex-col justify-between">
           <div>
             <div class="h-44 bg-gray-100 relative">
@@ -612,6 +667,7 @@
       document.getElementById('admProdTitle').value = p.title;
       document.getElementById('admProdUrdu').value = p.urdu_title || '';
       document.getElementById('admProdCategory').value = p.category;
+      document.getElementById('admProdSizes').value = Array.isArray(p.sizes) ? p.sizes.join(', ') : (p.sizes || '');
       document.getElementById('admProdStock').value = p.stock_quantity || 100;
       document.getElementById('admProdWholesale').value = p.wholesale_price;
       document.getElementById('admProdRetail').value = p.suggested_retail_price;
@@ -694,3 +750,12 @@
   </script>
 </body>
 </html>
+
+<script>
+function openProductModalForCategory(cat) {
+  openProductModal();
+  if (cat && cat !== 'All') {
+    document.getElementById('admProdCategory').value = cat;
+  }
+}
+</script>
