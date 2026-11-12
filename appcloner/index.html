@@ -1333,6 +1333,10 @@
                                    item.originalPackage.length !== item.clonedPackage.length);
                     const oldChip = isOld
                         ? `<span class="cloned-apk-chip" style="color:#F87171;">⚠️ Purana clone - dobara banayein</span>` : "";
+                    const warnHtml = (item.warnings && item.warnings.length)
+                        ? `<div style="margin-top:6px;font-size:11px;color:#FCA5A5;line-height:1.4;">⚠️ ${item.warnings[0]}</div>` : "";
+                    const noteHtml = (item.notes && item.notes.length)
+                        ? `<div style="margin-top:4px;font-size:11px;color:#93C5FD;line-height:1.4;">ℹ️ ${item.notes[0]}</div>` : "";
 
                     html += `
                         <div class="cloned-apk-card">
@@ -1347,6 +1351,8 @@
                                         ${oldChip}
                                         <span class="cloned-apk-chip" style="color: #4ADE80;">✓ Signed Release</span>
                                     </div>
+                                    ${warnHtml}
+                                    ${noteHtml}
                                 </div>
                             </div>
                             <div class="cloned-apk-actions">
