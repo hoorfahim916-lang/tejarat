@@ -562,6 +562,27 @@
     .mk-field select:focus,
     .mk-field textarea:focus { border-color: var(--mk-green-500); }
 
+    /* Static policy pages */
+    .policy-body h4 {
+      font-weight: 900; font-size: .8125rem; color: var(--mk-ink);
+      margin: 1rem 0 .375rem; line-height: 1.3;
+    }
+    .policy-body h4:first-child { margin-top: 0; }
+    .policy-body p { margin-bottom: .625rem; }
+    .policy-body b { color: var(--mk-ink); font-weight: 900; }
+    .policy-body ul, .policy-body ol { margin: 0 0 .75rem; padding-left: 1.125rem; }
+    .policy-body li { margin-bottom: .3125rem; }
+    .policy-body a { color: var(--mk-green-700); font-weight: 800; text-decoration: underline; }
+    .policy-body .pk-center {
+      text-align: center; margin-top: 1.25rem; padding-top: 1rem;
+      border-top: 1px dashed var(--mk-line); color: var(--mk-ink);
+    }
+    .policy-body .pk-tag {
+      display: inline-block; margin-top: .375rem; font-size: .6875rem; font-weight: 900;
+      color: var(--mk-green-700); background: var(--mk-green-50);
+      border: 1px solid var(--mk-green-200); padding: .25rem .625rem; border-radius: 999px;
+    }
+
     /* Make long product titles clamp instead of stretching the card */
     .mk-clamp-2 {
       display: -webkit-box;
@@ -596,7 +617,7 @@
               <h1 class="font-black text-xl tracking-tight leading-none text-white truncate">Tejarat</h1>
               <span id="headerBrandBadge" class="text-[9px] bg-white/20 text-white font-black px-1.5 py-0.5 rounded uppercase border border-white/25 flex-shrink-0">OFFICIAL</span>
             </div>
-            <p class="text-[10px] text-white/85 font-bold leading-tight mt-0.5 truncate">Zero Investment Reselling & Shopping</p>
+            <p class="text-[10px] text-white/85 font-bold leading-tight mt-0.5 truncate">Be Bold, Be Different, Be Passion</p>
           </div>
         </div>
 
@@ -1042,6 +1063,50 @@
             <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
           </div>
 
+          <div class="p-3.5 flex items-center justify-between gap-2 cursor-pointer hover:bg-gray-50 transition" onclick="openPolicyPage('about')">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="p-2 bg-emerald-50 rounded-xl text-emerald-800 flex-shrink-0"><i data-lucide="info" class="w-4 h-4"></i></span>
+              <div class="min-w-0">
+                <p class="font-bold text-gray-800 truncate">About Us</p>
+                <p class="text-[10px] text-gray-400 truncate">Hamari kahani aur quality ka waada</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between gap-2 cursor-pointer hover:bg-gray-50 transition" onclick="openPolicyPage('refund')">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="p-2 bg-rose-50 rounded-xl text-rose-600 flex-shrink-0"><i data-lucide="undo-2" class="w-4 h-4"></i></span>
+              <div class="min-w-0">
+                <p class="font-bold text-gray-800 truncate">Return &amp; Refund Policy</p>
+                <p class="text-[10px] text-gray-400 truncate">3 din ka return window aur refund rules</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between gap-2 cursor-pointer hover:bg-gray-50 transition" onclick="openPolicyPage('shipping')">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="p-2 bg-blue-50 rounded-xl text-blue-700 flex-shrink-0"><i data-lucide="truck" class="w-4 h-4"></i></span>
+              <div class="min-w-0">
+                <p class="font-bold text-gray-800 truncate">Shipping &amp; Delivery</p>
+                <p class="text-[10px] text-gray-400 truncate">Rs. 100 delivery • 3–5 din • poore Pakistan</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between gap-2 cursor-pointer hover:bg-gray-50 transition" onclick="openPolicyPage('contact')">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="p-2 bg-purple-50 rounded-xl text-purple-700 flex-shrink-0"><i data-lucide="headset" class="w-4 h-4"></i></span>
+              <div class="min-w-0">
+                <p class="font-bold text-gray-800 truncate">Contact Us</p>
+                <p class="text-[10px] text-gray-400 truncate">WhatsApp aur email par 24/7 rabta</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 flex-shrink-0"></i>
+          </div>
+
           <div class="p-3.5 flex items-center justify-between gap-2 cursor-pointer hover:bg-gray-50 transition" onclick="openChatbotModal()">
             <div class="flex items-center gap-3 min-w-0">
               <span class="p-2 bg-purple-50 rounded-xl text-purple-700 flex-shrink-0"><i data-lucide="message-square" class="w-4 h-4"></i></span>
@@ -1359,7 +1424,7 @@
             <div class="mk-info-row bg-white">
               <div class="txt">
                 <b>🚚 Delivery 2-4 Days</b>
-                <span>Flat Rs. 200 Delivery — Cash on Delivery poore Pakistan mein</span>
+                <span>Flat Rs. 100 Delivery — Cash on Delivery poore Pakistan mein</span>
               </div>
               <span class="tag bg-emerald-100 text-emerald-800">TCS / Leopards</span>
             </div>
@@ -1522,7 +1587,7 @@
                 <span>🚚</span><span>Cash on Delivery (COD) Rules:</span>
               </p>
               <p class="text-gray-600 text-[10px] leading-relaxed">
-                Poori raqam delivery ke waqt courier rider ko ada karein. Delivery charges flat Rs. 200 COD mein shamil hain.
+                Poori raqam delivery ke waqt courier rider ko ada karein. Delivery charges flat Rs. 100 COD mein shamil hain.
               </p>
             </div>
 
@@ -1887,7 +1952,7 @@
     // Constant Business Rules — defaults, overridden at runtime by app_settings
     const DEFAULT_ORDER_WHATSAPP_NUMBER = "923222089610";
     const DEFAULT_SUPPORT_WHATSAPP_NUMBER = "923190328256";
-    const DEFAULT_DELIVERY_FEE = 200;
+    const DEFAULT_DELIVERY_FEE = 100;
     const DEFAULT_ADVANCE_DISCOUNT = 100;
 
     // Live values — refreshed from Supabase `app_settings` on every launch
@@ -1930,18 +1995,198 @@
       account_title: "Not Set"
     };
 
-    // Standard Categories
+    // Fallback categories (used only if the `categories` table cannot be read)
     const DEFAULT_CATEGORIES = [
-      { name: "Dry Fruits & Nuts", roman: "Dry Fruits & Nuts (خشک میوہ جات)", icon: "🥜", active: true },
-      { name: "Pure Sidr Honey", roman: "Pure Sidr Honey (خالص بیری کا شہد)", icon: "🍯", active: true },
       { name: "Desi Ghee", roman: "Desi Ghee (خالص دیسی گھی)", icon: "🧈", active: true },
-      { name: "Ladies Suits", roman: "Ladies Suits (خواتین کے سوٹ)", icon: "👗", active: false, comingSoon: true },
-      { name: "Men Clothes", roman: "Men's Collection (مردانہ ملبوسات)", icon: "👔", active: false, comingSoon: true },
-      { name: "Pants & Jeans", roman: "Pants & Jeans (پینٹس وغیرہ)", icon: "👖", active: false, comingSoon: true },
-      { name: "Beauty & Makeup", roman: "Beauty & Cosmetics (کاسمیٹکس)", icon: "💄", active: false, comingSoon: true }
+      { name: "Honey", roman: "Honey (خالص شہد)", icon: "🍯", active: true },
+      { name: "Dry Fruits", roman: "Dry Fruits (خشک میوہ جات)", icon: "🥜", active: true },
+      { name: "Olive Oil", roman: "Olive Oil (زیتون کا تیل)", icon: "🫒", active: true },
+      { name: "Shilajit", roman: "Shilajit (سلاجیت)", icon: "⛰️", active: true },
+      { name: "Ittar & Perfumes", roman: "Ittar & Perfumes (عطر اور پرفیوم)", icon: "🌸", active: true },
+      { name: "Combo Packs", roman: "Combo Packs (کومبو پیکز)", icon: "🎁", active: true }
     ];
 
     
+    // ================================================================
+    // STATIC PAGES — About Us, Return & Refund, Shipping, Contact.
+    // Roman Urdu, branded as Tejarat App.
+    // ================================================================
+    const SUPPORT_EMAIL = 'shifazoneshopping@gmail.com';
+    const SUPPORT_PHONE = '0313-3411356';
+    const BRAND_TAGLINE = 'Be Bold, Be Different, Be Passion';
+
+    const POLICY_PAGES = {
+      about: {
+        title: 'About Us',
+        icon: '🌿',
+        html: `
+          <p>Tejarat App mein humein yakeen hai ke <b>sehat ka asal raab natural aur saaf khane se shuru hota hai</b>. Apne <b>100% Natural &amp; Pure</b> products ke waade par, hum nature ke behtareen ingredients ko saaf-surat khuj taur par source karte hain taake aap ko aisa quality milay jis par sach mein bharosa ho. Honey aur desi ghee se le kar olive oil, dry fruits, ittar aur doosre natural essentials tak — har product hamari purity, authenticity aur wellness ke waade ka nishan hai. <b>Tejarat App</b> par hum nature ka asal naimat aap ke ghar tak pohanchate hain — bilkul jaise hona chahiye.</p>
+
+          <h4>Hamari Kahani — Yahan Se Shuruaat</h4>
+          <p>Tejarat App ka safar paanch saal pehle humare ghar se shuru hua, ek simple mission ke saath: logon ko 100% natural aur khalis shahad dena jis par sach mein bharosa ho s sake. Us waqt sirf shahad hi humara product tha aur mahana sales sirf 10–15 kg hote the. Na website thi, na social media, na koi brand identity — sirf mehnat, imaandari aur quality ka waada.</p>
+
+          <h4>Brand Banana</h4>
+          <p>2025 mein humne faisla kiya ke choti dukaan ko aik bharosemand brand banaya jaye. Humne apna brand naam qanooni tor par register karaya aur professional identity banane par lagan shuru ki. Premium glass jars, custom packaging, professional labels aur khoobsurat branding par kharch kiye, taake har product hamare naam ke peechay ke quality aur trust ko dikhaye.</p>
+          <p>June 2025 tak humne apni pehli shop kiraye aur use brand ke mutabiq customize kiya. Pakistan ke mumtaz courier companies ke saath partnership ki taake poore mulk mein safe aur reliable delivery ho. June ke aakhir tak website aur social media complete ho gaye, aur July 2025 mein Tejarat App officially launch hua. Shuruat mushkil thi aur orders kam thay, magar hum quality par qaim rahe aur customers ki iqdamdar koshish karte rahe.</p>
+
+          <h4>Quality Ka Waada</h4>
+          <p>Har product saaf aur hygienic conditions mein pakta hota hai. Har jar ko hum professionally label karte hain aur har order ko protective packaging mein mehfooz taur par rakh kar bhejte hain, taake woh Poore Pakistan mein bilkul khalis pohnchay. <b>Har product apne hi sealed box (crate) ke andar</b> bheja jata hai — koi mix nahi, koi jaari nahi.</p>
+          <p>Hum apne customers ko sirf product nahi, balki educational content aur product updates bhi dete hain taake log natural foods ke ilawa sahi choices kar sakein.</p>
+
+          <h4>Hamare Customers Ke Saath Growth</h4>
+          <p>Ek shahad product se shuru hua safar aaj natural wellness products ki mukammal range ban chuka hai. Aaj <b>Tejarat App</b> par yeh sab kuch available hai:</p>
+          <ul>
+            <li>Berry Honey (Export Premium Quality)</li>
+            <li>Berry Honey (Premium Quality)</li>
+            <li>Palosa Honey</li>
+            <li>Chitrali Acacia Honey</li>
+            <li>Cow Desi Ghee</li>
+            <li>Buffalo Desi Ghee</li>
+            <li>Pakistani Forest Olive Oil</li>
+            <li>Extra Virgin Olive Oil</li>
+            <li>Pure Shilajit</li>
+            <li>Premium Dry Fruits</li>
+            <li>Dry Fruits with Honey</li>
+            <li>Premium Dates</li>
+            <li>Ittars &amp; Perfumes</li>
+          </ul>
+
+          <h4>Ab Tak Ka Safar</h4>
+          <p>Allah ke karam se, <b>August 2025 se March 2026</b> tak humne yeh deliver kiya:</p>
+          <ul>
+            <li>400+ kg shahad</li>
+            <li>350+ kg desi ghee</li>
+            <li>Ramadan ke duran 250+ boxes khajoor</li>
+            <li>100+ bottles ittar</li>
+          </ul>
+          <p>Yeh milestones hamare customers ke bharose ka saboot hain aur humein roz behtar banne ka hausla dete hain.</p>
+
+          <h4>Aage Ka Nazra</h4>
+          <p>2026 ka hamra nazarra pehle se bada hai. Hum apni product range barhana chahte hain, Pakistan mein zyada khandaanon tak pohanchna chahte hain, aur quality se koi sulaav nahi karte <b>100% Natural &amp; Pure</b> products dete rahe hain. Har order, har customer aur har recommendation humein aur mazboot karne ka hosla deta hai.</p>
+
+          <p class="pk-center"><b>Tejarat App</b><br><span class="pk-tag">${BRAND_TAGLINE}</span></p>
+        `,
+      },
+
+      refund: {
+        title: 'Return & Refund Policy',
+        icon: '↩️',
+        html: `
+          <p>Tejarat App par aap ki satisfaction hamari pehli priority hai. Agar aap apni khareed se poora khush nahi hain, to hum aap ki madad ke liye maujood hain.</p>
+
+          <h4>🔁 Return Timeframe</h4>
+          <p>Aap order milne ke <b>3 din</b> ke andar return ka request kar sakte hain.</p>
+
+          <h4>✅ Return Ke Liye Haqeeqiyat</h4>
+          <p>Return qualify karne ke liye:</p>
+          <ul>
+            <li>Product istemal na hua ho, sealed ho, aur apni original packaging mein ho</li>
+            <li>Aap ke paas khareed ka valid proof ho (receipt, order confirmation)</li>
+            <li>Sirf damaged, defective ya ghalat item hi return ke liye eligible hain</li>
+          </ul>
+          <p>Yeh return accept nahi kiye jate:</p>
+          <ul>
+            <li>Khule ya istemal kiye gaye products</li>
+            <li>Istemal ke baad soch badalna (change of mind)</li>
+            <li>Discounted ya promotional items</li>
+          </ul>
+
+          <h4>🛠 Damaged Ya Ghalat Item?</h4>
+          <p>Agar aap ko damaged ya ghalat item mila to <b>delivery ke 24 ghanton ke andar</b> humein rabta karein. Tasveerein bhejein:<br>📧 <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
+          <p>Hamari team verify karke aap ko return process ki raah bata degi.</p>
+
+          <h4>🚚 Return Process</h4>
+          <ol>
+            <li>📧 <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a> par email karein, saath mein:<br>
+              • Order number<br>• Return ki wajah<br>• Tasveerein (agar applicable hon)</li>
+            <li>Approve hone ke baad hum return ki instructions de denge.</li>
+            <li>Customer hi return shipping cost ka zimmedar hoga, jab tak item damaged ya ghalat na ho.</li>
+          </ol>
+
+          <h4>💳 Refunds</h4>
+          <p>Jab humein returned item mil jaye aur check ho jaye, to approve hone par hum <b>5–7 working days</b> ke andar refund <b>bank transfer ya Easypaisa/JazzCash</b> ke zariye bhej denge.</p>
+
+          <h4>ℹ Madad Chahiye?</h4>
+          <p>Koi bhi sawal ho to rabta karein:<br>📧 <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
+
+          <p class="pk-center"><b>Tejarat App</b> par bharosa karne ka shukriya!<br>Hum aap ki sehat aur aap ke trust ki qeemat rakhte hain 🌿</p>
+        `,
+      },
+
+      shipping: {
+        title: 'Shipping Policy',
+        icon: '🚚',
+        html: `
+          <p>Tejarat App par hum aap ka order mehfooz aur tez raftaar se pohanchane ki poori koshish karte hain. Yeh raha aap ke liye shipping ka poora tafseel:</p>
+
+          <h4>🚚 Pakistan Mein Shipping</h4>
+          <ul>
+            <li>Flat delivery charge: <b>Rs. 100</b> (1 kg order par)</li>
+            <li>Bundle / combo orders par delivery <b>free</b></li>
+            <li>Poore Pakistan mein delivery — TCS, Leopards aur Trax ke zariye</li>
+          </ul>
+
+          <h4>⏱ Delivery Time</h4>
+          <p>Orders aam tor par <b>3–5 business days</b> mein pohanch jate hain, jo aap ke location par depend karta hai. Doosre shehron aur remote ilaaqon mein 5–7 din lag sakte hain.</p>
+
+          <h4>🧾 Order Processing</h4>
+          <p>Sab orders <b>1–2 business days</b> ke andar process kiye jate hain. Ship hone ke baad aap ko order confirmation aur tracking details WhatsApp par mil jati hain.</p>
+
+          <h4>📦 Secure Packaging</h4>
+          <p>Har order ko hum dhyan se pack karte hain taake aap ka product aap tak bilkul khalis pohnche. <b>Har product apne hi sealed box (crate) ke andar</b> bheja jata hai — koi mixing nahi, koi weight kam nahi.</p>
+
+          <h4>💬 Customer Support</h4>
+          <p>Order mein koi masla ho to humari team har waqt haazir hai. WhatsApp ya email par rabta karein:</p>
+          <ul>
+            <li>📱 WhatsApp / Phone: <a href="https://wa.me/92${SUPPORT_PHONE.slice(1)}" target="_blank">+${SUPPORT_PHONE}</a></li>
+            <li>📧 <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></li>
+          </ul>
+
+          <p class="pk-center"><b>Tejarat App</b> par bharosa karne ka shukriya!<br>Hum aap ke trust ki qeemat rakhte hain 🌿</p>
+        `,
+      },
+
+      contact: {
+        title: 'Contact Us',
+        icon: '📞',
+        html: `
+          <p>Koi sawal, feedback ya madad chahiye? Hum hamesha haazir hain.</p>
+
+          <h4>📋 Contact Information</h4>
+          <ul>
+            <li>👤 Owner: Hafiz Dr Muhammad Shoaib Al-Madani</li>
+            <li>📱 Phone &amp; WhatsApp: <a href="https://wa.me/92${SUPPORT_PHONE.slice(1)}" target="_blank">${SUPPORT_PHONE}</a></li>
+            <li>📧 Email: <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></li>
+            <li>🏢 Brand: <b>Tejarat App</b></li>
+          </ul>
+
+          <h4>🏪 Shop Address</h4>
+          <p>Shop No#1, Zamanabad Street No#1,<br>Near Khursheed School, Landhi #4, Karachi</p>
+
+          <h4>🕐 Support Hours</h4>
+          <p><b>24/7 Customer Support</b> — WhatsApp aur email par raat ko bhi jawab mil jata hai.</p>
+
+          <p class="pk-center"><b>Tejarat App</b><br><span class="pk-tag">${BRAND_TAGLINE}</span></p>
+        `,
+      },
+    };
+
+    function openPolicyPage(key) {
+      const page = POLICY_PAGES[key];
+      if (!page) return;
+      const modal = document.getElementById('policyModal');
+      document.getElementById('policyModalTitle').innerText = page.icon + '  ' + page.title;
+      document.getElementById('policyModalBody').innerHTML = page.html;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closePolicyModal() {
+      document.getElementById('policyModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
     // ================================================================
     // BRAND KIT — 6 Tejarat logo options + live theme showcase.
     // The chosen logo is stored locally and applied to every logo slot
@@ -4633,6 +4878,24 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
       fetchAllCloudData();
     });
   </script>
+
+  <!-- ==================== MODAL: STATIC PAGES (About / Refund / Shipping / Contact) ==================== -->
+  <div id="policyModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="sheet modal-sheet">
+      <div class="sheet-head">
+        <h3 id="policyModalTitle" class="sheet-title">Policy</h3>
+        <button onclick="closePolicyModal()" class="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition flex-shrink-0">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="policyModalBody" class="sheet-body text-xs text-gray-700 leading-relaxed policy-body"></div>
+      <div class="sheet-foot">
+        <button onclick="closePolicyModal()" class="btn w-full bg-[var(--mk-brand)] text-white shadow-lg">
+          Band Karein
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== MODAL: GOOGLE OAUTH SUPABASE SETUP GUIDE ==================== -->
   <div id="googleSetupGuideModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3">
