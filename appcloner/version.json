@@ -1,7 +1,7 @@
 {
-  "versionCode": 106,
-  "versionName": "1.0.6",
+  "versionCode": 107,
+  "versionName": "1.1.0",
   "downloadUrl": "https://hoorfahim916-lang.github.io/tejarat/appcloner/App-Cloner-VIP.apk",
-  "changelog": "✅ Fix: adaptive icon crash (default Android icon), provider authority conflict, split APK install, zipalign + resources.arsc alignment.",
+  "changelog": "NEW: signing-certificate spoofing (apps jo apni signature verify karti hain ab chalengi), native .so package patch, resources.arsc string patch, Clone Doctor (PairIP/Play Integrity warning), icon crash fix, provider conflict fix.",
   "forceUpdate": true
 }
