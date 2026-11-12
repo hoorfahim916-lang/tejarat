@@ -406,6 +406,7 @@
       background: var(--mk-green-50);
       border: 1px solid var(--mk-green-200);
     }
+    .mk-price-strip-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mk-price-strip > div { min-width: 0; }
     .mk-price-strip .lbl {
       font-size: 9px;
@@ -588,7 +589,7 @@
         <!-- Left: Logo + "Tejarat" -->
         <div class="flex items-center gap-2.5 cursor-pointer min-w-0" onclick="switchTab('home')">
           <div class="w-10 h-10 rounded-2xl overflow-hidden shadow-md border border-white/30 flex items-center justify-center bg-white flex-shrink-0">
-            <img src="markaz_assets/tejarat_logo.png" onerror="this.onerror=null; this.src='tejarat_logo.png';" alt="Tejarat Logo" class="w-full h-full object-cover" />
+            <img data-brand-logo src="markaz_assets/logos/logo_1_gold_emerald.svg" onerror="this.onerror=null; this.src='markaz_assets/tejarat_logo.png';" alt="Tejarat Logo" class="w-full h-full object-cover" />
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5">
@@ -938,6 +939,24 @@
           </div>
         </div>
 
+        <!-- BRAND KIT: logos + theme preview -->
+        <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="p-2 bg-emerald-50 rounded-xl text-emerald-800 flex-shrink-0"><i data-lucide="palette" class="w-4 h-4"></i></span>
+              <div class="min-w-0">
+                <h3 class="font-black text-xs text-gray-900 truncate">Brand Kit</h3>
+                <p class="text-[10px] text-gray-500 truncate">Apna logo aur color theme chunein</p>
+              </div>
+            </div>
+            <button onclick="openThemePickerModal()" class="text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex-shrink-0">Theme →</button>
+          </div>
+          <div id="brandKitBox" class="grid grid-cols-3 gap-2"></div>
+          <p class="text-[10px] text-gray-400 leading-relaxed">
+            Logo foran app ke header mein lag jata hai. Theme change karne ke liye "Theme" dabayein.
+          </p>
+        </div>
+
         <!-- TWO PROMINENT FEATURE CARDS: MERI PAYMENTS & MERI OFFERS -->
         <div class="grid grid-cols-2 gap-3">
           <!-- Card 1: Meri Payments -->
@@ -1126,7 +1145,7 @@
       <div class="flex items-center justify-between border-b border-gray-100 pb-3">
         <div class="flex items-center space-x-2.5">
           <div class="w-10 h-10 rounded-2xl overflow-hidden shadow border border-emerald-400/40 bg-white flex items-center justify-center flex-shrink-0">
-            <img src="markaz_assets/tejarat_logo.png" onerror="this.onerror=null; this.src='tejarat_logo.png';" alt="Tejarat Logo" class="w-full h-full object-cover" />
+            <img data-brand-logo src="markaz_assets/logos/logo_1_gold_emerald.svg" onerror="this.onerror=null; this.src='markaz_assets/tejarat_logo.png';" alt="Tejarat Logo" class="w-full h-full object-cover" />
           </div>
           <div>
             <h3 class="font-black text-sm text-gray-900 leading-tight">Tejarat Reseller Sign In</h3>
@@ -1252,7 +1271,7 @@
         <div class="sheet-body">
           <!-- Image Display & Multi-Angle Gallery -->
           <div class="space-y-2">
-            <div class="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3] max-h-64 shadow-inner border border-gray-100">
+            <div class="relative rounded-2xl overflow-hidden bg-gray-100 aspect-square max-h-72 shadow-inner border border-gray-100">
               <img id="detImage" src="" alt="Product" class="w-full h-full object-contain" />
               <span class="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-black px-2.5 py-1 rounded-xl shadow-md">
                 ⭐ 100% Asli Organic
@@ -1272,19 +1291,16 @@
             <p id="detUrduTitle" class="text-xs text-emerald-700 mt-1 font-bold leading-snug mk-clamp-2"></p>
           </div>
 
-          <!-- Pricing Strip (Wholesale vs Retail vs Profit) -->
-          <div class="mk-price-strip">
+          <!-- Pricing Strip: Wholesale vs Retail. Profit is NEVER shown here —
+               the reseller decides their own margin in the box below. -->
+          <div class="mk-price-strip mk-price-strip-2">
             <div>
-              <p class="lbl">Wholesale</p>
+              <p class="lbl">Wholesale Price</p>
               <p id="detWholesale" class="val">Rs. 0</p>
             </div>
             <div class="sep">
-              <p class="lbl">Market Retail</p>
+              <p class="lbl">Retail Price</p>
               <p id="detRetail" class="val" style="font-size:.8125rem">Rs. 0</p>
-            </div>
-            <div>
-              <p class="lbl">Aap Ka Munafa</p>
-              <p id="detMargin" class="val val-profit" style="font-size:.8125rem">+Rs. 0</p>
             </div>
           </div>
 
@@ -1313,7 +1329,8 @@
             <!-- Reseller Margin Field -->
             <div id="resellerProfitBox" class="pt-1 space-y-2">
               <div class="flex items-center justify-between gap-2">
-                <label class="text-xs font-bold text-emerald-800">Apna Munafa (Profit) Likhein (Rs.):</label>
+                <label class="text-xs font-bold text-emerald-800">Apna Profit Likhein (Rs.):</label>
+              <span class="text-[10px] text-gray-500 font-medium">Jo amount aap likhein, wohi aap ka profit hoga</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <input
@@ -1342,7 +1359,7 @@
             <div class="mk-info-row bg-white">
               <div class="txt">
                 <b>🚚 Delivery 2-4 Days</b>
-                <span>Flat Rs. 150/KG Cash on Delivery poore Pakistan mein</span>
+                <span>Flat Rs. 200 Delivery — Cash on Delivery poore Pakistan mein</span>
               </div>
               <span class="tag bg-emerald-100 text-emerald-800">TCS / Leopards</span>
             </div>
@@ -1505,7 +1522,7 @@
                 <span>🚚</span><span>Cash on Delivery (COD) Rules:</span>
               </p>
               <p class="text-gray-600 text-[10px] leading-relaxed">
-                Poori raqam delivery ke waqt courier rider ko ada karein. Delivery charges flat Rs. 150 COD mein shamil hain.
+                Poori raqam delivery ke waqt courier rider ko ada karein. Delivery charges flat Rs. 200 COD mein shamil hain.
               </p>
             </div>
 
@@ -1556,7 +1573,7 @@
                 <span id="billWholesale" class="val">Rs. 0</span>
               </div>
               <div class="mk-bill-line">
-                <span class="lbl !text-emerald-700">2. Aap Ka Profit:</span>
+                <span class="lbl !text-emerald-700">2. Aap Ka Profit (jo aapne set kiya):</span>
                 <span id="billProfit" class="val !text-emerald-700">+Rs. 0</span>
               </div>
               <div class="mk-bill-line">
@@ -1870,7 +1887,7 @@
     // Constant Business Rules — defaults, overridden at runtime by app_settings
     const DEFAULT_ORDER_WHATSAPP_NUMBER = "923222089610";
     const DEFAULT_SUPPORT_WHATSAPP_NUMBER = "923190328256";
-    const DEFAULT_DELIVERY_FEE = 150;
+    const DEFAULT_DELIVERY_FEE = 200;
     const DEFAULT_ADVANCE_DISCOUNT = 100;
 
     // Live values — refreshed from Supabase `app_settings` on every launch
@@ -1925,6 +1942,60 @@
     ];
 
     
+    // ================================================================
+    // BRAND KIT — 6 Tejarat logo options + live theme showcase.
+    // The chosen logo is stored locally and applied to every logo slot
+    // in the app instantly.
+    // ================================================================
+    const BRAND_LOGOS = [
+      { key: 'logo_1_gold_emerald', file: 'markaz_assets/logos/logo_1_gold_emerald.svg', label: 'Gold & Emerald Shield', desc: 'Royal premium shield with gold T' },
+      { key: 'logo_2_royal_hexagon', file: 'markaz_assets/logos/logo_2_royal_hexagon.svg', label: 'Royal Hexagon', desc: 'Modern hexagonal badge' },
+      { key: 'logo_3_modern_cart', file: 'markaz_assets/logos/logo_3_modern_cart.svg', label: 'Modern Cart', desc: 'Cart + T monogram' },
+      { key: 'logo_4_urdu_calligraphy', file: 'markaz_assets/logos/logo_4_urdu_calligraphy.svg', label: 'Urdu Calligraphy', desc: 'تجارت — Urdu calligraphy' },
+      { key: 'logo_5_luxury_shield', file: 'markaz_assets/logos/logo_5_luxury_shield.svg', label: 'Luxury Shield', desc: 'Minimal luxury shield mark' },
+      { key: 'logo_6_tech_minimal', file: 'markaz_assets/logos/logo_6_tech_minimal.svg', label: 'Tech Minimal', desc: 'Clean modern minimal mark' },
+    ];
+
+    function currentBrandLogo() {
+      const key = localStorage.getItem('tejarat_brand_logo') || 'logo_1_gold_emerald';
+      return BRAND_LOGOS.find(l => l.key === key) || BRAND_LOGOS[0];
+    }
+
+    function applyBrandLogo(key) {
+      const logo = BRAND_LOGOS.find(l => l.key === key);
+      if (!logo) return;
+      localStorage.setItem('tejarat_brand_logo', key);
+      document.querySelectorAll('[data-brand-logo]').forEach(img => {
+        img.src = logo.file;
+        img.alt = 'Tejarat Logo';
+      });
+      renderBrandKit();
+      if (window.lucide) lucide.createIcons();
+      showToast('✓ "' + logo.label + '" logo apply ho gaya!');
+    }
+
+    function initBrandLogo() {
+      const logo = currentBrandLogo();
+      document.querySelectorAll('[data-brand-logo]').forEach(img => {
+        img.src = logo.file;
+        img.alt = 'Tejarat Logo';
+      });
+    }
+
+    function renderBrandKit() {
+      const box = document.getElementById('brandKitBox');
+      if (!box) return;
+      const cur = currentBrandLogo().key;
+      box.innerHTML = BRAND_LOGOS.map(l => `
+        <button type="button" onclick="applyBrandLogo('${l.key}')"
+          class="rounded-2xl border-2 p-2.5 flex flex-col items-center gap-1.5 transition ${l.key === cur ? 'border-emerald-500 bg-emerald-50 shadow' : 'border-gray-200 bg-white hover:border-emerald-300'}">
+          <img src="${l.file}" alt="${l.label}" class="w-14 h-14 object-contain" />
+          <span class="text-[10px] font-black text-gray-800 text-center leading-tight">${l.label}</span>
+          <span class="text-[9px] text-gray-500 text-center leading-tight">${l.desc}</span>
+        </button>
+      `).join('');
+    }
+
     // ==================== DYNAMIC APP THEME ENGINE ====================
     // Real theming: every theme writes CSS custom properties, so the ENTIRE
     // app (buttons, badges, borders, header, sheets) re-colours instantly.
@@ -2135,7 +2206,9 @@
         if (data.whatsapp_order_number) ORDER_WHATSAPP_NUMBER = String(data.whatsapp_order_number).replace(/\D/g, '');
         if (data.whatsapp_support_number) SUPPORT_WHATSAPP_NUMBER = String(data.whatsapp_support_number).replace(/\D/g, '');
         if (data.default_delivery_fee != null) FLAT_DELIVERY_FEE = Number(data.default_delivery_fee) || DEFAULT_DELIVERY_FEE;
-        if (data.first_order_bonus != null) ADVANCE_DISCOUNT_AMOUNT = Number(data.first_order_bonus) || DEFAULT_ADVANCE_DISCOUNT;
+        // NOTE: the advance discount is a fixed business rule (Rs. 100) and is
+        // deliberately NOT tied to first_order_bonus, which is a reward value.
+        ADVANCE_DISCOUNT_AMOUNT = DEFAULT_ADVANCE_DISCOUNT;
       } catch (err) {
         console.warn('app_settings fetch error:', err);
       }
@@ -2201,6 +2274,7 @@
         renderWalletUI();
         updateBadges();
         renderThemeSwatches();
+        renderBrandKit();
         if (window.lucide) lucide.createIcons();
       } catch (err) {
         console.warn('renderAllViews error:', err);
@@ -2216,12 +2290,20 @@
       const current = localStorage.getItem('tejarat_theme') || 'markaz';
       list.innerHTML = Object.entries(THEME_DEFINITIONS).map(([key, t], idx) => `
         <button data-theme-key="${key}" onclick="applyAppTheme('${key}')"
-          class="w-full p-3 rounded-2xl border-2 border-gray-200 hover:border-emerald-400 flex items-center justify-between gap-2 transition text-left">
+          class="w-full p-3 rounded-2xl border-2 border-gray-200 hover:border-emerald-400 flex items-center justify-between gap-3 transition text-left">
           <div class="flex items-center gap-3 min-w-0">
-            <span class="w-8 h-8 rounded-xl shadow-md flex-shrink-0" style="background:${t.swatch}"></span>
+            <span class="w-11 h-11 rounded-xl shadow-md flex-shrink-0 border border-black/5" style="background:${t.swatch}"></span>
             <div class="min-w-0">
               <p class="text-xs font-black text-gray-900 truncate">${idx + 1}. ${t.label}</p>
               <p class="text-[10px] text-gray-500 truncate">${t.desc}</p>
+              <div class="flex gap-1 mt-1.5 flex-wrap">
+                <span class="w-4 h-4 rounded-md border border-black/10" style="background:${t.brand}" title="Brand ${t.brand}"></span>
+                <span class="w-4 h-4 rounded-md border border-black/10" style="background:${t.brandDeep}" title="Deep ${t.brandDeep}"></span>
+                <span class="w-4 h-4 rounded-md border border-black/10" style="background:${t.ink}" title="Ink ${t.ink}"></span>
+                <span class="w-4 h-4 rounded-md border border-black/10" style="background:${t.from}" title="Header ${t.from}"></span>
+                <span class="w-4 h-4 rounded-md border border-black/10" style="background:${t.via}" title="Header ${t.via}"></span>
+              </div>
+              <p class="text-[9px] font-mono text-gray-400 mt-1 truncate">${t.brand} · ${t.brandDeep} · ${t.ink}</p>
             </div>
           </div>
           <span data-theme-active class="text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full flex-shrink-0 ${current === key ? '' : 'hidden'}">Active</span>
@@ -3046,7 +3128,6 @@
       }
 
       container.innerHTML = filtered.map(prod => {
-        const estProfit = Math.max(300, (prod.suggested_retail_price || (prod.wholesale_price + 500)) - prod.wholesale_price);
         const isFav = wishlist.some(w => w.id === prod.id);
         const rating = Number(prod.rating || 0);
 
@@ -3056,9 +3137,9 @@
             <div class="relative bg-gray-100 h-44 overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
               <img src="${prod.image_url}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
 
-              <!-- Profit Tag -->
-              <span class="absolute top-2.5 left-2.5 bg-[var(--mk-brand)] text-white text-[10px] font-black px-2 py-0.5 rounded-lg shadow">
-                +Rs. ${estProfit} Profit
+              <!-- Category tag (profit is never advertised — the reseller sets their own) -->
+              <span class="absolute top-2.5 left-2.5 bg-[var(--mk-brand)] text-white text-[10px] font-black px-2 py-0.5 rounded-lg shadow max-w-[60%] truncate">
+                ${(prod.category || '').split(' ')[0]}
               </span>
 
               <!-- Wishlist Heart -->
@@ -3078,14 +3159,15 @@
                 <h4 onclick="openProductModal('${prod.id}')" class="font-black text-xs text-gray-900 leading-snug mk-clamp-2 cursor-pointer hover:text-[var(--mk-brand)] mt-0.5">${prod.title}</h4>
               </div>
 
-              <!-- Price Row -->
-              <div class="pt-1.5 border-t border-gray-50">
+              <!-- Price Row: Wholesale + Retail (the reseller picks their own profit) -->
+              <div class="pt-1.5 border-t border-gray-50 space-y-0.5">
                 <div class="flex items-baseline justify-between gap-1">
-                  <div class="min-w-0">
-                    <span class="text-[10px] text-gray-400 font-semibold">Wholesale:</span>
-                    <span class="text-sm font-black text-[var(--mk-brand)]">Rs. ${Number(prod.wholesale_price || 0).toLocaleString()}</span>
-                  </div>
-                  <span class="text-[10px] line-through text-gray-400 flex-shrink-0">Rs. ${Number(prod.suggested_retail_price || 0).toLocaleString()}</span>
+                  <span class="text-[10px] text-gray-400 font-semibold">Wholesale</span>
+                  <span class="text-sm font-black text-[var(--mk-brand)]">Rs. ${Number(prod.wholesale_price || 0).toLocaleString()}</span>
+                </div>
+                <div class="flex items-baseline justify-between gap-1">
+                  <span class="text-[10px] text-gray-400 font-semibold">Retail</span>
+                  <span class="text-xs font-bold text-gray-700">Rs. ${Number(prod.suggested_retail_price || 0).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -3141,6 +3223,7 @@
         container.innerHTML = '';
         return;
       }
+      container.classList.add('pb-1');
       container.innerHTML = currentProductPhotos.map((item, idx) => {
         const url = typeof item === 'object' ? item.url : item;
         const label = typeof item === 'object' ? item.label : `Photo ${idx + 1}`;
@@ -3249,18 +3332,11 @@ ${p.urdu_title || ''}
       if (!p) return;
       currentProduct = p;
 
-      // Setup multi-image gallery
-      if (p.id === 'prod_honey_dryfruit_12mix') {
-        currentProductPhotos = [
-          { url: 'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=900&auto=format&fit=crop', label: '✨ Studio View' },
-          { url: 'markaz_assets/honey_dryfruit_jar_front.jpg', label: '📸 Real Front' },
-          { url: 'markaz_assets/honey_dryfruit_jar_side.jpg', label: '📸 Real Side' },
-          { url: 'markaz_assets/honey_dryfruit_jar_close.jpg', label: '📸 Close-Up' },
-          { url: 'markaz_assets/honey_dryfruit_jar_bottom.jpg', label: '📸 Bottom Nuts' }
-        ];
-      } else {
-        currentProductPhotos = [{ url: p.image_url, label: '✨ Studio View' }];
-      }
+      // Multi-angle gallery: 10 photos per product, stored in specs.photos
+      const specPhotos = (p.specs && Array.isArray(p.specs.photos)) ? p.specs.photos : [];
+      currentProductPhotos = specPhotos.length
+        ? specPhotos.map((ph, i) => ({ url: ph.url, label: ph.label || ('📸 View ' + (i + 1)) }))
+        : [{ url: p.image_url, label: '✨ Studio View' }];
       activePhotoIndex = 0;
       switchProductPhoto(0);
 
@@ -3340,8 +3416,8 @@ ${p.urdu_title || ''}
         : 0;
       const total = wholesale + profit + FLAT_DELIVERY_FEE;
 
-      document.getElementById('detMargin').innerText = `+Rs. ${profit.toLocaleString()}`;
-      document.getElementById('detFinalCustomerCOD').innerText = `Rs. ${total.toLocaleString()}`;
+      const codEl = document.getElementById('detFinalCustomerCOD');
+      if (codEl) codEl.innerText = `Rs. ${total.toLocaleString()}`;
       calculateOrderBill();
     }
 
@@ -4419,7 +4495,6 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
       }
 
       gridContainer.innerHTML = filtered.map(prod => {
-        const estProfit = Math.max(300, (prod.suggested_retail_price || (prod.wholesale_price + 500)) - prod.wholesale_price);
         const isFav = wishlist.some(w => w.id === prod.id);
         const rating = Number(prod.rating || 0);
 
@@ -4429,9 +4504,9 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
             <div class="relative aspect-square w-full bg-gray-100 overflow-hidden cursor-pointer" onclick="openProductModal('${prod.id}')">
               <img src="${prod.image_url}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='markaz_assets/category_fallback_image.webp'" />
 
-              <!-- Profit Tag -->
-              <span class="absolute top-2 left-2 bg-[var(--mk-brand)] text-white text-[9px] font-black px-2 py-0.5 rounded-lg shadow">
-                +Rs. ${estProfit}
+              <!-- Category tag (profit is never advertised — the reseller sets their own) -->
+              <span class="absolute top-2 left-2 bg-[var(--mk-brand)] text-white text-[9px] font-black px-2 py-0.5 rounded-lg shadow max-w-[55%] truncate">
+                ${(prod.category || '').split(' ')[0]}
               </span>
 
               <!-- Wishlist Heart -->
@@ -4452,14 +4527,15 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
                 <h4 onclick="openProductModal('${prod.id}')" class="font-black text-xs text-gray-900 leading-snug mk-clamp-2 cursor-pointer hover:text-emerald-700 mt-0.5">${prod.title}</h4>
               </div>
 
-              <!-- Price Row -->
-              <div class="pt-1 border-t border-gray-100">
+              <!-- Price Row: Wholesale + Retail (the reseller picks their own profit) -->
+              <div class="pt-1 border-t border-gray-100 space-y-0.5">
                 <div class="flex items-baseline justify-between gap-1">
-                  <div class="min-w-0">
-                    <span class="text-[9px] text-gray-400 font-bold">Wholesale:</span>
-                    <span class="text-xs font-black text-[var(--mk-brand)]">Rs. ${Number(prod.wholesale_price || 0).toLocaleString()}</span>
-                  </div>
-                  <span class="text-[9px] line-through text-gray-400 flex-shrink-0">Rs. ${Number(prod.suggested_retail_price || 0).toLocaleString()}</span>
+                  <span class="text-[9px] text-gray-400 font-bold">Wholesale</span>
+                  <span class="text-xs font-black text-[var(--mk-brand)]">Rs. ${Number(prod.wholesale_price || 0).toLocaleString()}</span>
+                </div>
+                <div class="flex items-baseline justify-between gap-1">
+                  <span class="text-[9px] text-gray-400 font-bold">Retail</span>
+                  <span class="text-[10px] font-bold text-gray-700">Rs. ${Number(prod.suggested_retail_price || 0).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -4552,6 +4628,8 @@ _Tejarat App - Pakistan's #1 Reselling Network_`;
     // Initialize App
     window.addEventListener('DOMContentLoaded', () => {
       initCarousel();
+      initBrandLogo();
+      renderBrandKit();
       fetchAllCloudData();
     });
   </script>

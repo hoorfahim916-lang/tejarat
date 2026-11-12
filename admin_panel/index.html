@@ -150,6 +150,9 @@
       <button onclick="switchAdminTab('payouts')" id="adm-btn-payouts" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
         💸 Payout Requests
       </button>
+      <button onclick="switchAdminTab('branding')" id="adm-btn-branding" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
+        🎨 Branding &amp; Theme
+      </button>
       <button onclick="switchAdminTab('settings')" id="adm-btn-settings" class="adm-tab-btn bg-white text-gray-700 border px-4 py-2 rounded-xl font-bold text-xs">
         📲 WhatsApp &amp; OTA
       </button>
@@ -304,6 +307,47 @@
           </table>
         </div>
       </div>
+    </section>
+
+    <!-- ==================== SECTION: BRANDING & THEME ==================== -->
+    <section id="adm-sec-branding" class="adm-sec hidden space-y-6">
+
+      <!-- Logo kit -->
+      <div class="adm-card p-6 space-y-4">
+        <div class="flex items-center gap-2.5 border-b pb-3">
+          <i data-lucide="shapes" class="w-6 h-6 text-[#02BC87]"></i>
+          <div class="min-w-0">
+            <h3 class="text-base font-extrabold text-gray-900">Tejarat Logo Kit</h3>
+            <p class="text-xs text-gray-500">6 ready logo options. Pick the one you like and it can be applied app-wide.</p>
+          </div>
+        </div>
+        <div id="admLogoKit" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"></div>
+      </div>
+
+      <!-- Theme palette -->
+      <div class="adm-card p-6 space-y-4">
+        <div class="flex items-center gap-2.5 border-b pb-3">
+          <i data-lucide="palette" class="w-6 h-6 text-[#FFBE21]"></i>
+          <div class="min-w-0">
+            <h3 class="text-base font-extrabold text-gray-900">App Theme Palettes</h3>
+            <p class="text-xs text-gray-500">The app ships with 6 themes. Click to preview one on the live site.</p>
+          </div>
+        </div>
+        <div id="admThemeKit" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Live preview -->
+      <div class="adm-card p-6 space-y-4">
+        <div class="flex items-center gap-2.5 border-b pb-3">
+          <i data-lucide="monitor-smartphone" class="w-6 h-6 text-[#009DCD]"></i>
+          <div class="min-w-0">
+            <h3 class="text-base font-extrabold text-gray-900">Live Preview</h3>
+            <p class="text-xs text-gray-500">How the chosen theme + logo look in the app header.</p>
+          </div>
+        </div>
+        <div id="admBrandPreview" class="rounded-2xl overflow-hidden border border-gray-200"></div>
+      </div>
+
     </section>
 
     <!-- ==================== SECTION 6: WHATSAPP & OTA SETTINGS ==================== -->
@@ -1367,6 +1411,133 @@
     }
 
     // ---------------------------------------------------------------
+    // BRANDING & THEME
+    // ---------------------------------------------------------------
+    const BRAND_LOGOS = [
+      { key: 'logo_1_gold_emerald', file: 'markaz_assets/logos/logo_1_gold_emerald.svg', label: 'Gold & Emerald Shield', desc: 'Royal premium shield, gold T' },
+      { key: 'logo_2_royal_hexagon', file: 'markaz_assets/logos/logo_2_royal_hexagon.svg', label: 'Royal Hexagon', desc: 'Modern hexagonal badge' },
+      { key: 'logo_3_modern_cart', file: 'markaz_assets/logos/logo_3_modern_cart.svg', label: 'Modern Cart', desc: 'Cart + T monogram' },
+      { key: 'logo_4_urdu_calligraphy', file: 'markaz_assets/logos/logo_4_urdu_calligraphy.svg', label: 'Urdu Calligraphy', desc: '\u062a\u062c\u0627\u0631\u062a in Urdu script' },
+      { key: 'logo_5_luxury_shield', file: 'markaz_assets/logos/logo_5_luxury_shield.svg', label: 'Luxury Shield', desc: 'Minimal luxury shield' },
+      { key: 'logo_6_tech_minimal', file: 'markaz_assets/logos/logo_6_tech_minimal.svg', label: 'Tech Minimal', desc: 'Clean modern minimal mark' },
+    ];
+
+    const APP_THEMES = [
+      { key: 'markaz', label: 'Markaz Green', desc: 'Original Markaz brand \u00b7 Fresh & Organic',
+        brand: '#02BC87', deep: '#02704D', soft: '#EAFBF4', ink: '#070A56',
+        from: '#02704D', via: '#00A473', to: '#02BC87' },
+      { key: 'emerald', label: 'Deep Emerald & Gold', desc: 'Organic \u00b7 Pure Nature \u00b7 Halal Wholesale',
+        brand: '#00A473', deep: '#04392B', soft: '#EAFBF4', ink: '#070A56',
+        from: '#04392B', via: '#009578', to: '#00A473' },
+      { key: 'ocean', label: 'Ocean Blue', desc: 'Trust \u00b7 Corporate \u00b7 Professional',
+        brand: '#009DCD', deep: '#004755', soft: '#E9F8FD', ink: '#070A56',
+        from: '#004755', via: '#0083AB', to: '#009DCD' },
+      { key: 'royal', label: 'Royal Purple', desc: 'Trendy \u00b7 High Conversion \u00b7 Reseller Signature',
+        brand: '#7C3AED', deep: '#4C1D95', soft: '#F5F3FF', ink: '#070A56',
+        from: '#4C1D95', via: '#6D28D9', to: '#7C3AED' },
+      { key: 'ruby', label: 'Persian Plum & Ruby', desc: 'Warm \u00b7 Royal Pakistani Cultural Aesthetic',
+        brand: '#BE123C', deep: '#4C0519', soft: '#FFF1F2', ink: '#070A56',
+        from: '#4C0519', via: '#881337', to: '#BE123C' },
+      { key: 'midnight', label: 'Midnight Navy & Gold', desc: 'Luxury Premium \u00b7 High-End Organic Store',
+        brand: '#FFBE21', deep: '#070A56', soft: '#FFF9EC', ink: '#070A56',
+        from: '#030712', via: '#0E1036', to: '#1A1F72' },
+    ];
+
+    let selectedBrandLogo = BRAND_LOGOS[0].key;
+    let selectedAppTheme = 'markaz';
+
+    function renderBrandKit() {
+      const logoBox = document.getElementById('admLogoKit');
+      if (logoBox) {
+        logoBox.innerHTML = BRAND_LOGOS.map(l => `
+          <button type="button" onclick="pickBrandLogo('${l.key}')"
+            class="rounded-2xl border-2 p-3 flex flex-col items-center gap-2 transition ${l.key === selectedBrandLogo ? 'border-[#02BC87] bg-emerald-50 shadow' : 'border-gray-200 bg-white hover:border-emerald-300'}">
+            <img src="../${l.file}" alt="${l.label}" class="w-20 h-20 object-contain" />
+            <span class="text-[11px] font-black text-gray-900 text-center leading-tight">${l.label}</span>
+            <span class="text-[10px] text-gray-500 text-center leading-tight">${l.desc}</span>
+            <span class="text-[9px] font-mono text-gray-400">${l.file.split('/').pop()}</span>
+          </button>
+        `).join('');
+      }
+
+      const themeBox = document.getElementById('admThemeKit');
+      if (themeBox) {
+        themeBox.innerHTML = APP_THEMES.map(t => `
+          <button type="button" onclick="pickAppTheme('${t.key}')"
+            class="rounded-2xl border-2 p-3 flex flex-col gap-2.5 text-left transition ${t.key === selectedAppTheme ? 'border-[#02BC87] bg-emerald-50 shadow' : 'border-gray-200 bg-white hover:border-emerald-300'}">
+            <div class="h-14 rounded-xl border border-black/5" style="background:linear-gradient(135deg,${t.from},${t.via},${t.to})"></div>
+            <div>
+              <p class="text-xs font-black text-gray-900">${t.label}</p>
+              <p class="text-[10px] text-gray-500">${t.desc}</p>
+            </div>
+            <div class="flex gap-1 flex-wrap">
+              <span class="w-6 h-6 rounded-md border border-black/10" style="background:${t.brand}" title="Brand ${t.brand}"></span>
+              <span class="w-6 h-6 rounded-md border border-black/10" style="background:${t.deep}" title="Deep ${t.deep}"></span>
+              <span class="w-6 h-6 rounded-md border border-black/10" style="background:${t.soft}" title="Soft ${t.soft}"></span>
+              <span class="w-6 h-6 rounded-md border border-black/10" style="background:${t.ink}" title="Ink ${t.ink}"></span>
+            </div>
+            <p class="text-[9px] font-mono text-gray-400">${t.brand} \u00b7 ${t.deep} \u00b7 ${t.ink}</p>
+          </button>
+        `).join('');
+      }
+
+      renderBrandPreview();
+      lucide.createIcons();
+    }
+
+    function pickBrandLogo(key) {
+      selectedBrandLogo = key;
+      renderBrandKit();
+      const l = BRAND_LOGOS.find(x => x.key === key);
+      if (l) admToast('\u2713 "' + l.label + '" select ho gaya.');
+    }
+
+    function pickAppTheme(key) {
+      selectedAppTheme = key;
+      renderBrandKit();
+      const t = APP_THEMES.find(x => x.key === key);
+      if (t) admToast('\u2713 "' + t.label + '" theme select ho gaya.');
+    }
+
+    function renderBrandPreview() {
+      const box = document.getElementById('admBrandPreview');
+      if (!box) return;
+      const l = BRAND_LOGOS.find(x => x.key === selectedBrandLogo) || BRAND_LOGOS[0];
+      const t = APP_THEMES.find(x => x.key === selectedAppTheme) || APP_THEMES[0];
+      box.innerHTML = `
+        <div style="background:linear-gradient(135deg,${t.from},${t.via},${t.to})" class="px-4 py-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-10 h-10 rounded-2xl overflow-hidden bg-white border border-white/40 flex items-center justify-center flex-shrink-0">
+              <img src="../${l.file}" alt="${l.label}" class="w-full h-full object-contain" />
+            </div>
+            <div class="min-w-0">
+              <p class="font-black text-lg text-white leading-none">Tejarat</p>
+              <p class="text-[10px] text-white/85 font-bold mt-0.5 truncate">Zero Investment Reselling &amp; Shopping</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <span class="p-2 bg-white/15 rounded-full"><i data-lucide="bell" class="w-4 h-4 text-white"></i></span>
+            <span class="p-2 bg-white/15 rounded-full"><i data-lucide="shopping-bag" class="w-4 h-4 text-white"></i></span>
+          </div>
+        </div>
+        <div class="p-4 bg-[#F3F4F5] space-y-3">
+          <div class="rounded-2xl p-3 border" style="background:${t.soft};border-color:${t.brand}33">
+            <p class="text-[10px] font-black uppercase" style="color:${t.deep}">Wholesale Price</p>
+            <p class="text-lg font-black" style="color:${t.ink}">Rs. ${(2700).toLocaleString()}</p>
+            <p class="text-[10px] font-black" style="color:${t.brand}">Reseller sets their own profit</p>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <span class="px-3 py-1.5 rounded-xl text-[10px] font-black text-white" style="background:${t.brand}">Primary Button</span>
+            <span class="px-3 py-1.5 rounded-xl text-[10px] font-black" style="background:${t.deep};color:#fff">Dark Button</span>
+            <span class="px-3 py-1.5 rounded-xl text-[10px] font-black" style="background:#FFBE21;color:#070A56">Bonus Badge</span>
+            <span class="px-3 py-1.5 rounded-xl text-[10px] font-black bg-white border border-gray-200" style="color:${t.ink}">Outline</span>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    // ---------------------------------------------------------------
     // Tabs
     // ---------------------------------------------------------------
     function switchAdminTab(tab) {
@@ -1381,6 +1552,7 @@
     }
 
     // Boot: only load data once the PIN is verified
+    renderBrandKit();
     if (checkAdminAuth()) {
       refreshAllAdminData();
       lucide.createIcons();
