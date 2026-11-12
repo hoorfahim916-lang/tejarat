@@ -51,7 +51,7 @@ $alignedApk = Join-Path $buildDir "aligned.apk"
 if ($LASTEXITCODE -ne 0) { throw "zipalign failed with code $LASTEXITCODE" }
 
 Write-Host "Step 6: Signing APK with release keystore..."
-$outApk = Join-Path $baseDir "Tejarat-App-v3.5-PRO.apk"
+$outApk = Join-Path $baseDir "Tejarat-App-v3.7-PRO.apk"
 & cmd /c "$apksigner" sign --ks $keystore --ks-pass pass:tejarat123 --out "$outApk" "$alignedApk"
 if ($LASTEXITCODE -ne 0) { throw "apksigner failed with code $LASTEXITCODE" }
 
@@ -59,10 +59,10 @@ Write-Host "Step 7: Verifying signed APK..."
 & cmd /c "$apksigner" verify "$outApk"
 if ($LASTEXITCODE -ne 0) { throw "apksigner verify failed with code $LASTEXITCODE" }
 
-# Sync other versions so any previous shortcut works
-Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.4-PRO.apk") -Force
-Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.3-PRO.apk") -Force
-Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.2-PRO.apk") -Force
+# Keep previous filenames in sync so any earlier shortcut still works
+foreach ($v in @("3.6","3.5","3.4","3.3","3.2")) {
+    Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v$v-PRO.apk") -Force
+}
 Copy-Item "$outApk" (Join-Path $baseDir "Tejarat-App-v3.1-MidnightGold.apk") -Force
 
 Write-Host "SUCCESS! Output APK generated at: $outApk"
