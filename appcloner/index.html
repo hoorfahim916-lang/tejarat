@@ -926,6 +926,9 @@
                     <button class="btn-clone-action" id="btnInstallUpdate" onclick="triggerUpdateDownload()" style="display: none; width: 100%; padding: 14px; font-size: 14px; background: linear-gradient(135deg, #0284C7, #00E676);">
                         ⬇️ ابھی نیا ورژن انسٹال کریں
                     </button>
+                    <button class="btn-clone-action" onclick="installUpdateFromPhone()" style="width: 100%; padding: 14px; font-size: 14px; background: linear-gradient(135deg, #7C3AED, #0284C7);">
+                        📂 فون سے نیا APK انسٹال کریں
+                    </button>
                     <button class="btn-action-banner" onclick="forceOtaReload()" style="justify-content: center; padding: 10px;">
                         <span style="font-size: 12px; color: var(--text-sub);">🔄 ریفریش لائیو سسٹم (Sync Now)</span>
                     </button>
@@ -950,6 +953,13 @@
         function initApp() {
             loadInstalledApps();
             loadClonedApks();
+            // Silent update check on every start: if the server has a newer build, the
+            // header shows a red dot so the user never has to reinstall manually.
+            setTimeout(function () {
+                if (window.AndroidBridge && window.AndroidBridge.checkForAppUpdate) {
+                    try { window.AndroidBridge.checkForAppUpdate(); } catch (e) {}
+                }
+            }, 3000);
         }
 
         window.onCloneProgress = function(percent, msg) {
@@ -958,11 +968,28 @@
             document.getElementById("cloneStatusMsg").innerText = msg;
         };
 
-        window.onCloneSuccess = function() {
+        window.onCloneSuccess = function(record) {
             closeModal("cloningProgressModal");
             switchTab('clonedApks');
+            var extra = "";
+            if (record && record.apkCount) {
+                extra = " (" + record.apkCount + " APK" + (record.apkCount > 1 ? "s" : "") + ")";
+            }
             if (window.AndroidBridge && window.AndroidBridge.showToast) {
-                window.AndroidBridge.showToast("🎉 کلون تیار ہے! اب 'INSTALL' دبائیں تاکہ ہوم اسکرین پر انسٹال ہو جائے۔");
+                window.AndroidBridge.showToast("🎉 کلون تیار ہے" + extra + "! اب 'INSTALL' دبائیں۔");
+            }
+            loadClonedApks();
+        };
+
+        window.onInstallResult = function(result) {
+            if (!result) return;
+            if (result.success) {
+                if (window.AndroidBridge && window.AndroidBridge.showToast) {
+                    window.AndroidBridge.showToast("✅ Install complete! Home screen par clone icon khul jayega.");
+                }
+                if (typeof loadClonedApks === 'function') loadClonedApks();
+            } else {
+                alert("❌ Install failed: " + (result.message || "unknown error"));
             }
         };
 
@@ -1300,6 +1327,12 @@
                         `<div class="cloned-apk-icon" style="background: #1E293B; display: flex; align-items: center; justify-content: center; font-size: 22px;">📦</div>`;
 
                     const sizeMb = (item.fileSize / (1024 * 1024)).toFixed(1);
+                    const parts = (item.apkCount && item.apkCount > 1)
+                        ? `<span class="cloned-apk-chip">${item.apkCount} APK parts</span>` : "";
+                    const isOld = (item.originalPackage && item.clonedPackage &&
+                                   item.originalPackage.length !== item.clonedPackage.length);
+                    const oldChip = isOld
+                        ? `<span class="cloned-apk-chip" style="color:#F87171;">⚠️ Purana clone - dobara banayein</span>` : "";
 
                     html += `
                         <div class="cloned-apk-card">
@@ -1310,6 +1343,8 @@
                                     <div class="cloned-apk-meta">
                                         <span class="cloned-apk-chip">📦 ${item.clonedPackage}</span>
                                         <span class="cloned-apk-chip">${sizeMb} MB</span>
+                                        ${parts}
+                                        ${oldChip}
                                         <span class="cloned-apk-chip" style="color: #4ADE80;">✓ Signed Release</span>
                                     </div>
                                 </div>
@@ -1417,6 +1452,15 @@
                 `;
                 btnInstall.style.display = 'block';
                 btnInstall.innerText = `⬇️ ابھی اپ ڈیٹ انسٹال کریں (v${data.serverVersionName})`;
+
+                const modal = document.getElementById('updateModal');
+                const modalOpen = modal && modal.style.display === 'flex';
+                if (!modalOpen) {
+                    if (window.AndroidBridge && window.AndroidBridge.showToast) {
+                        window.AndroidBridge.showToast("🔄 Naya version available hai (v" + data.serverVersionName + ") - header ke update button par click karein.");
+                    }
+                    if (data.forceUpdate) openUpdateModal();
+                }
             } else {
                 const dot = document.getElementById('headerUpdateDot');
                 if (dot) dot.style.display = 'none';
@@ -1476,8 +1520,15 @@
             statusBox.innerText = 'ڈاؤن لوڈ میں خرابی: ' + err;
         };
 
-        function forceOtaReload() {
-            if (window.AndroidBridge && window.AndroidBridge.refreshApp) {
+        function installUpdateFromPhone() {
+            if (window.AndroidBridge && window.AndroidBridge.pickApkToInstall) {
+                window.AndroidBridge.pickApkToInstall();
+            } else {
+                alert('Is device par file picker available nahi hai.');
+            }
+        }
+
+        function forceOtaReload() {            if (window.AndroidBridge && window.AndroidBridge.refreshApp) {
                 window.AndroidBridge.refreshApp();
             } else {
                 window.location.reload();
