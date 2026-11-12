@@ -1,7 +1,7 @@
 {
-  "versionCode": 103,
-  "versionName": "1.0.3",
+  "versionCode": 106,
+  "versionName": "1.0.6",
   "downloadUrl": "https://hoorfahim916-lang.github.io/tejarat/appcloner/App-Cloner-VIP.apk",
-  "changelog": "⚡ پرماننٹ فکس: پیکیج پارسنگ، اسپلٹ بائنڈنگز اور سام سنگ سیکیورٹی بلاک مکمل ختم۔",
+  "changelog": "✅ Fix: adaptive icon crash (default Android icon), provider authority conflict, split APK install, zipalign + resources.arsc alignment.",
   "forceUpdate": true
 }
